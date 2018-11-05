@@ -1,3 +1,5 @@
+//Patricio Forbes A01192455
+//David Martinez A00817107
 grammar Foma;
 
 options { language = Ruby; }

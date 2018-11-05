@@ -20,7 +20,6 @@ options { language = Ruby; }
 // RESERVED WORDS
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-AS: 'as';
 R_INTEGER: 'int';
 R_FLOAT: 'float';
 R_CHAR: 'char';

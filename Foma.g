@@ -51,7 +51,7 @@ RETURN: 'return';
 CLASS: 'class';
 INHER: 'inherits';
 START: 'start';
-END: 'end';
+R_END: 'end';
 NEW: 'new';
 
 
@@ -105,7 +105,7 @@ POINT: '.';
 
 
 RP: ')';
-LP: '('
+LP: '(';
 LB: '[';
 RB: ']';
 
@@ -128,37 +128,37 @@ NEWLINE: ( '\n' | '\r' )+ { $channel = HIDDEN };
 // ****************                   PARSER                     ****************
 // ******************************************************************************
 
-begin
-  : ( class )* ( variables )* ( function )* program
+commence
+  : ( r_class )* (variables)* (function)* program
   ;
   finally { exit }
 
-class
-  : CLASS ID ( INHER ID )? START ( attribute )* ( constructor )+ ( method )* END
+r_class
+  : CLASS ID ( INHER ID )? START ( attributes )* ( constructor )+ ( method )* R_END
   ;
 
 function
-  : FUNCTION type_f ID LP (parameters (COMMA parameters)*)? RP START ( variables | estatutes_f ) END
+  : FUNCTION type_f ID LP (parameters (COMMA parameters)*)? RP START ( variables | estatutes_f )* R_END
   ;
 
 method
-  : type_f ID LP (parameters (COMMA parameters)*)? RP START ( variables | estatutes_f ) END
+  : type_f ID LP (parameters (COMMA parameters)*)? RP START ( variables | estatutes_f )* R_END
   ;
 
 constructor
-  : ID LP (parameters (COMMA parameters)*)? RP START ( variables | estatutes_f ) END
+  : ID LP (parameters (COMMA parameters)*)? RP START ( variables | estatutes_f )* R_END
   ;
 
 program
-  : PROGRAM ID block
+  : PROGRAM ID START ( variables | estatutes )* R_END
   ;
 
 variables
-  : type_c ID (COMMA ID)* SEMICOLON
+  : type_c ID ( COMMA ID )* SEMICOLON
   ;
 
-atributes
-  : type_s ID (COMMA ID)* SEMICOLON
+attributes
+  : type_s ID ( COMMA ID )* SEMICOLON
   ;
 
 parameters
@@ -178,7 +178,7 @@ type_f
   ;
 
 block
-  : START estatutes END
+  : START estatutes* R_END
   ;
 
 super_expression
@@ -186,7 +186,7 @@ super_expression
   ;
 
 expression
-  : exp ((LT | LEQ | GT | GEQ | EG | NE) exp)*
+  : exp ((LT | LEQ | GT | GEQ | EQ | NE) exp)*
   ;
 
 exp
@@ -210,7 +210,7 @@ id
   ;
 
 estatutes
-  : (assign | condition | while_loop | for_loop | print | input | func_call | method_call)
+  : (assign SEMICOLON | condition | while_loop | for_loop | print | input | func_call SEMICOLON | method_call SEMICOLON )
   ;
 
 estatutes_f
@@ -218,7 +218,7 @@ estatutes_f
   ;
 
 assign
-  : id ASSIGN super_expression SEMICOLON
+  : id ASSIGN super_expression
   ;
 
 condition
@@ -230,23 +230,23 @@ while_loop
   ;
 
 for_loop
-  : FOR LP assign? SEMICOLON super_expression SEMICOLON assign? block
+  : FOR LP assign? SEMICOLON super_expression SEMICOLON assign? RP block
   ;
 
 print
-  :
+  : PRINT LP (super_expression ( COMMA super_expression)* ) RP SEMICOLON
   ;
 
 input
-  :
+  : INPUT LP id RP SEMICOLON
   ;
 
 func_call
-  : ID LP (parameters (COMMA parameters)*)? SEMICOLON
+  : ID LP (ID (COMMA ID)*)? RP
   ;
 
 method_call
-  : ID POINT LP (parameters (COMMA parameters)*)? SEMICOLON
+  : ID POINT LP (ID (COMMA ID)*)? RP
   ;
 
 return

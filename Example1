@@ -1,0 +1,60 @@
+class A
+start
+	int a;
+	bool b;
+	char c;
+	float d;
+
+	A()
+	start
+		int e,f,g;
+		float h;
+	end
+
+	void test()
+	start
+		if ( a > e)
+		start
+			a = a + 1;
+		end
+	end
+end
+
+int global;
+
+function int thisIsAFunc(bool x, int y)
+start
+	global = 0;
+	while(global >= 10)
+	start
+		print(global);
+
+	end
+
+end
+
+program Main
+start
+	int m, n;
+	bool err;
+
+	err = true;
+	m = 2;
+
+	thisIsAFunc(err, m);
+
+	int k;
+	for ( k = 1 ; 1 < 10; k = k + 1)
+	start
+		if( m < 10)
+		start
+			m = 100;
+		end
+		else
+		start
+			m = 1000;
+		end
+	end
+
+
+end

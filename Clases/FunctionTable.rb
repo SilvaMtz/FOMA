@@ -8,8 +8,8 @@ class FunctionTable
     @functions = {}
   end
 
-  def function_add(id, type, size)
-    @functions[id] = Function.new(header, type, size)
+  def function_add(id, type, size, var_pointer)
+    @functions[id] = Function.new(id, type, size, var_pointer)
   end
 
 end

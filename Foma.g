@@ -5,9 +5,13 @@ grammar Foma;
 options { language = Ruby; }
 
 @header {
+  require "Classes/Program"
 }
 
 @members {
+  \$program = Program.new()
+  \$func_aux
+  \$var_aux
 }
 
 // ******************************************************************************
@@ -128,8 +132,13 @@ NEWLINE: ( '\n' | '\r' )+ { $channel = HIDDEN };
 // ****************                   PARSER                     ****************
 // ******************************************************************************
 
+{\$quads.goto_program()}
+\$program = Program.new()
+\$func_aux
+\$var_aux
+
 commence
-  : ( r_class )* (variables)* (function)* program
+  : ( r_class )* (variables)* { \$program.add_func("void") } (function)* program
   ;
   finally { exit }
 
@@ -154,7 +163,7 @@ program
   ;
 
 variables
-  : type_c ID ( COMMA ID )* SEMICOLON
+  : type_c ID { \$program.add_var($ID.text, $type_c.text) } ( COMMA ID { \$program.add_var($ID.text, $type_c.text) } )* SEMICOLON
   ;
 
 attributes

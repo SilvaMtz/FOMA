@@ -1,11 +1,12 @@
-
 class Function
 
-  attr_accessor :id, :type, :parameters, :var_pointer
+  attr_accessor :id, :type, :size, :var_pointer
 
-  def initialize (id, type)
+  def initialize (id, type, size, var_pointer)
     @id = id
     @type = type
+    @size = size
+    @var_pointer = var_pointer
   end
 
 end

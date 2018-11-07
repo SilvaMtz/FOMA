@@ -5,7 +5,7 @@
 # Generated using ANTLR version: 3.5
 # Ruby runtime library version: 1.10.0
 # Input grammar file: Foma.g
-# Generated at: 2018-11-06 20:50:24
+# Generated at: 2018-11-06 20:59:24
 #
 
 # ~~~> start load path setup
@@ -73,10 +73,10 @@ module Foma
                    :INHER => 26, :INPUT => 27, :INTEGER => 28, :LB => 29, 
                    :LBRACE => 30, :LEQ => 31, :LP => 32, :LT => 33, :MOD => 34, 
                    :MULT => 35, :NE => 36, :NEW => 37, :NEWLINE => 38, :NULL => 39, 
-                   :OBJ => 40, :OR => 41, :POINT => 42, :PRINT => 43, :PROGRAM => 44, 
-                   :RB => 45, :RBRACE => 46, :RETURN => 47, :RP => 48, :R_END => 49, 
-                   :SEMICOLON => 50, :START => 51, :SUB => 52, :VOID => 53, 
-                   :WHILE => 54, :WHITESPACE => 55 )
+                   :OR => 40, :POINT => 41, :PRINT => 42, :PROGRAM => 43, 
+                   :RB => 44, :RBRACE => 45, :RETURN => 46, :RP => 47, :R_END => 48, 
+                   :SEMICOLON => 49, :START => 50, :SUB => 51, :VOID => 52, 
+                   :WHILE => 53, :WHITESPACE => 54 )
 
   end
 

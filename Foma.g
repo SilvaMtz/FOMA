@@ -170,7 +170,7 @@ type_s
   ;
 
 type_c
-  : (type_s | OBJ)
+  : (type_s | ID)
   ;
 
 type_f

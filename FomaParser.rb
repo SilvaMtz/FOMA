@@ -5,7 +5,7 @@
 # Generated using ANTLR version: 3.5
 # Ruby runtime library version: 1.10.0
 # Input grammar file: Foma.g
-# Generated at: 2018-11-06 20:50:24
+# Generated at: 2018-11-06 20:59:24
 #
 
 # ~~~> start load path setup
@@ -81,10 +81,10 @@ module Foma
                    :INHER => 26, :INPUT => 27, :INTEGER => 28, :LB => 29, 
                    :LBRACE => 30, :LEQ => 31, :LP => 32, :LT => 33, :MOD => 34, 
                    :MULT => 35, :NE => 36, :NEW => 37, :NEWLINE => 38, :NULL => 39, 
-                   :OBJ => 40, :OR => 41, :POINT => 42, :PRINT => 43, :PROGRAM => 44, 
-                   :RB => 45, :RBRACE => 46, :RETURN => 47, :RP => 48, :R_END => 49, 
-                   :SEMICOLON => 50, :START => 51, :SUB => 52, :VOID => 53, 
-                   :WHILE => 54, :WHITESPACE => 55 )
+                   :OR => 40, :POINT => 41, :PRINT => 42, :PROGRAM => 43, 
+                   :RB => 44, :RBRACE => 45, :RETURN => 46, :RP => 47, :R_END => 48, 
+                   :SEMICOLON => 49, :START => 50, :SUB => 51, :VOID => 52, 
+                   :WHILE => 53, :WHITESPACE => 54 )
 
 
     # register the proper human-readable name or literal value
@@ -98,9 +98,9 @@ module Foma
                     "ELSE", "EQ", "FLOAT", "FOR", "FUNCTION", "GEQ", "GT", 
                     "ID", "IF", "INHER", "INPUT", "INTEGER", "LB", "LBRACE", 
                     "LEQ", "LP", "LT", "MOD", "MULT", "NE", "NEW", "NEWLINE", 
-                    "NULL", "OBJ", "OR", "POINT", "PRINT", "PROGRAM", "RB", 
-                    "RBRACE", "RETURN", "RP", "R_END", "SEMICOLON", "START", 
-                    "SUB", "VOID", "WHILE", "WHITESPACE" )
+                    "NULL", "OR", "POINT", "PRINT", "PROGRAM", "RB", "RBRACE", 
+                    "RETURN", "RP", "R_END", "SEMICOLON", "START", "SUB", 
+                    "VOID", "WHILE", "WHITESPACE" )
 
 
   end
@@ -170,7 +170,7 @@ module Foma
         alt_2 = 2
         look_2_0 = @input.peek( 1 )
 
-        if ( look_2_0.between?( BOOL, CHAR ) || look_2_0 == FLOAT || look_2_0 == INTEGER || look_2_0 == OBJ )
+        if ( look_2_0.between?( BOOL, CHAR ) || look_2_0 == FLOAT || look_2_0 == ID || look_2_0 == INTEGER )
           alt_2 = 1
 
         end
@@ -406,13 +406,17 @@ module Foma
       # at line 141:70: ( variables | estatutes_f )*
       while true # decision 10
         alt_10 = 3
-        look_10_0 = @input.peek( 1 )
+        case look_10 = @input.peek( 1 )
+        when BOOL, CHAR, FLOAT, INTEGER then alt_10 = 1
+        when ID then look_10_3 = @input.peek( 2 )
 
-        if ( look_10_0.between?( BOOL, CHAR ) || look_10_0 == FLOAT || look_10_0 == INTEGER || look_10_0 == OBJ )
-          alt_10 = 1
-        elsif ( look_10_0 == FOR || look_10_0.between?( ID, IF ) || look_10_0 == INPUT || look_10_0 == PRINT || look_10_0 == RETURN || look_10_0 == WHILE )
+        if ( look_10_3 == ASSIGN || look_10_3 == LP || look_10_3 == POINT )
           alt_10 = 2
+        elsif ( look_10_3 == ID )
+          alt_10 = 1
 
+        end
+        when FOR, IF, INPUT, PRINT, RETURN, WHILE then alt_10 = 2
         end
         case alt_10
         when 1
@@ -510,13 +514,17 @@ module Foma
       # at line 145:61: ( variables | estatutes_f )*
       while true # decision 13
         alt_13 = 3
-        look_13_0 = @input.peek( 1 )
+        case look_13 = @input.peek( 1 )
+        when BOOL, CHAR, FLOAT, INTEGER then alt_13 = 1
+        when ID then look_13_3 = @input.peek( 2 )
 
-        if ( look_13_0.between?( BOOL, CHAR ) || look_13_0 == FLOAT || look_13_0 == INTEGER || look_13_0 == OBJ )
-          alt_13 = 1
-        elsif ( look_13_0 == FOR || look_13_0.between?( ID, IF ) || look_13_0 == INPUT || look_13_0 == PRINT || look_13_0 == RETURN || look_13_0 == WHILE )
+        if ( look_13_3 == ASSIGN || look_13_3 == LP || look_13_3 == POINT )
           alt_13 = 2
+        elsif ( look_13_3 == ID )
+          alt_13 = 1
 
+        end
+        when FOR, IF, INPUT, PRINT, RETURN, WHILE then alt_13 = 2
         end
         case alt_13
         when 1
@@ -611,13 +619,17 @@ module Foma
       # at line 149:54: ( variables | estatutes_f )*
       while true # decision 16
         alt_16 = 3
-        look_16_0 = @input.peek( 1 )
+        case look_16 = @input.peek( 1 )
+        when BOOL, CHAR, FLOAT, INTEGER then alt_16 = 1
+        when ID then look_16_3 = @input.peek( 2 )
 
-        if ( look_16_0.between?( BOOL, CHAR ) || look_16_0 == FLOAT || look_16_0 == INTEGER || look_16_0 == OBJ )
-          alt_16 = 1
-        elsif ( look_16_0 == FOR || look_16_0.between?( ID, IF ) || look_16_0 == INPUT || look_16_0 == PRINT || look_16_0 == RETURN || look_16_0 == WHILE )
+        if ( look_16_3 == ASSIGN || look_16_3 == LP || look_16_3 == POINT )
           alt_16 = 2
+        elsif ( look_16_3 == ID )
+          alt_16 = 1
 
+        end
+        when FOR, IF, INPUT, PRINT, RETURN, WHILE then alt_16 = 2
         end
         case alt_16
         when 1
@@ -674,13 +686,17 @@ module Foma
       # at line 153:22: ( variables | estatutes )*
       while true # decision 17
         alt_17 = 3
-        look_17_0 = @input.peek( 1 )
+        case look_17 = @input.peek( 1 )
+        when BOOL, CHAR, FLOAT, INTEGER then alt_17 = 1
+        when ID then look_17_3 = @input.peek( 2 )
 
-        if ( look_17_0.between?( BOOL, CHAR ) || look_17_0 == FLOAT || look_17_0 == INTEGER || look_17_0 == OBJ )
-          alt_17 = 1
-        elsif ( look_17_0 == FOR || look_17_0.between?( ID, IF ) || look_17_0 == INPUT || look_17_0 == PRINT || look_17_0 == WHILE )
+        if ( look_17_3 == ASSIGN || look_17_3 == LP || look_17_3 == POINT )
           alt_17 = 2
+        elsif ( look_17_3 == ID )
+          alt_17 = 1
 
+        end
+        when FOR, IF, INPUT, PRINT, WHILE then alt_17 = 2
         end
         case alt_17
         when 1
@@ -907,7 +923,7 @@ module Foma
     # parser rule type_c
     #
     # (in Foma.g)
-    # 172:1: type_c : ( type_s | OBJ ) ;
+    # 172:1: type_c : ( type_s | ID ) ;
     #
     def type_c
       # -> uncomment the next line to manually enable rule tracing
@@ -915,14 +931,14 @@ module Foma
 
 
       begin
-      # at line 173:5: ( type_s | OBJ )
-      # at line 173:5: ( type_s | OBJ )
+      # at line 173:5: ( type_s | ID )
+      # at line 173:5: ( type_s | ID )
       alt_20 = 2
       look_20_0 = @input.peek( 1 )
 
       if ( look_20_0.between?( BOOL, CHAR ) || look_20_0 == FLOAT || look_20_0 == INTEGER )
         alt_20 = 1
-      elsif ( look_20_0 == OBJ )
+      elsif ( look_20_0 == ID )
         alt_20 = 2
       else
         raise NoViableAlternative( "", 20, 0 )
@@ -936,8 +952,8 @@ module Foma
         @state.following.pop
 
       when 2
-        # at line 173:15: OBJ
-        match( OBJ, TOKENS_FOLLOWING_OBJ_IN_type_c_933 )
+        # at line 173:15: ID
+        match( ID, TOKENS_FOLLOWING_ID_IN_type_c_933 )
 
       end
 
@@ -2026,7 +2042,7 @@ module Foma
     # parser rule method_call
     #
     # (in Foma.g)
-    # 248:1: method_call : ID POINT LP ( parameters ( COMMA parameters )* )? RP ;
+    # 248:1: method_call : ID POINT LP ( ID ( COMMA ID )* )? RP ;
     #
     def method_call
       # -> uncomment the next line to manually enable rule tracing
@@ -2034,24 +2050,22 @@ module Foma
 
 
       begin
-      # at line 249:5: ID POINT LP ( parameters ( COMMA parameters )* )? RP
+      # at line 249:5: ID POINT LP ( ID ( COMMA ID )* )? RP
       match( ID, TOKENS_FOLLOWING_ID_IN_method_call_1435 )
       match( POINT, TOKENS_FOLLOWING_POINT_IN_method_call_1437 )
       match( LP, TOKENS_FOLLOWING_LP_IN_method_call_1439 )
-      # at line 249:17: ( parameters ( COMMA parameters )* )?
+      # at line 249:17: ( ID ( COMMA ID )* )?
       alt_38 = 2
       look_38_0 = @input.peek( 1 )
 
-      if ( look_38_0.between?( BOOL, CHAR ) || look_38_0 == FLOAT || look_38_0 == INTEGER )
+      if ( look_38_0 == ID )
         alt_38 = 1
       end
       case alt_38
       when 1
-        # at line 249:18: parameters ( COMMA parameters )*
-        @state.following.push( TOKENS_FOLLOWING_parameters_IN_method_call_1442 )
-        parameters
-        @state.following.pop
-        # at line 249:29: ( COMMA parameters )*
+        # at line 249:18: ID ( COMMA ID )*
+        match( ID, TOKENS_FOLLOWING_ID_IN_method_call_1442 )
+        # at line 249:21: ( COMMA ID )*
         while true # decision 37
           alt_37 = 2
           look_37_0 = @input.peek( 1 )
@@ -2062,11 +2076,9 @@ module Foma
           end
           case alt_37
           when 1
-            # at line 249:30: COMMA parameters
+            # at line 249:22: COMMA ID
             match( COMMA, TOKENS_FOLLOWING_COMMA_IN_method_call_1445 )
-            @state.following.push( TOKENS_FOLLOWING_parameters_IN_method_call_1447 )
-            parameters
-            @state.following.pop
+            match( ID, TOKENS_FOLLOWING_ID_IN_method_call_1447 )
 
           else
             break # out of loop for decision 37
@@ -2128,91 +2140,91 @@ module Foma
 
 
 
-    TOKENS_FOLLOWING_r_class_IN_commence_583 = Set[ 7, 8, 9, 19, 21, 28, 40, 44 ]
-    TOKENS_FOLLOWING_variables_IN_commence_589 = Set[ 7, 8, 19, 21, 28, 40, 44 ]
-    TOKENS_FOLLOWING_function_IN_commence_594 = Set[ 21, 44 ]
+    TOKENS_FOLLOWING_r_class_IN_commence_583 = Set[ 7, 8, 9, 19, 21, 24, 28, 43 ]
+    TOKENS_FOLLOWING_variables_IN_commence_589 = Set[ 7, 8, 19, 21, 24, 28, 43 ]
+    TOKENS_FOLLOWING_function_IN_commence_594 = Set[ 21, 43 ]
     TOKENS_FOLLOWING_program_IN_commence_598 = Set[ 1 ]
     TOKENS_FOLLOWING_CLASS_IN_r_class_617 = Set[ 24 ]
-    TOKENS_FOLLOWING_ID_IN_r_class_619 = Set[ 26, 51 ]
+    TOKENS_FOLLOWING_ID_IN_r_class_619 = Set[ 26, 50 ]
     TOKENS_FOLLOWING_INHER_IN_r_class_623 = Set[ 24 ]
-    TOKENS_FOLLOWING_ID_IN_r_class_625 = Set[ 51 ]
+    TOKENS_FOLLOWING_ID_IN_r_class_625 = Set[ 50 ]
     TOKENS_FOLLOWING_START_IN_r_class_630 = Set[ 7, 8, 19, 24, 28 ]
     TOKENS_FOLLOWING_attributes_IN_r_class_634 = Set[ 7, 8, 19, 24, 28 ]
-    TOKENS_FOLLOWING_constructor_IN_r_class_641 = Set[ 7, 8, 19, 24, 28, 49, 53 ]
-    TOKENS_FOLLOWING_method_IN_r_class_648 = Set[ 7, 8, 19, 28, 49, 53 ]
+    TOKENS_FOLLOWING_constructor_IN_r_class_641 = Set[ 7, 8, 19, 24, 28, 48, 52 ]
+    TOKENS_FOLLOWING_method_IN_r_class_648 = Set[ 7, 8, 19, 28, 48, 52 ]
     TOKENS_FOLLOWING_R_END_IN_r_class_653 = Set[ 1 ]
-    TOKENS_FOLLOWING_FUNCTION_IN_function_666 = Set[ 7, 8, 19, 28, 53 ]
+    TOKENS_FOLLOWING_FUNCTION_IN_function_666 = Set[ 7, 8, 19, 28, 52 ]
     TOKENS_FOLLOWING_type_f_IN_function_668 = Set[ 24 ]
     TOKENS_FOLLOWING_ID_IN_function_670 = Set[ 32 ]
-    TOKENS_FOLLOWING_LP_IN_function_672 = Set[ 7, 8, 19, 28, 48 ]
-    TOKENS_FOLLOWING_parameters_IN_function_675 = Set[ 11, 48 ]
+    TOKENS_FOLLOWING_LP_IN_function_672 = Set[ 7, 8, 19, 28, 47 ]
+    TOKENS_FOLLOWING_parameters_IN_function_675 = Set[ 11, 47 ]
     TOKENS_FOLLOWING_COMMA_IN_function_678 = Set[ 7, 8, 19, 28 ]
-    TOKENS_FOLLOWING_parameters_IN_function_680 = Set[ 11, 48 ]
-    TOKENS_FOLLOWING_RP_IN_function_686 = Set[ 51 ]
-    TOKENS_FOLLOWING_START_IN_function_688 = Set[ 7, 8, 19, 20, 24, 25, 27, 28, 40, 43, 47, 49, 54 ]
-    TOKENS_FOLLOWING_variables_IN_function_692 = Set[ 7, 8, 19, 20, 24, 25, 27, 28, 40, 43, 47, 49, 54 ]
-    TOKENS_FOLLOWING_estatutes_f_IN_function_696 = Set[ 7, 8, 19, 20, 24, 25, 27, 28, 40, 43, 47, 49, 54 ]
+    TOKENS_FOLLOWING_parameters_IN_function_680 = Set[ 11, 47 ]
+    TOKENS_FOLLOWING_RP_IN_function_686 = Set[ 50 ]
+    TOKENS_FOLLOWING_START_IN_function_688 = Set[ 7, 8, 19, 20, 24, 25, 27, 28, 42, 46, 48, 53 ]
+    TOKENS_FOLLOWING_variables_IN_function_692 = Set[ 7, 8, 19, 20, 24, 25, 27, 28, 42, 46, 48, 53 ]
+    TOKENS_FOLLOWING_estatutes_f_IN_function_696 = Set[ 7, 8, 19, 20, 24, 25, 27, 28, 42, 46, 48, 53 ]
     TOKENS_FOLLOWING_R_END_IN_function_701 = Set[ 1 ]
     TOKENS_FOLLOWING_type_f_IN_method_714 = Set[ 24 ]
     TOKENS_FOLLOWING_ID_IN_method_716 = Set[ 32 ]
-    TOKENS_FOLLOWING_LP_IN_method_718 = Set[ 7, 8, 19, 28, 48 ]
-    TOKENS_FOLLOWING_parameters_IN_method_721 = Set[ 11, 48 ]
+    TOKENS_FOLLOWING_LP_IN_method_718 = Set[ 7, 8, 19, 28, 47 ]
+    TOKENS_FOLLOWING_parameters_IN_method_721 = Set[ 11, 47 ]
     TOKENS_FOLLOWING_COMMA_IN_method_724 = Set[ 7, 8, 19, 28 ]
-    TOKENS_FOLLOWING_parameters_IN_method_726 = Set[ 11, 48 ]
-    TOKENS_FOLLOWING_RP_IN_method_732 = Set[ 51 ]
-    TOKENS_FOLLOWING_START_IN_method_734 = Set[ 7, 8, 19, 20, 24, 25, 27, 28, 40, 43, 47, 49, 54 ]
-    TOKENS_FOLLOWING_variables_IN_method_738 = Set[ 7, 8, 19, 20, 24, 25, 27, 28, 40, 43, 47, 49, 54 ]
-    TOKENS_FOLLOWING_estatutes_f_IN_method_742 = Set[ 7, 8, 19, 20, 24, 25, 27, 28, 40, 43, 47, 49, 54 ]
+    TOKENS_FOLLOWING_parameters_IN_method_726 = Set[ 11, 47 ]
+    TOKENS_FOLLOWING_RP_IN_method_732 = Set[ 50 ]
+    TOKENS_FOLLOWING_START_IN_method_734 = Set[ 7, 8, 19, 20, 24, 25, 27, 28, 42, 46, 48, 53 ]
+    TOKENS_FOLLOWING_variables_IN_method_738 = Set[ 7, 8, 19, 20, 24, 25, 27, 28, 42, 46, 48, 53 ]
+    TOKENS_FOLLOWING_estatutes_f_IN_method_742 = Set[ 7, 8, 19, 20, 24, 25, 27, 28, 42, 46, 48, 53 ]
     TOKENS_FOLLOWING_R_END_IN_method_747 = Set[ 1 ]
     TOKENS_FOLLOWING_ID_IN_constructor_760 = Set[ 32 ]
-    TOKENS_FOLLOWING_LP_IN_constructor_762 = Set[ 7, 8, 19, 28, 48 ]
-    TOKENS_FOLLOWING_parameters_IN_constructor_765 = Set[ 11, 48 ]
+    TOKENS_FOLLOWING_LP_IN_constructor_762 = Set[ 7, 8, 19, 28, 47 ]
+    TOKENS_FOLLOWING_parameters_IN_constructor_765 = Set[ 11, 47 ]
     TOKENS_FOLLOWING_COMMA_IN_constructor_768 = Set[ 7, 8, 19, 28 ]
-    TOKENS_FOLLOWING_parameters_IN_constructor_770 = Set[ 11, 48 ]
-    TOKENS_FOLLOWING_RP_IN_constructor_776 = Set[ 51 ]
-    TOKENS_FOLLOWING_START_IN_constructor_778 = Set[ 7, 8, 19, 20, 24, 25, 27, 28, 40, 43, 47, 49, 54 ]
-    TOKENS_FOLLOWING_variables_IN_constructor_782 = Set[ 7, 8, 19, 20, 24, 25, 27, 28, 40, 43, 47, 49, 54 ]
-    TOKENS_FOLLOWING_estatutes_f_IN_constructor_786 = Set[ 7, 8, 19, 20, 24, 25, 27, 28, 40, 43, 47, 49, 54 ]
+    TOKENS_FOLLOWING_parameters_IN_constructor_770 = Set[ 11, 47 ]
+    TOKENS_FOLLOWING_RP_IN_constructor_776 = Set[ 50 ]
+    TOKENS_FOLLOWING_START_IN_constructor_778 = Set[ 7, 8, 19, 20, 24, 25, 27, 28, 42, 46, 48, 53 ]
+    TOKENS_FOLLOWING_variables_IN_constructor_782 = Set[ 7, 8, 19, 20, 24, 25, 27, 28, 42, 46, 48, 53 ]
+    TOKENS_FOLLOWING_estatutes_f_IN_constructor_786 = Set[ 7, 8, 19, 20, 24, 25, 27, 28, 42, 46, 48, 53 ]
     TOKENS_FOLLOWING_R_END_IN_constructor_791 = Set[ 1 ]
     TOKENS_FOLLOWING_PROGRAM_IN_program_804 = Set[ 24 ]
-    TOKENS_FOLLOWING_ID_IN_program_806 = Set[ 51 ]
-    TOKENS_FOLLOWING_START_IN_program_808 = Set[ 7, 8, 19, 20, 24, 25, 27, 28, 40, 43, 49, 54 ]
-    TOKENS_FOLLOWING_variables_IN_program_812 = Set[ 7, 8, 19, 20, 24, 25, 27, 28, 40, 43, 49, 54 ]
-    TOKENS_FOLLOWING_estatutes_IN_program_816 = Set[ 7, 8, 19, 20, 24, 25, 27, 28, 40, 43, 49, 54 ]
+    TOKENS_FOLLOWING_ID_IN_program_806 = Set[ 50 ]
+    TOKENS_FOLLOWING_START_IN_program_808 = Set[ 7, 8, 19, 20, 24, 25, 27, 28, 42, 48, 53 ]
+    TOKENS_FOLLOWING_variables_IN_program_812 = Set[ 7, 8, 19, 20, 24, 25, 27, 28, 42, 48, 53 ]
+    TOKENS_FOLLOWING_estatutes_IN_program_816 = Set[ 7, 8, 19, 20, 24, 25, 27, 28, 42, 48, 53 ]
     TOKENS_FOLLOWING_R_END_IN_program_821 = Set[ 1 ]
     TOKENS_FOLLOWING_type_c_IN_variables_834 = Set[ 24 ]
-    TOKENS_FOLLOWING_ID_IN_variables_836 = Set[ 11, 50 ]
+    TOKENS_FOLLOWING_ID_IN_variables_836 = Set[ 11, 49 ]
     TOKENS_FOLLOWING_COMMA_IN_variables_840 = Set[ 24 ]
-    TOKENS_FOLLOWING_ID_IN_variables_842 = Set[ 11, 50 ]
+    TOKENS_FOLLOWING_ID_IN_variables_842 = Set[ 11, 49 ]
     TOKENS_FOLLOWING_SEMICOLON_IN_variables_847 = Set[ 1 ]
     TOKENS_FOLLOWING_type_s_IN_attributes_860 = Set[ 24 ]
-    TOKENS_FOLLOWING_ID_IN_attributes_862 = Set[ 11, 50 ]
+    TOKENS_FOLLOWING_ID_IN_attributes_862 = Set[ 11, 49 ]
     TOKENS_FOLLOWING_COMMA_IN_attributes_866 = Set[ 24 ]
-    TOKENS_FOLLOWING_ID_IN_attributes_868 = Set[ 11, 50 ]
+    TOKENS_FOLLOWING_ID_IN_attributes_868 = Set[ 11, 49 ]
     TOKENS_FOLLOWING_SEMICOLON_IN_attributes_873 = Set[ 1 ]
     TOKENS_FOLLOWING_type_s_IN_parameters_886 = Set[ 24 ]
     TOKENS_FOLLOWING_ID_IN_parameters_888 = Set[ 1 ]
     TOKENS_FOLLOWING_type_s_IN_type_c_929 = Set[ 1 ]
-    TOKENS_FOLLOWING_OBJ_IN_type_c_933 = Set[ 1 ]
+    TOKENS_FOLLOWING_ID_IN_type_c_933 = Set[ 1 ]
     TOKENS_FOLLOWING_type_s_IN_type_f_948 = Set[ 1 ]
     TOKENS_FOLLOWING_VOID_IN_type_f_952 = Set[ 1 ]
-    TOKENS_FOLLOWING_START_IN_block_966 = Set[ 20, 24, 25, 27, 43, 49, 54 ]
-    TOKENS_FOLLOWING_estatutes_IN_block_968 = Set[ 20, 24, 25, 27, 43, 49, 54 ]
+    TOKENS_FOLLOWING_START_IN_block_966 = Set[ 20, 24, 25, 27, 42, 48, 53 ]
+    TOKENS_FOLLOWING_estatutes_IN_block_968 = Set[ 20, 24, 25, 27, 42, 48, 53 ]
     TOKENS_FOLLOWING_R_END_IN_block_971 = Set[ 1 ]
-    TOKENS_FOLLOWING_expression_IN_super_expression_984 = Set[ 1, 5, 41 ]
+    TOKENS_FOLLOWING_expression_IN_super_expression_984 = Set[ 1, 5, 40 ]
     TOKENS_FOLLOWING_set_IN_super_expression_987 = Set[ 12, 13, 14, 15, 24, 32 ]
-    TOKENS_FOLLOWING_expression_IN_super_expression_995 = Set[ 1, 5, 41 ]
+    TOKENS_FOLLOWING_expression_IN_super_expression_995 = Set[ 1, 5, 40 ]
     TOKENS_FOLLOWING_exp_IN_expression_1010 = Set[ 1, 18, 22, 23, 31, 33, 36 ]
     TOKENS_FOLLOWING_set_IN_expression_1013 = Set[ 12, 13, 14, 15, 24, 32 ]
     TOKENS_FOLLOWING_exp_IN_expression_1037 = Set[ 1, 18, 22, 23, 31, 33, 36 ]
-    TOKENS_FOLLOWING_term_IN_exp_1052 = Set[ 1, 4, 52 ]
+    TOKENS_FOLLOWING_term_IN_exp_1052 = Set[ 1, 4, 51 ]
     TOKENS_FOLLOWING_set_IN_exp_1055 = Set[ 12, 13, 14, 15, 24, 32 ]
-    TOKENS_FOLLOWING_term_IN_exp_1063 = Set[ 1, 4, 52 ]
+    TOKENS_FOLLOWING_term_IN_exp_1063 = Set[ 1, 4, 51 ]
     TOKENS_FOLLOWING_factor_IN_term_1078 = Set[ 1, 16, 34, 35 ]
     TOKENS_FOLLOWING_set_IN_term_1082 = Set[ 12, 13, 14, 15, 24, 32 ]
     TOKENS_FOLLOWING_factor_IN_term_1096 = Set[ 1, 16, 34, 35 ]
     TOKENS_FOLLOWING_LP_IN_factor_1113 = Set[ 12, 13, 14, 15, 24, 32 ]
-    TOKENS_FOLLOWING_super_expression_IN_factor_1115 = Set[ 48 ]
+    TOKENS_FOLLOWING_super_expression_IN_factor_1115 = Set[ 47 ]
     TOKENS_FOLLOWING_RP_IN_factor_1117 = Set[ 1 ]
     TOKENS_FOLLOWING_var_cte_IN_factor_1121 = Set[ 1 ]
     TOKENS_FOLLOWING_func_call_IN_factor_1125 = Set[ 1 ]
@@ -2223,16 +2235,16 @@ module Foma
     TOKENS_FOLLOWING_C_CHAR_IN_var_cte_1156 = Set[ 1 ]
     TOKENS_FOLLOWING_C_BOOL_IN_var_cte_1160 = Set[ 1 ]
     TOKENS_FOLLOWING_ID_IN_id_1174 = Set[ 1 ]
-    TOKENS_FOLLOWING_assign_IN_estatutes_1188 = Set[ 50 ]
+    TOKENS_FOLLOWING_assign_IN_estatutes_1188 = Set[ 49 ]
     TOKENS_FOLLOWING_SEMICOLON_IN_estatutes_1190 = Set[ 1 ]
     TOKENS_FOLLOWING_condition_IN_estatutes_1194 = Set[ 1 ]
     TOKENS_FOLLOWING_while_loop_IN_estatutes_1198 = Set[ 1 ]
     TOKENS_FOLLOWING_for_loop_IN_estatutes_1202 = Set[ 1 ]
     TOKENS_FOLLOWING_print_IN_estatutes_1206 = Set[ 1 ]
     TOKENS_FOLLOWING_input_IN_estatutes_1210 = Set[ 1 ]
-    TOKENS_FOLLOWING_func_call_IN_estatutes_1214 = Set[ 50 ]
+    TOKENS_FOLLOWING_func_call_IN_estatutes_1214 = Set[ 49 ]
     TOKENS_FOLLOWING_SEMICOLON_IN_estatutes_1216 = Set[ 1 ]
-    TOKENS_FOLLOWING_method_call_IN_estatutes_1220 = Set[ 50 ]
+    TOKENS_FOLLOWING_method_call_IN_estatutes_1220 = Set[ 49 ]
     TOKENS_FOLLOWING_SEMICOLON_IN_estatutes_1222 = Set[ 1 ]
     TOKENS_FOLLOWING_estatutes_IN_estatutes_f_1238 = Set[ 1 ]
     TOKENS_FOLLOWING_return_IN_estatutes_f_1242 = Set[ 1 ]
@@ -2241,52 +2253,52 @@ module Foma
     TOKENS_FOLLOWING_super_expression_IN_assign_1260 = Set[ 1 ]
     TOKENS_FOLLOWING_IF_IN_condition_1273 = Set[ 32 ]
     TOKENS_FOLLOWING_LP_IN_condition_1275 = Set[ 12, 13, 14, 15, 24, 32 ]
-    TOKENS_FOLLOWING_super_expression_IN_condition_1277 = Set[ 48 ]
-    TOKENS_FOLLOWING_RP_IN_condition_1279 = Set[ 51 ]
+    TOKENS_FOLLOWING_super_expression_IN_condition_1277 = Set[ 47 ]
+    TOKENS_FOLLOWING_RP_IN_condition_1279 = Set[ 50 ]
     TOKENS_FOLLOWING_block_IN_condition_1281 = Set[ 1, 17 ]
-    TOKENS_FOLLOWING_ELSE_IN_condition_1284 = Set[ 51 ]
+    TOKENS_FOLLOWING_ELSE_IN_condition_1284 = Set[ 50 ]
     TOKENS_FOLLOWING_block_IN_condition_1286 = Set[ 1 ]
     TOKENS_FOLLOWING_WHILE_IN_while_loop_1301 = Set[ 32 ]
     TOKENS_FOLLOWING_LP_IN_while_loop_1303 = Set[ 12, 13, 14, 15, 24, 32 ]
-    TOKENS_FOLLOWING_super_expression_IN_while_loop_1305 = Set[ 48 ]
-    TOKENS_FOLLOWING_RP_IN_while_loop_1307 = Set[ 51 ]
+    TOKENS_FOLLOWING_super_expression_IN_while_loop_1305 = Set[ 47 ]
+    TOKENS_FOLLOWING_RP_IN_while_loop_1307 = Set[ 50 ]
     TOKENS_FOLLOWING_block_IN_while_loop_1309 = Set[ 1 ]
     TOKENS_FOLLOWING_FOR_IN_for_loop_1322 = Set[ 32 ]
-    TOKENS_FOLLOWING_LP_IN_for_loop_1324 = Set[ 24, 50 ]
-    TOKENS_FOLLOWING_assign_IN_for_loop_1326 = Set[ 50 ]
+    TOKENS_FOLLOWING_LP_IN_for_loop_1324 = Set[ 24, 49 ]
+    TOKENS_FOLLOWING_assign_IN_for_loop_1326 = Set[ 49 ]
     TOKENS_FOLLOWING_SEMICOLON_IN_for_loop_1329 = Set[ 12, 13, 14, 15, 24, 32 ]
-    TOKENS_FOLLOWING_super_expression_IN_for_loop_1331 = Set[ 50 ]
-    TOKENS_FOLLOWING_SEMICOLON_IN_for_loop_1333 = Set[ 24, 48 ]
-    TOKENS_FOLLOWING_assign_IN_for_loop_1335 = Set[ 48 ]
-    TOKENS_FOLLOWING_RP_IN_for_loop_1338 = Set[ 51 ]
+    TOKENS_FOLLOWING_super_expression_IN_for_loop_1331 = Set[ 49 ]
+    TOKENS_FOLLOWING_SEMICOLON_IN_for_loop_1333 = Set[ 24, 47 ]
+    TOKENS_FOLLOWING_assign_IN_for_loop_1335 = Set[ 47 ]
+    TOKENS_FOLLOWING_RP_IN_for_loop_1338 = Set[ 50 ]
     TOKENS_FOLLOWING_block_IN_for_loop_1340 = Set[ 1 ]
     TOKENS_FOLLOWING_PRINT_IN_print_1353 = Set[ 32 ]
     TOKENS_FOLLOWING_LP_IN_print_1355 = Set[ 12, 13, 14, 15, 24, 32 ]
-    TOKENS_FOLLOWING_super_expression_IN_print_1358 = Set[ 11, 48 ]
+    TOKENS_FOLLOWING_super_expression_IN_print_1358 = Set[ 11, 47 ]
     TOKENS_FOLLOWING_COMMA_IN_print_1362 = Set[ 12, 13, 14, 15, 24, 32 ]
-    TOKENS_FOLLOWING_super_expression_IN_print_1364 = Set[ 11, 48 ]
-    TOKENS_FOLLOWING_RP_IN_print_1370 = Set[ 50 ]
+    TOKENS_FOLLOWING_super_expression_IN_print_1364 = Set[ 11, 47 ]
+    TOKENS_FOLLOWING_RP_IN_print_1370 = Set[ 49 ]
     TOKENS_FOLLOWING_SEMICOLON_IN_print_1372 = Set[ 1 ]
     TOKENS_FOLLOWING_INPUT_IN_input_1385 = Set[ 32 ]
     TOKENS_FOLLOWING_LP_IN_input_1387 = Set[ 24 ]
-    TOKENS_FOLLOWING_id_IN_input_1389 = Set[ 48 ]
-    TOKENS_FOLLOWING_RP_IN_input_1391 = Set[ 50 ]
+    TOKENS_FOLLOWING_id_IN_input_1389 = Set[ 47 ]
+    TOKENS_FOLLOWING_RP_IN_input_1391 = Set[ 49 ]
     TOKENS_FOLLOWING_SEMICOLON_IN_input_1393 = Set[ 1 ]
     TOKENS_FOLLOWING_ID_IN_func_call_1406 = Set[ 32 ]
-    TOKENS_FOLLOWING_LP_IN_func_call_1408 = Set[ 24, 48 ]
-    TOKENS_FOLLOWING_ID_IN_func_call_1411 = Set[ 11, 48 ]
+    TOKENS_FOLLOWING_LP_IN_func_call_1408 = Set[ 24, 47 ]
+    TOKENS_FOLLOWING_ID_IN_func_call_1411 = Set[ 11, 47 ]
     TOKENS_FOLLOWING_COMMA_IN_func_call_1414 = Set[ 24 ]
-    TOKENS_FOLLOWING_ID_IN_func_call_1416 = Set[ 11, 48 ]
+    TOKENS_FOLLOWING_ID_IN_func_call_1416 = Set[ 11, 47 ]
     TOKENS_FOLLOWING_RP_IN_func_call_1422 = Set[ 1 ]
-    TOKENS_FOLLOWING_ID_IN_method_call_1435 = Set[ 42 ]
+    TOKENS_FOLLOWING_ID_IN_method_call_1435 = Set[ 41 ]
     TOKENS_FOLLOWING_POINT_IN_method_call_1437 = Set[ 32 ]
-    TOKENS_FOLLOWING_LP_IN_method_call_1439 = Set[ 7, 8, 19, 28, 48 ]
-    TOKENS_FOLLOWING_parameters_IN_method_call_1442 = Set[ 11, 48 ]
-    TOKENS_FOLLOWING_COMMA_IN_method_call_1445 = Set[ 7, 8, 19, 28 ]
-    TOKENS_FOLLOWING_parameters_IN_method_call_1447 = Set[ 11, 48 ]
+    TOKENS_FOLLOWING_LP_IN_method_call_1439 = Set[ 24, 47 ]
+    TOKENS_FOLLOWING_ID_IN_method_call_1442 = Set[ 11, 47 ]
+    TOKENS_FOLLOWING_COMMA_IN_method_call_1445 = Set[ 24 ]
+    TOKENS_FOLLOWING_ID_IN_method_call_1447 = Set[ 11, 47 ]
     TOKENS_FOLLOWING_RP_IN_method_call_1453 = Set[ 1 ]
     TOKENS_FOLLOWING_RETURN_IN_return_1465 = Set[ 12, 13, 14, 15, 24, 32 ]
-    TOKENS_FOLLOWING_super_expression_IN_return_1467 = Set[ 50 ]
+    TOKENS_FOLLOWING_super_expression_IN_return_1467 = Set[ 49 ]
     TOKENS_FOLLOWING_SEMICOLON_IN_return_1469 = Set[ 1 ]
 
   end # class Parser < ANTLR3::Parser

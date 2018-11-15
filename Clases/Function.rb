@@ -1,12 +1,15 @@
+
+require_relative 'VarTable'
+
 class Function
 
-  attr_accessor :id, :type, :size, :var_pointer
+  attr_accessor :id, :type, :size, :dirVars
 
-  def initialize (id, type, size, var_pointer)
+  def initialize (id, type, size, dirVars)
     @id = id
     @type = type
     @size = size
-    @var_pointer = var_pointer
+    @dirVars = dirVars
   end
 
 end

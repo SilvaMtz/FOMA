@@ -5,13 +5,13 @@ grammar Foma;
 options { language = Ruby; }
 
 @header {
-  require "Classes/Program"
+  require "Clases/Program"
 }
 
 @members {
   \$program = Program.new()
-  \$func_aux
-  \$var_aux
+  \$idTemp
+
 }
 
 // ******************************************************************************
@@ -132,18 +132,14 @@ NEWLINE: ( '\n' | '\r' )+ { $channel = HIDDEN };
 // ****************                   PARSER                     ****************
 // ******************************************************************************
 
-{\$quads.goto_program()}
-\$program = Program.new()
-\$func_aux
-\$var_aux
 
 commence
-  : ( r_class )* (variables)* { \$program.add_func("void") } (function)* program
+  : ( r_class )* (variables)* (function)* program {puts "EXITS"}
   ;
   finally { exit }
 
 r_class
-  : CLASS ID ( INHER ID )? START ( attributes )* ( constructor )+ ( method )* R_END
+  : CLASS ID ( INHER ID )? START  ( attributes )*  ( constructor )+  ( method )* R_END
   ;
 
 function
@@ -151,11 +147,11 @@ function
   ;
 
 method
-  : type_f ID LP (parameters (COMMA parameters)*)? RP START ( variables | estatutes_f )* R_END
+  : type_f ID LP (parameters (COMMA parameters)*)? RP START ( variables | estatutes_f )*  R_END
   ;
 
 constructor
-  : ID LP (parameters (COMMA parameters)*)? RP START ( variables | estatutes_f )* R_END
+  :  ID LP  (parameters (COMMA parameters)*)? RP  START ( attributes | estatutes_f )*  R_END
   ;
 
 program
@@ -163,15 +159,15 @@ program
   ;
 
 variables
-  : type_c ID { \$program.add_var($ID.text, $type_c.text) } ( COMMA ID { \$program.add_var($ID.text, $type_c.text) } )* SEMICOLON
+  : type_c id {puts "#{$type_c.text}, #{\$idTemp}"} ( COMMA id  {puts "#{$type_c.text}, #{\$idTemp}"})*  SEMICOLON
   ;
 
 attributes
-  : type_s ID ( COMMA ID )* SEMICOLON
+  : type_s id {puts "#{$type_s.text}, #{\$idTemp}"}( COMMA id {puts "#{$type_s.text}, #{\$idTemp}"} )* SEMICOLON
   ;
 
 parameters
-  : type_s ID
+  : type_s ID {puts "#{$type_s.text}, #{$ID.text}"}
   ;
 
 type_s
@@ -215,7 +211,7 @@ var_cte
   ;
 
 id
-  : ID
+  : ID {\$idTemp = $ID.text}
   ;
 
 estatutes

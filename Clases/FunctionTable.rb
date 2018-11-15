@@ -12,4 +12,13 @@ class FunctionTable
     @functions[id] = Function.new(id, type, size, var_pointer)
   end
 
+  def function_exists? (id)
+    @functions.key?(id)
+  end
+
+  def function_get(id)
+    @functions[id]
+  end
+
+
 end

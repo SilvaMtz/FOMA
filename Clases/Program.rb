@@ -5,10 +5,8 @@ class Program
 
   attr_accessor :current_function, :dir_func, :dir_var
 
-
-
   def initialize()
-    current_function = 'GLOBAL'
+    @current_function = 'GLOBAL'
     @dir_func = FunctionTable.new()
     @dir_var = VarTable.new()
   end
@@ -18,7 +16,8 @@ class Program
   end
 
   def add_function(type)
-    @dir_func.add_func(current_function, type, @dir_var.length, @dir_var)
+    @dir_func.add_func(@current_function, type, @dir_var.length, @dir_var)
+    @dir_var.display()
     @dir_var = VarTable.new()
   end
 end

@@ -13,6 +13,8 @@ start
 
 	void test()
 	start
+		int falta;
+
 		if ( a > e)
 		start
 			a = a + 1;

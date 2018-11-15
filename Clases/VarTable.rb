@@ -13,12 +13,22 @@ class VarTable
   end
 
   def var_exists? (id)
-    @variables.key(id)?
+    @variables.key(id)
   end
 
   def var_get(id)
-    @variables[id]
+    @variables.key?(id)
   end
+
+  def display()
+    puts "Tabla de Variables:"
+    puts "ID \tTYPE"
+    @variables.each do |key, variable|
+      puts("#{variable.id}\t#{variable.type}")
+    end
+    puts ""
+  end
+
 
   # def print()
   #   puts "\tVar Table:"

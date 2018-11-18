@@ -10,8 +10,11 @@ options { language = Ruby; }
 
 @members {
   \$program = Program.new()
-  \$idTemp
-
+  \$params = 0
+  \$classId
+  \$varId
+  \$varType
+  \$dimTemp
 }
 
 // ******************************************************************************
@@ -134,40 +137,72 @@ NEWLINE: ( '\n' | '\r' )+ { $channel = HIDDEN };
 
 
 commence
-  : ( r_class )* (variables)* (function)* program {puts "EXITS"}
+  : ( r_class  )*  (variables)* {\$program.add_func("GLOBAL", "void", 0)} (function)* program {puts "EXITS"}
   ;
   finally { exit }
 
 r_class
-  : CLASS ID ( INHER ID )? START  ( attributes )*  ( constructor )+  ( method )* R_END
+  : CLASS ID {\$classId = $ID.text}  inherits? START  ( attributes )* {\$program.add_attrs()}  constructor  ( method )* {\$program.add_class(\$classId)}  R_END
+  ;
+
+inherits
+  :( INHER ID )
   ;
 
 function
-  : FUNCTION type_f ID LP (parameters (COMMA parameters)*)? RP START ( variables | estatutes_f )* R_END
+  : FUNCTION type_f ID parameters START (attributes)* {\$program.add_func($ID.text, $type_f.text, \$params)}{\$params = 0}(estatutes_f)* R_END
   ;
 
 method
-  : type_f ID LP (parameters (COMMA parameters)*)? RP START ( variables | estatutes_f )*  R_END
+  : type_f ID parameters START (attributes)*  {\$program.add_func($ID.text, $type_f.text, \$params)}{\$params = 0}  (estatutes_f)*  R_END
   ;
 
 constructor
-  :  ID LP  (parameters (COMMA parameters)*)? RP  START ( attributes | estatutes_f )*  R_END
+  :  ID parameters  START (attributes)* (estatutes)* {\$program.add_func($ID.text, "CONST", \$params)}{\$params = 0} R_END
   ;
 
 program
-  : PROGRAM ID START ( variables | estatutes )* R_END
+  : PROGRAM ID START (attributes)* {\$program.add_func($ID.text, "void", 0)} (estatutes)* R_END
   ;
 
 variables
-  : type_c id {puts "#{$type_c.text}, #{\$idTemp}"} ( COMMA id  {puts "#{$type_c.text}, #{\$idTemp}"})*  SEMICOLON
+  : (dec_var | dec_arr | dec_mat)
+  ;
+
+dec_var
+  : type_c {\$varType = $type_c.text} ID {\$program.add_var($ID.text, \$varType)} dec_var_2* SEMICOLON
+  ;
+
+dec_var_2
+  : COMMA ID {\$program.add_var($ID.text, \$varType)}
+  ;
+
+dec_arr
+  : type_s ID LB C_INT RB SEMICOLON {\$program.add_dim($ID.text, $type_s.text, $C_INT.text, 0)}
+  ;
+
+dec_mat
+  : type_s ID LB C_INT RB  dim_2 SEMICOLON {\$program.add_dim($ID.text, $type_s.text, $C_INT.text, \$dimTemp)}
+  ;
+
+dim_2
+  : LB C_INT RB {\$dimTemp = $C_INT.text}
   ;
 
 attributes
-  : type_s id {puts "#{$type_s.text}, #{\$idTemp}"}( COMMA id {puts "#{$type_s.text}, #{\$idTemp}"} )* SEMICOLON
+  : type_s {\$varType = $type_s.text} ID {\$program.add_var($ID.text, \$varType)} attributes_2*  SEMICOLON
+  ;
+
+attributes_2
+  : COMMA ID {\$program.add_var($ID.text, \$varType)}
   ;
 
 parameters
-  : type_s ID {puts "#{$type_s.text}, #{$ID.text}"}
+  : LP (type_s ID {\$program.add_var($ID.text, $type_s.text)}{\$params += 1}( parameters_2 )*)? RP
+  ;
+
+parameters_2
+  :  COMMA type_s ID {\$program.add_var($ID.text, $type_s.text)}{\$params += 1}
   ;
 
 type_s
@@ -207,11 +242,11 @@ factor
   ;
 
 var_cte
-  : (id | C_INT | C_FLOAT | C_CHAR | C_BOOL)
+  : (var_access | C_INT | C_FLOAT | C_CHAR | C_BOOL)
   ;
 
-id
-  : ID {\$idTemp = $ID.text}
+var_access
+  : ID (LB exp RB (LB exp RB)?)?
   ;
 
 estatutes
@@ -219,11 +254,11 @@ estatutes
   ;
 
 estatutes_f
-  : (estatutes | return)
+  : (estatutes | r_return)
   ;
 
 assign
-  : id ASSIGN super_expression
+  : var_access ASSIGN super_expression
   ;
 
 condition
@@ -243,7 +278,7 @@ print
   ;
 
 input
-  : INPUT LP id RP SEMICOLON
+  : INPUT LP ID RP SEMICOLON
   ;
 
 func_call
@@ -254,6 +289,6 @@ method_call
   : ID POINT LP (ID (COMMA ID)*)? RP
   ;
 
-return
+r_return
  : RETURN super_expression SEMICOLON
  ;

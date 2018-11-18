@@ -4,6 +4,7 @@ start
 	bool b;
 	char c;
 	float d;
+	
 
 	A()
 	start
@@ -11,7 +12,7 @@ start
 		float h;
 	end
 
-	void test()
+	void test(int po)
 	start
 		int falta;
 
@@ -20,9 +21,22 @@ start
 			a = a + 1;
 		end
 	end
+
+	int test2(bool bo, int in)
+	start
+		int algo;
+
+		return algo;
+	end
+
+
 end
 
-int global;
+int global, global2;
+int arr[5];
+int mat[3][2];
+A obj;
+
 
 function int thisIsAFunc(bool x, int y)
 start
@@ -39,13 +53,15 @@ program Main
 start
 	int m, n;
 	bool err;
+	int k;
 
 	err = true;
 	m = 2;
 
 	thisIsAFunc(err, m);
 
-	int k;
+	arr[5 + 3] = mat[4+1][m];
+
 	for ( k = 1 ; 1 < 10; k = k + 1)
 	start
 		if( m < 10)

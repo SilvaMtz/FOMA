@@ -8,16 +8,26 @@ class FunctionTable
     @functions = {}
   end
 
-  def function_add(id, type, size, var_pointer)
-    @functions[id] = Function.new(id, type, size, var_pointer)
+  def add_func(id, type, params, dirVars)
+    @functions[id] = Function.new(id, type, params, dirVars)
   end
 
-  def function_exists? (id)
+  def exists (id)
     @functions.key?(id)
   end
 
-  def function_get(id)
+  def get_function(id)
     @functions[id]
+  end
+
+  def display()
+
+    @functions.each do |key, funcElements|
+      puts "ID = #{key} TYPE = #{funcElements.type} PARAMS = #{funcElements.params}"
+      puts "VARS: "
+      funcElements.dirVars.display
+    end
+    puts ""
   end
 
 

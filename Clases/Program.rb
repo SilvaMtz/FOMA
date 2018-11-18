@@ -1,23 +1,73 @@
-require_relative 'VarTable'
-require_relative 'FunctionTable'
+require_relative 'ClassTable'
 
 class Program
 
-  attr_accessor :current_function, :dir_func, :dir_var
+  attr_accessor :dirFunc, :dirVars, :dirAttrs, :dirClass
 
   def initialize()
-    @current_function = 'GLOBAL'
-    @dir_func = FunctionTable.new()
-    @dir_var = VarTable.new()
+    @dirFunc = FunctionTable.new()
+    @dirVars = VarTable.new()
+    @dirAttrs = VarTable.new()
+    @dirClass = ClassTable.new()
+  end
+
+  def add_attrs ()
+    @dirAttrs = @dirVars
+    @dirVars = VarTable.new()
   end
 
   def add_var(id, type)
-    @dir_var.add_var(id, type)
+    puts "#{id}, #{type}"
+    if @dirVars.exists(id)
+      puts "ERROR: Existen declaraciones multiples de la Variable #{id}"
+    else
+      if @dirVars.exists(id)
+        puts "ERROR: Existen declaraciones multiples de la clase #{id}"
+      else
+        @dirVars.add_var(id, type)
+      end
+    end
   end
 
-  def add_function(type)
-    @dir_func.add_func(@current_function, type, @dir_var.length, @dir_var)
-    @dir_var.display()
-    @dir_var = VarTable.new()
+  def add_dim(id, type, dim1, dim2)
+
+    for i in 0...dim1.to_i do
+      idRes = id + "[#{i}]"
+      for j in 0 ... dim2.to_i do
+        idRes =  id + "[#{i}][#{j}]"
+        add_var(idRes, type)
+      end
+      if dim2 == 0
+        add_var(idRes, type)
+
+      end
+    end
+
+    # @dirVars.add_var(id, type)
   end
+
+  def add_func(id, type, params)
+    @dirFunc.add_func(id, type, params, @dirVars)
+    @dirVars = VarTable.new()
+  end
+
+  def add_class (id)
+
+    if @dirClass.exists(id)
+      puts "ERROR: Existen declaraciones multiples de la clase #{id}"
+    else
+      @dirClass.add_class(id, @dirAttrs, @dirFunc)
+    end
+
+    @dirAttrs = VarTable.new()
+    @dirFunc = FunctionTable.new()
+
+
+  end
+
+  def display()
+    @dirClass.display
+    @dirFunc.display
+  end
+
 end

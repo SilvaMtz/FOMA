@@ -1,14 +1,16 @@
 require_relative 'ClassTable'
+require_relative 'Memory'
 
 class Program
 
-  attr_accessor :dirFunc, :dirVars, :dirAttrs, :dirClass
+  attr_accessor :dirFunc, :dirVars, :dirAttrs, :dirClass, :memory
 
   def initialize()
     @dirFunc = FunctionTable.new()
     @dirVars = VarTable.new()
     @dirAttrs = VarTable.new()
     @dirClass = ClassTable.new()
+    @memory = Memory.new()
   end
 
   def add_attrs ()
@@ -16,15 +18,16 @@ class Program
     @dirVars = VarTable.new()
   end
 
-  def add_var(id, type)
-    puts "#{id}, #{type}"
+  def add_var(id, type, scope)
+
     if @dirVars.exists(id)
       puts "ERROR: Existen declaraciones multiples de la Variable #{id}"
     else
-      if @dirVars.exists(id)
-        puts "ERROR: Existen declaraciones multiples de la clase #{id}"
+      if @dirFunc.exists(id)
+        puts "ERROR: Existen declaraciones hibirdas para #{id}"
       else
-        @dirVars.add_var(id, type)
+
+        @dirVars.add_var(id, type, @memory.get_mem(type, scope))
       end
     end
   end
@@ -35,10 +38,10 @@ class Program
       idRes = id + "[#{i}]"
       for j in 0 ... dim2.to_i do
         idRes =  id + "[#{i}][#{j}]"
-        add_var(idRes, type)
+        add_var(idRes, type, "global")
       end
       if dim2 == 0
-        add_var(idRes, type)
+        add_var(idRes, type, "global")
 
       end
     end
@@ -49,6 +52,7 @@ class Program
   def add_func(id, type, params)
     @dirFunc.add_func(id, type, params, @dirVars)
     @dirVars = VarTable.new()
+    @memory.reset
   end
 
   def add_class (id)
@@ -66,6 +70,7 @@ class Program
   end
 
   def display()
+    puts "IN 2"
     @dirClass.display
     @dirFunc.display
   end

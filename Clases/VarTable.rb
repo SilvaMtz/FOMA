@@ -8,8 +8,8 @@ class VarTable
     @variables = {}
   end
 
-  def add_var(id, type)
-    @variables[id] = Vars.new(id, type)
+  def add_var(id, type, memory)
+    @variables[id] = Vars.new(id, type, memory)
   end
 
   def exists (id)
@@ -22,9 +22,9 @@ class VarTable
 
   def display()
 
-    puts "ID \tTYPE"
+    puts "ID \tTYPE\tMEMORY"
     @variables.each do |key, variable|
-      puts("#{variable.id}\t#{variable.type}")
+      puts("#{variable.id}\t#{variable.type}\t#{variable.memory}")
     end
     puts ""
   end

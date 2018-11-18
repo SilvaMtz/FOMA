@@ -12,6 +12,7 @@ options { language = Ruby; }
   \$program = Program.new()
   \$params = 0
   \$classId
+  \$scope
   \$varId
   \$varType
   \$dimTemp
@@ -137,7 +138,7 @@ NEWLINE: ( '\n' | '\r' )+ { $channel = HIDDEN };
 
 
 commence
-  : ( r_class  )*  (variables)* {\$program.add_func("GLOBAL", "void", 0)} (function)* program {puts "EXITS"}
+  : {\$scope = "class"}( r_class  )* {\$scope = "global"} (variables)* {\$program.add_func("global", "void", 0)} (function)* program {\$program.display}{puts "EXITS"}
   ;
   finally { exit }
 
@@ -150,7 +151,7 @@ inherits
   ;
 
 function
-  : FUNCTION type_f ID parameters START (attributes)* {\$program.add_func($ID.text, $type_f.text, \$params)}{\$params = 0}(estatutes_f)* R_END
+  : FUNCTION  type_f ID {\$scope = $ID.text}  parameters START (attributes)* {\$program.add_func($ID.text, $type_f.text, \$params)}{\$params = 0}(estatutes_f)* R_END
   ;
 
 method
@@ -170,11 +171,11 @@ variables
   ;
 
 dec_var
-  : type_c {\$varType = $type_c.text} ID {\$program.add_var($ID.text, \$varType)} dec_var_2* SEMICOLON
+  : type_c {\$varType = $type_c.text} ID {\$program.add_var($ID.text, \$varType, \$scope)} dec_var_2* SEMICOLON
   ;
 
 dec_var_2
-  : COMMA ID {\$program.add_var($ID.text, \$varType)}
+  : COMMA ID {\$program.add_var($ID.text, \$varType, \$scope)}
   ;
 
 dec_arr
@@ -190,19 +191,19 @@ dim_2
   ;
 
 attributes
-  : type_s {\$varType = $type_s.text} ID {\$program.add_var($ID.text, \$varType)} attributes_2*  SEMICOLON
+  : type_s {\$varType = $type_s.text} ID {\$program.add_var($ID.text, \$varType, \$scope)} attributes_2*  SEMICOLON
   ;
 
 attributes_2
-  : COMMA ID {\$program.add_var($ID.text, \$varType)}
+  : COMMA ID {\$program.add_var($ID.text, \$varType, \$scope)}
   ;
 
 parameters
-  : LP (type_s ID {\$program.add_var($ID.text, $type_s.text)}{\$params += 1}( parameters_2 )*)? RP
+  : LP (type_s ID {\$program.add_var($ID.text, $type_s.text, \$scope)}{\$params += 1}( parameters_2 )*)? RP
   ;
 
 parameters_2
-  :  COMMA type_s ID {\$program.add_var($ID.text, $type_s.text)}{\$params += 1}
+  :  COMMA type_s ID {\$program.add_var($ID.text, $type_s.text, \$scope)}{\$params += 1}
   ;
 
 type_s

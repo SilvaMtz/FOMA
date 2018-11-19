@@ -16,7 +16,4 @@ def printTokens()
 end
 
 parser = open(file_name) { | f | Foma::Parser.new( f ) }
-# parser.commence
-sem = SemanticCube.new()
-sem.convert["Integer"]
-sem.printHash
+parser.commence

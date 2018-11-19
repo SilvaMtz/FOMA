@@ -1,0 +1,30 @@
+program Main
+start
+
+  a = b ;
+  c = d + e * f;
+  g = d and x < h;
+
+  if (x < z)
+  start
+    x = x + y;
+  end
+  else
+  start
+    z = z + 25;
+  end
+
+  while (a < b)
+  start
+    y = p + m;
+  end
+
+
+  for (x = 5 ; x < z ; x = x + 1)
+  start
+    v = d;
+  end
+
+  x = 10;
+
+end

@@ -6,10 +6,12 @@ options { language = Ruby; }
 
 @header {
   require "Clases/Program"
+  require "Clases/CuadruplosTable"
 }
 
 @members {
   \$program = Program.new()
+  \$cuads = CuadruplosTable.new()
   \$params = 0
   \$classId
   \$scope
@@ -138,7 +140,7 @@ NEWLINE: ( '\n' | '\r' )+ { $channel = HIDDEN };
 
 
 commence
-  : {\$scope = "class"}( r_class  )* {\$scope = "global"} (variables)* {\$program.add_func("global", "void", 0)} (function)* program {\$program.display}{puts "EXITS"}
+  : {\$scope = "class"}( r_class  )* {\$scope = "global"} (variables)* {\$program.add_func("global", "void", 0)} (function)* program  {\$cuads.display}{puts "EXITS"}
   ;
   finally { exit }
 
@@ -223,23 +225,23 @@ block
   ;
 
 super_expression
-  : expression ((AND | OR) expression)*
+  : expression ((AND {\$cuads.add_SE($AND.text)}| OR {\$cuads.add_SE($OR.text)}) expression)*
   ;
 
 expression
-  : exp ((LT | LEQ | GT | GEQ | EQ | NE) exp)*
+  : exp ((LT {\$cuads.add_E($LT.text)} | LEQ {\$cuads.add_E($LEQ.text)} | GT {\$cuads.add_E($GT.text)} | GEQ {\$cuads.add_E($GEQ.text)} | EQ {\$cuads.add_E($EQ.text)} | NE {\$cuads.add_E($NE.text)} ) exp)*
   ;
 
 exp
-  : term ((ADD | SUB) term)*
+  : term ((ADD {\$cuads.add_EXP($ADD.text)} | SUB {\$cuads.add_EXP($SUB.text)}) term)*
   ;
 
 term
-  : factor ( ( MULT | DIV | MOD ) factor )*
+  : factor ( ( MULT {\$cuads.add_T($MULT.text)} | DIV {\$cuads.add_T($DIV.text)}| MOD {\$cuads.add_T($MOD.text)} ) factor )*
   ;
 
 factor
-  : (LP super_expression RP | var_cte | func_call | method_call)
+  : (LP super_expression RP | var_cte {\$cuads.add_operando($var_cte.text)}  | func_call | method_call)
   ;
 
 var_cte
@@ -247,7 +249,7 @@ var_cte
   ;
 
 var_access
-  : ID (LB exp RB (LB exp RB)?)?
+  : ID (LB {\$cuads.add_falseBottom}  exp  {\$cuads.rem_falseBottom}{\$cuads.drop_opp}RB (LB {\$cuads.add_falseBottom}  exp  {\$cuads.rem_falseBottom} {\$cuads.drop_opp}RB)?)?
   ;
 
 estatutes
@@ -259,19 +261,19 @@ estatutes_f
   ;
 
 assign
-  : var_access ASSIGN super_expression
+  : var_access {\$cuads.add_operando($var_access.text)} ASSIGN {\$cuads.add_assign()} super_expression {\$cuads.emptyStack}
   ;
 
 condition
-  : IF LP super_expression RP block (ELSE block)?
+  : IF LP {\$cuads.add_falseBottom} super_expression {\$cuads.rem_falseBottom} {\$cuads.goto_falso}RP block (ELSE {\$cuads.goto_else}  block)? {\$cuads.fill_goto}
   ;
 
 while_loop
-  : WHILE LP super_expression RP block
+  : WHILE LP {\$cuads.save_spot}{\$cuads.add_falseBottom} super_expression {\$cuads.rem_falseBottom} {\$cuads.goto_falso}RP block {\$cuads.goto_loop}
   ;
 
 for_loop
-  : FOR LP assign? SEMICOLON super_expression SEMICOLON assign? RP block
+  : FOR LP assign? SEMICOLON {\$cuads.save_spot}{\$cuads.add_falseBottom} super_expression {\$cuads.rem_falseBottom} {\$cuads.goto_falso} SEMICOLON{\$cuads.add_swap} assign? {\$cuads.add_swap} RP block {\$cuads.do_swap}{\$cuads.goto_loop}
   ;
 
 print

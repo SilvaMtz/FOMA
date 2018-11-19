@@ -5,7 +5,7 @@
 # Generated using ANTLR version: 3.5
 # Ruby runtime library version: 1.10.0
 # Input grammar file: Foma.g
-# Generated at: 2018-11-18 23:54:39
+# Generated at: 2018-11-19 15:07:42
 #
 
 # ~~~> start load path setup
@@ -118,7 +118,7 @@ module Foma
                      :block, :super_expression, :expression, :exp, :term, 
                      :factor, :var_cte, :var_access, :estatutes, :estatutes_f, 
                      :assign, :condition, :while_loop, :for_loop, :print, 
-                     :input, :func_call, :method_call, :r_return ].freeze
+                     :print_2, :input, :func_call, :method_call, :r_return ].freeze
 
     include TokenData
 
@@ -140,6 +140,7 @@ module Foma
       $varId
       $varType
       $dimTemp
+      $numTemp
 
     # - - - - - - - - - - - - Rules - - - - - - - - - - - - -
 
@@ -147,7 +148,7 @@ module Foma
     # parser rule commence
     #
     # (in Foma.g)
-    # 142:1: commence : ( r_class )* ( variables )* ( function )* program ;
+    # 143:1: commence : ( r_class )* ( variables )* ( function )* program ;
     #
     def commence
       # -> uncomment the next line to manually enable rule tracing
@@ -155,12 +156,12 @@ module Foma
 
 
       begin
-      # at line 143:5: ( r_class )* ( variables )* ( function )* program
+      # at line 144:5: ( r_class )* ( variables )* ( function )* program
       # --> action
       $scope = "class"
       # <-- action
 
-      # at line 143:24: ( r_class )*
+      # at line 144:25: ( r_class )*
       while true # decision 1
         alt_1 = 2
         look_1_0 = @input.peek( 1 )
@@ -171,7 +172,7 @@ module Foma
         end
         case alt_1
         when 1
-          # at line 143:26: r_class
+          # at line 144:26: r_class
           @state.following.push( TOKENS_FOLLOWING_r_class_IN_commence_585 )
           r_class
           @state.following.pop
@@ -186,7 +187,7 @@ module Foma
       $scope = "global"
       # <-- action
 
-      # at line 143:59: ( variables )*
+      # at line 145:26: ( variables )*
       while true # decision 2
         alt_2 = 2
         look_2_0 = @input.peek( 1 )
@@ -197,8 +198,8 @@ module Foma
         end
         case alt_2
         when 1
-          # at line 143:60: variables
-          @state.following.push( TOKENS_FOLLOWING_variables_IN_commence_594 )
+          # at line 145:27: variables
+          @state.following.push( TOKENS_FOLLOWING_variables_IN_commence_596 )
           variables
           @state.following.pop
 
@@ -209,10 +210,10 @@ module Foma
 
 
       # --> action
-      $program.add_func("global", "void", 0)
+      $program.add_func("global", "void", 0, "NA")
       # <-- action
 
-      # at line 143:114: ( function )*
+      # at line 146:5: ( function )*
       while true # decision 3
         alt_3 = 2
         look_3_0 = @input.peek( 1 )
@@ -223,8 +224,8 @@ module Foma
         end
         case alt_3
         when 1
-          # at line 143:115: function
-          @state.following.push( TOKENS_FOLLOWING_function_IN_commence_601 )
+          # at line 146:6: function
+          @state.following.push( TOKENS_FOLLOWING_function_IN_commence_607 )
           function
           @state.following.pop
 
@@ -233,9 +234,14 @@ module Foma
         end
       end # loop for decision 3
 
-      @state.following.push( TOKENS_FOLLOWING_program_IN_commence_605 )
+      @state.following.push( TOKENS_FOLLOWING_program_IN_commence_615 )
       program
       @state.following.pop
+
+      # --> action
+      $program.display
+      # <-- action
+
 
       # --> action
       $cuads.display
@@ -267,7 +273,7 @@ module Foma
     # parser rule r_class
     #
     # (in Foma.g)
-    # 147:1: r_class : CLASS ID ( inherits )? START ( attributes )* constructor ( method )* R_END ;
+    # 151:1: r_class : CLASS ID ( inherits )? START ( attributes )* constructor ( method )* R_END ;
     #
     def r_class
       # -> uncomment the next line to manually enable rule tracing
@@ -278,15 +284,15 @@ module Foma
 
 
       begin
-      # at line 148:5: CLASS ID ( inherits )? START ( attributes )* constructor ( method )* R_END
-      match( CLASS, TOKENS_FOLLOWING_CLASS_IN_r_class_628 )
-      __ID1__ = match( ID, TOKENS_FOLLOWING_ID_IN_r_class_630 )
+      # at line 152:5: CLASS ID ( inherits )? START ( attributes )* constructor ( method )* R_END
+      match( CLASS, TOKENS_FOLLOWING_CLASS_IN_r_class_639 )
+      __ID1__ = match( ID, TOKENS_FOLLOWING_ID_IN_r_class_641 )
 
       # --> action
       $classId = __ID1__.text
       # <-- action
 
-      # at line 148:38: ( inherits )?
+      # at line 152:38: ( inherits )?
       alt_4 = 2
       look_4_0 = @input.peek( 1 )
 
@@ -295,14 +301,14 @@ module Foma
       end
       case alt_4
       when 1
-        # at line 148:38: inherits
-        @state.following.push( TOKENS_FOLLOWING_inherits_IN_r_class_635 )
+        # at line 152:38: inherits
+        @state.following.push( TOKENS_FOLLOWING_inherits_IN_r_class_646 )
         inherits
         @state.following.pop
 
       end
-      match( START, TOKENS_FOLLOWING_START_IN_r_class_638 )
-      # at line 148:55: ( attributes )*
+      match( START, TOKENS_FOLLOWING_START_IN_r_class_649 )
+      # at line 152:55: ( attributes )*
       while true # decision 5
         alt_5 = 2
         look_5_0 = @input.peek( 1 )
@@ -313,8 +319,8 @@ module Foma
         end
         case alt_5
         when 1
-          # at line 148:57: attributes
-          @state.following.push( TOKENS_FOLLOWING_attributes_IN_r_class_643 )
+          # at line 152:57: attributes
+          @state.following.push( TOKENS_FOLLOWING_attributes_IN_r_class_654 )
           attributes
           @state.following.pop
 
@@ -328,10 +334,10 @@ module Foma
       $program.add_attrs()
       # <-- action
 
-      @state.following.push( TOKENS_FOLLOWING_constructor_IN_r_class_651 )
+      @state.following.push( TOKENS_FOLLOWING_constructor_IN_r_class_662 )
       constructor
       @state.following.pop
-      # at line 148:109: ( method )*
+      # at line 152:109: ( method )*
       while true # decision 6
         alt_6 = 2
         look_6_0 = @input.peek( 1 )
@@ -342,8 +348,8 @@ module Foma
         end
         case alt_6
         when 1
-          # at line 148:111: method
-          @state.following.push( TOKENS_FOLLOWING_method_IN_r_class_656 )
+          # at line 152:111: method
+          @state.following.push( TOKENS_FOLLOWING_method_IN_r_class_667 )
           method
           @state.following.pop
 
@@ -357,7 +363,7 @@ module Foma
       $program.add_class($classId)
       # <-- action
 
-      match( R_END, TOKENS_FOLLOWING_R_END_IN_r_class_664 )
+      match( R_END, TOKENS_FOLLOWING_R_END_IN_r_class_675 )
 
       rescue ANTLR3::Error::RecognitionError => re
         report_error(re)
@@ -379,7 +385,7 @@ module Foma
     # parser rule inherits
     #
     # (in Foma.g)
-    # 151:1: inherits : ( INHER ID ) ;
+    # 155:1: inherits : ( INHER ID ) ;
     #
     def inherits
       # -> uncomment the next line to manually enable rule tracing
@@ -387,11 +393,11 @@ module Foma
 
 
       begin
-      # at line 152:4: ( INHER ID )
-      # at line 152:4: ( INHER ID )
-      # at line 152:6: INHER ID
-      match( INHER, TOKENS_FOLLOWING_INHER_IN_inherits_678 )
-      match( ID, TOKENS_FOLLOWING_ID_IN_inherits_680 )
+      # at line 156:4: ( INHER ID )
+      # at line 156:4: ( INHER ID )
+      # at line 156:6: INHER ID
+      match( INHER, TOKENS_FOLLOWING_INHER_IN_inherits_689 )
+      match( ID, TOKENS_FOLLOWING_ID_IN_inherits_691 )
 
 
       rescue ANTLR3::Error::RecognitionError => re
@@ -414,7 +420,7 @@ module Foma
     # parser rule function
     #
     # (in Foma.g)
-    # 155:1: function : FUNCTION type_f ID parameters START ( attributes )* ( estatutes_f )* R_END ;
+    # 159:1: function : FUNCTION type_f ID parameters START ( attributes )* ( estatutes_f )* R_END ;
     #
     def function
       # -> uncomment the next line to manually enable rule tracing
@@ -426,22 +432,27 @@ module Foma
 
 
       begin
-      # at line 156:5: FUNCTION type_f ID parameters START ( attributes )* ( estatutes_f )* R_END
-      match( FUNCTION, TOKENS_FOLLOWING_FUNCTION_IN_function_695 )
-      @state.following.push( TOKENS_FOLLOWING_type_f_IN_function_698 )
+      # at line 160:5: FUNCTION type_f ID parameters START ( attributes )* ( estatutes_f )* R_END
+      match( FUNCTION, TOKENS_FOLLOWING_FUNCTION_IN_function_706 )
+      @state.following.push( TOKENS_FOLLOWING_type_f_IN_function_710 )
       type_f3 = type_f
       @state.following.pop
-      __ID2__ = match( ID, TOKENS_FOLLOWING_ID_IN_function_700 )
+      __ID2__ = match( ID, TOKENS_FOLLOWING_ID_IN_function_712 )
 
       # --> action
       $scope = __ID2__.text
       # <-- action
 
-      @state.following.push( TOKENS_FOLLOWING_parameters_IN_function_705 )
+      @state.following.push( TOKENS_FOLLOWING_parameters_IN_function_717 )
       parameters
       @state.following.pop
-      match( START, TOKENS_FOLLOWING_START_IN_function_707 )
-      # at line 156:64: ( attributes )*
+      match( START, TOKENS_FOLLOWING_START_IN_function_719 )
+
+      # --> action
+      $numTemp = $cuads.num
+      # <-- action
+
+      # at line 160:92: ( attributes )*
       while true # decision 7
         alt_7 = 2
         look_7_0 = @input.peek( 1 )
@@ -452,8 +463,8 @@ module Foma
         end
         case alt_7
         when 1
-          # at line 156:65: attributes
-          @state.following.push( TOKENS_FOLLOWING_attributes_IN_function_710 )
+          # at line 160:93: attributes
+          @state.following.push( TOKENS_FOLLOWING_attributes_IN_function_725 )
           attributes
           @state.following.pop
 
@@ -464,7 +475,7 @@ module Foma
 
 
       # --> action
-      $program.add_func(__ID2__.text, ( type_f3 && @input.to_s( type_f3.start, type_f3.stop ) ), $params)
+      $program.add_func(__ID2__.text, ( type_f3 && @input.to_s( type_f3.start, type_f3.stop ) ), $params, $numTemp)
       # <-- action
 
 
@@ -472,7 +483,7 @@ module Foma
       $params = 0
       # <-- action
 
-      # at line 156:146: ( estatutes_f )*
+      # at line 160:185: ( estatutes_f )*
       while true # decision 8
         alt_8 = 2
         look_8_0 = @input.peek( 1 )
@@ -483,8 +494,8 @@ module Foma
         end
         case alt_8
         when 1
-          # at line 156:147: estatutes_f
-          @state.following.push( TOKENS_FOLLOWING_estatutes_f_IN_function_717 )
+          # at line 160:186: estatutes_f
+          @state.following.push( TOKENS_FOLLOWING_estatutes_f_IN_function_732 )
           estatutes_f
           @state.following.pop
 
@@ -493,7 +504,7 @@ module Foma
         end
       end # loop for decision 8
 
-      match( R_END, TOKENS_FOLLOWING_R_END_IN_function_721 )
+      match( R_END, TOKENS_FOLLOWING_R_END_IN_function_736 )
 
       rescue ANTLR3::Error::RecognitionError => re
         report_error(re)
@@ -515,7 +526,7 @@ module Foma
     # parser rule method
     #
     # (in Foma.g)
-    # 159:1: method : type_f ID parameters START ( attributes )* ( estatutes_f )* R_END ;
+    # 163:1: method : type_f ID parameters START ( attributes )* ( estatutes_f )* R_END ;
     #
     def method
       # -> uncomment the next line to manually enable rule tracing
@@ -527,16 +538,21 @@ module Foma
 
 
       begin
-      # at line 160:5: type_f ID parameters START ( attributes )* ( estatutes_f )* R_END
-      @state.following.push( TOKENS_FOLLOWING_type_f_IN_method_734 )
+      # at line 164:5: type_f ID parameters START ( attributes )* ( estatutes_f )* R_END
+      @state.following.push( TOKENS_FOLLOWING_type_f_IN_method_749 )
       type_f5 = type_f
       @state.following.pop
-      __ID4__ = match( ID, TOKENS_FOLLOWING_ID_IN_method_736 )
-      @state.following.push( TOKENS_FOLLOWING_parameters_IN_method_738 )
+      __ID4__ = match( ID, TOKENS_FOLLOWING_ID_IN_method_751 )
+      @state.following.push( TOKENS_FOLLOWING_parameters_IN_method_753 )
       parameters
       @state.following.pop
-      match( START, TOKENS_FOLLOWING_START_IN_method_740 )
-      # at line 160:32: ( attributes )*
+      match( START, TOKENS_FOLLOWING_START_IN_method_755 )
+
+      # --> action
+      $numTemp = $cuads.num
+      # <-- action
+
+      # at line 164:58: ( attributes )*
       while true # decision 9
         alt_9 = 2
         look_9_0 = @input.peek( 1 )
@@ -547,8 +563,8 @@ module Foma
         end
         case alt_9
         when 1
-          # at line 160:33: attributes
-          @state.following.push( TOKENS_FOLLOWING_attributes_IN_method_743 )
+          # at line 164:59: attributes
+          @state.following.push( TOKENS_FOLLOWING_attributes_IN_method_760 )
           attributes
           @state.following.pop
 
@@ -559,7 +575,7 @@ module Foma
 
 
       # --> action
-      $program.add_func(__ID4__.text, ( type_f5 && @input.to_s( type_f5.start, type_f5.stop ) ), $params)
+      $program.add_func(__ID4__.text, ( type_f5 && @input.to_s( type_f5.start, type_f5.stop ) ), $params, $numTemp)
       # <-- action
 
 
@@ -567,7 +583,7 @@ module Foma
       $params = 0
       # <-- action
 
-      # at line 160:117: ( estatutes_f )*
+      # at line 164:154: ( estatutes_f )*
       while true # decision 10
         alt_10 = 2
         look_10_0 = @input.peek( 1 )
@@ -578,8 +594,8 @@ module Foma
         end
         case alt_10
         when 1
-          # at line 160:118: estatutes_f
-          @state.following.push( TOKENS_FOLLOWING_estatutes_f_IN_method_753 )
+          # at line 164:155: estatutes_f
+          @state.following.push( TOKENS_FOLLOWING_estatutes_f_IN_method_770 )
           estatutes_f
           @state.following.pop
 
@@ -588,7 +604,7 @@ module Foma
         end
       end # loop for decision 10
 
-      match( R_END, TOKENS_FOLLOWING_R_END_IN_method_758 )
+      match( R_END, TOKENS_FOLLOWING_R_END_IN_method_775 )
 
       rescue ANTLR3::Error::RecognitionError => re
         report_error(re)
@@ -610,7 +626,7 @@ module Foma
     # parser rule constructor
     #
     # (in Foma.g)
-    # 163:1: constructor : ID parameters START ( attributes )* ( estatutes )* R_END ;
+    # 167:1: constructor : ID parameters START ( attributes )* ( estatutes )* R_END ;
     #
     def constructor
       # -> uncomment the next line to manually enable rule tracing
@@ -621,13 +637,18 @@ module Foma
 
 
       begin
-      # at line 164:6: ID parameters START ( attributes )* ( estatutes )* R_END
-      __ID6__ = match( ID, TOKENS_FOLLOWING_ID_IN_constructor_772 )
-      @state.following.push( TOKENS_FOLLOWING_parameters_IN_constructor_774 )
+      # at line 168:6: ID parameters START ( attributes )* ( estatutes )* R_END
+      __ID6__ = match( ID, TOKENS_FOLLOWING_ID_IN_constructor_789 )
+      @state.following.push( TOKENS_FOLLOWING_parameters_IN_constructor_791 )
       parameters
       @state.following.pop
-      match( START, TOKENS_FOLLOWING_START_IN_constructor_777 )
-      # at line 164:27: ( attributes )*
+      match( START, TOKENS_FOLLOWING_START_IN_constructor_794 )
+
+      # --> action
+      $numTemp = $cuads.num
+      # <-- action
+
+      # at line 168:53: ( attributes )*
       while true # decision 11
         alt_11 = 2
         look_11_0 = @input.peek( 1 )
@@ -638,8 +659,8 @@ module Foma
         end
         case alt_11
         when 1
-          # at line 164:28: attributes
-          @state.following.push( TOKENS_FOLLOWING_attributes_IN_constructor_780 )
+          # at line 168:54: attributes
+          @state.following.push( TOKENS_FOLLOWING_attributes_IN_constructor_799 )
           attributes
           @state.following.pop
 
@@ -648,7 +669,7 @@ module Foma
         end
       end # loop for decision 11
 
-      # at line 164:41: ( estatutes )*
+      # at line 168:67: ( estatutes )*
       while true # decision 12
         alt_12 = 2
         look_12_0 = @input.peek( 1 )
@@ -659,8 +680,8 @@ module Foma
         end
         case alt_12
         when 1
-          # at line 164:42: estatutes
-          @state.following.push( TOKENS_FOLLOWING_estatutes_IN_constructor_785 )
+          # at line 168:68: estatutes
+          @state.following.push( TOKENS_FOLLOWING_estatutes_IN_constructor_804 )
           estatutes
           @state.following.pop
 
@@ -671,7 +692,7 @@ module Foma
 
 
       # --> action
-      $program.add_func(__ID6__.text, "CONST", $params)
+      $program.add_func(__ID6__.text, "CONST", $params, $numTemp)
       # <-- action
 
 
@@ -679,7 +700,7 @@ module Foma
       $params = 0
       # <-- action
 
-      match( R_END, TOKENS_FOLLOWING_R_END_IN_constructor_792 )
+      match( R_END, TOKENS_FOLLOWING_R_END_IN_constructor_811 )
 
       rescue ANTLR3::Error::RecognitionError => re
         report_error(re)
@@ -701,7 +722,7 @@ module Foma
     # parser rule program
     #
     # (in Foma.g)
-    # 167:1: program : PROGRAM ID START ( attributes )* ( estatutes )* R_END ;
+    # 171:1: program : PROGRAM ID START ( attributes )* ( estatutes )* R_END ;
     #
     def program
       # -> uncomment the next line to manually enable rule tracing
@@ -712,11 +733,16 @@ module Foma
 
 
       begin
-      # at line 168:5: PROGRAM ID START ( attributes )* ( estatutes )* R_END
-      match( PROGRAM, TOKENS_FOLLOWING_PROGRAM_IN_program_805 )
-      __ID7__ = match( ID, TOKENS_FOLLOWING_ID_IN_program_807 )
-      match( START, TOKENS_FOLLOWING_START_IN_program_809 )
-      # at line 168:22: ( attributes )*
+      # at line 172:5: PROGRAM ID START ( attributes )* ( estatutes )* R_END
+      match( PROGRAM, TOKENS_FOLLOWING_PROGRAM_IN_program_824 )
+      __ID7__ = match( ID, TOKENS_FOLLOWING_ID_IN_program_826 )
+      match( START, TOKENS_FOLLOWING_START_IN_program_828 )
+
+      # --> action
+      $numTemp = $cuads.num
+      # <-- action
+
+      # at line 172:48: ( attributes )*
       while true # decision 13
         alt_13 = 2
         look_13_0 = @input.peek( 1 )
@@ -727,8 +753,8 @@ module Foma
         end
         case alt_13
         when 1
-          # at line 168:23: attributes
-          @state.following.push( TOKENS_FOLLOWING_attributes_IN_program_812 )
+          # at line 172:49: attributes
+          @state.following.push( TOKENS_FOLLOWING_attributes_IN_program_833 )
           attributes
           @state.following.pop
 
@@ -739,10 +765,10 @@ module Foma
 
 
       # --> action
-      $program.add_func(__ID7__.text, "void", 0)
+      $program.add_func(__ID7__.text, "void", 0, $numTemp)
       # <-- action
 
-      # at line 168:78: ( estatutes )*
+      # at line 172:115: ( estatutes )*
       while true # decision 14
         alt_14 = 2
         look_14_0 = @input.peek( 1 )
@@ -753,8 +779,8 @@ module Foma
         end
         case alt_14
         when 1
-          # at line 168:79: estatutes
-          @state.following.push( TOKENS_FOLLOWING_estatutes_IN_program_819 )
+          # at line 172:116: estatutes
+          @state.following.push( TOKENS_FOLLOWING_estatutes_IN_program_840 )
           estatutes
           @state.following.pop
 
@@ -763,7 +789,7 @@ module Foma
         end
       end # loop for decision 14
 
-      match( R_END, TOKENS_FOLLOWING_R_END_IN_program_823 )
+      match( R_END, TOKENS_FOLLOWING_R_END_IN_program_844 )
 
       rescue ANTLR3::Error::RecognitionError => re
         report_error(re)
@@ -785,7 +811,7 @@ module Foma
     # parser rule variables
     #
     # (in Foma.g)
-    # 171:1: variables : ( dec_var | dec_arr | dec_mat ) ;
+    # 175:1: variables : ( dec_var | dec_arr | dec_mat ) ;
     #
     def variables
       # -> uncomment the next line to manually enable rule tracing
@@ -793,8 +819,8 @@ module Foma
 
 
       begin
-      # at line 172:5: ( dec_var | dec_arr | dec_mat )
-      # at line 172:5: ( dec_var | dec_arr | dec_mat )
+      # at line 176:5: ( dec_var | dec_arr | dec_mat )
+      # at line 176:5: ( dec_var | dec_arr | dec_mat )
       alt_15 = 3
       look_15_0 = @input.peek( 1 )
 
@@ -847,20 +873,20 @@ module Foma
       end
       case alt_15
       when 1
-        # at line 172:6: dec_var
-        @state.following.push( TOKENS_FOLLOWING_dec_var_IN_variables_837 )
+        # at line 176:6: dec_var
+        @state.following.push( TOKENS_FOLLOWING_dec_var_IN_variables_858 )
         dec_var
         @state.following.pop
 
       when 2
-        # at line 172:16: dec_arr
-        @state.following.push( TOKENS_FOLLOWING_dec_arr_IN_variables_841 )
+        # at line 176:16: dec_arr
+        @state.following.push( TOKENS_FOLLOWING_dec_arr_IN_variables_862 )
         dec_arr
         @state.following.pop
 
       when 3
-        # at line 172:26: dec_mat
-        @state.following.push( TOKENS_FOLLOWING_dec_mat_IN_variables_845 )
+        # at line 176:26: dec_mat
+        @state.following.push( TOKENS_FOLLOWING_dec_mat_IN_variables_866 )
         dec_mat
         @state.following.pop
 
@@ -886,7 +912,7 @@ module Foma
     # parser rule dec_var
     #
     # (in Foma.g)
-    # 175:1: dec_var : type_c ID ( dec_var_2 )* SEMICOLON ;
+    # 179:1: dec_var : type_c ID ( dec_var_2 )* SEMICOLON ;
     #
     def dec_var
       # -> uncomment the next line to manually enable rule tracing
@@ -898,8 +924,8 @@ module Foma
 
 
       begin
-      # at line 176:5: type_c ID ( dec_var_2 )* SEMICOLON
-      @state.following.push( TOKENS_FOLLOWING_type_c_IN_dec_var_859 )
+      # at line 180:5: type_c ID ( dec_var_2 )* SEMICOLON
+      @state.following.push( TOKENS_FOLLOWING_type_c_IN_dec_var_880 )
       type_c8 = type_c
       @state.following.pop
 
@@ -907,13 +933,13 @@ module Foma
       $varType = ( type_c8 && @input.to_s( type_c8.start, type_c8.stop ) )
       # <-- action
 
-      __ID9__ = match( ID, TOKENS_FOLLOWING_ID_IN_dec_var_863 )
+      __ID9__ = match( ID, TOKENS_FOLLOWING_ID_IN_dec_var_884 )
 
       # --> action
       $program.add_var(__ID9__.text, $varType, $scope)
       # <-- action
 
-      # at line 176:92: ( dec_var_2 )*
+      # at line 180:92: ( dec_var_2 )*
       while true # decision 16
         alt_16 = 2
         look_16_0 = @input.peek( 1 )
@@ -924,8 +950,8 @@ module Foma
         end
         case alt_16
         when 1
-          # at line 176:92: dec_var_2
-          @state.following.push( TOKENS_FOLLOWING_dec_var_2_IN_dec_var_867 )
+          # at line 180:92: dec_var_2
+          @state.following.push( TOKENS_FOLLOWING_dec_var_2_IN_dec_var_888 )
           dec_var_2
           @state.following.pop
 
@@ -934,7 +960,7 @@ module Foma
         end
       end # loop for decision 16
 
-      match( SEMICOLON, TOKENS_FOLLOWING_SEMICOLON_IN_dec_var_870 )
+      match( SEMICOLON, TOKENS_FOLLOWING_SEMICOLON_IN_dec_var_891 )
 
       rescue ANTLR3::Error::RecognitionError => re
         report_error(re)
@@ -956,7 +982,7 @@ module Foma
     # parser rule dec_var_2
     #
     # (in Foma.g)
-    # 179:1: dec_var_2 : COMMA ID ;
+    # 183:1: dec_var_2 : COMMA ID ;
     #
     def dec_var_2
       # -> uncomment the next line to manually enable rule tracing
@@ -967,9 +993,9 @@ module Foma
 
 
       begin
-      # at line 180:5: COMMA ID
-      match( COMMA, TOKENS_FOLLOWING_COMMA_IN_dec_var_2_883 )
-      __ID10__ = match( ID, TOKENS_FOLLOWING_ID_IN_dec_var_2_885 )
+      # at line 184:5: COMMA ID
+      match( COMMA, TOKENS_FOLLOWING_COMMA_IN_dec_var_2_904 )
+      __ID10__ = match( ID, TOKENS_FOLLOWING_ID_IN_dec_var_2_906 )
 
       # --> action
       $program.add_var(__ID10__.text, $varType, $scope)
@@ -996,7 +1022,7 @@ module Foma
     # parser rule dec_arr
     #
     # (in Foma.g)
-    # 183:1: dec_arr : type_s ID LB C_INT RB SEMICOLON ;
+    # 187:1: dec_arr : type_s ID LB C_INT RB SEMICOLON ;
     #
     def dec_arr
       # -> uncomment the next line to manually enable rule tracing
@@ -1009,15 +1035,15 @@ module Foma
 
 
       begin
-      # at line 184:5: type_s ID LB C_INT RB SEMICOLON
-      @state.following.push( TOKENS_FOLLOWING_type_s_IN_dec_arr_900 )
+      # at line 188:5: type_s ID LB C_INT RB SEMICOLON
+      @state.following.push( TOKENS_FOLLOWING_type_s_IN_dec_arr_921 )
       type_s12 = type_s
       @state.following.pop
-      __ID11__ = match( ID, TOKENS_FOLLOWING_ID_IN_dec_arr_902 )
-      match( LB, TOKENS_FOLLOWING_LB_IN_dec_arr_904 )
-      __C_INT13__ = match( C_INT, TOKENS_FOLLOWING_C_INT_IN_dec_arr_906 )
-      match( RB, TOKENS_FOLLOWING_RB_IN_dec_arr_908 )
-      match( SEMICOLON, TOKENS_FOLLOWING_SEMICOLON_IN_dec_arr_910 )
+      __ID11__ = match( ID, TOKENS_FOLLOWING_ID_IN_dec_arr_923 )
+      match( LB, TOKENS_FOLLOWING_LB_IN_dec_arr_925 )
+      __C_INT13__ = match( C_INT, TOKENS_FOLLOWING_C_INT_IN_dec_arr_927 )
+      match( RB, TOKENS_FOLLOWING_RB_IN_dec_arr_929 )
+      match( SEMICOLON, TOKENS_FOLLOWING_SEMICOLON_IN_dec_arr_931 )
 
       # --> action
       $program.add_dim(__ID11__.text, ( type_s12 && @input.to_s( type_s12.start, type_s12.stop ) ), __C_INT13__.text, 0)
@@ -1044,7 +1070,7 @@ module Foma
     # parser rule dec_mat
     #
     # (in Foma.g)
-    # 187:1: dec_mat : type_s ID LB C_INT RB dim_2 SEMICOLON ;
+    # 191:1: dec_mat : type_s ID LB C_INT RB dim_2 SEMICOLON ;
     #
     def dec_mat
       # -> uncomment the next line to manually enable rule tracing
@@ -1057,18 +1083,18 @@ module Foma
 
 
       begin
-      # at line 188:5: type_s ID LB C_INT RB dim_2 SEMICOLON
-      @state.following.push( TOKENS_FOLLOWING_type_s_IN_dec_mat_925 )
+      # at line 192:5: type_s ID LB C_INT RB dim_2 SEMICOLON
+      @state.following.push( TOKENS_FOLLOWING_type_s_IN_dec_mat_946 )
       type_s15 = type_s
       @state.following.pop
-      __ID14__ = match( ID, TOKENS_FOLLOWING_ID_IN_dec_mat_927 )
-      match( LB, TOKENS_FOLLOWING_LB_IN_dec_mat_929 )
-      __C_INT16__ = match( C_INT, TOKENS_FOLLOWING_C_INT_IN_dec_mat_931 )
-      match( RB, TOKENS_FOLLOWING_RB_IN_dec_mat_933 )
-      @state.following.push( TOKENS_FOLLOWING_dim_2_IN_dec_mat_936 )
+      __ID14__ = match( ID, TOKENS_FOLLOWING_ID_IN_dec_mat_948 )
+      match( LB, TOKENS_FOLLOWING_LB_IN_dec_mat_950 )
+      __C_INT16__ = match( C_INT, TOKENS_FOLLOWING_C_INT_IN_dec_mat_952 )
+      match( RB, TOKENS_FOLLOWING_RB_IN_dec_mat_954 )
+      @state.following.push( TOKENS_FOLLOWING_dim_2_IN_dec_mat_957 )
       dim_2
       @state.following.pop
-      match( SEMICOLON, TOKENS_FOLLOWING_SEMICOLON_IN_dec_mat_938 )
+      match( SEMICOLON, TOKENS_FOLLOWING_SEMICOLON_IN_dec_mat_959 )
 
       # --> action
       $program.add_dim(__ID14__.text, ( type_s15 && @input.to_s( type_s15.start, type_s15.stop ) ), __C_INT16__.text, $dimTemp)
@@ -1095,7 +1121,7 @@ module Foma
     # parser rule dim_2
     #
     # (in Foma.g)
-    # 191:1: dim_2 : LB C_INT RB ;
+    # 195:1: dim_2 : LB C_INT RB ;
     #
     def dim_2
       # -> uncomment the next line to manually enable rule tracing
@@ -1106,10 +1132,10 @@ module Foma
 
 
       begin
-      # at line 192:5: LB C_INT RB
-      match( LB, TOKENS_FOLLOWING_LB_IN_dim_2_953 )
-      __C_INT17__ = match( C_INT, TOKENS_FOLLOWING_C_INT_IN_dim_2_955 )
-      match( RB, TOKENS_FOLLOWING_RB_IN_dim_2_957 )
+      # at line 196:5: LB C_INT RB
+      match( LB, TOKENS_FOLLOWING_LB_IN_dim_2_974 )
+      __C_INT17__ = match( C_INT, TOKENS_FOLLOWING_C_INT_IN_dim_2_976 )
+      match( RB, TOKENS_FOLLOWING_RB_IN_dim_2_978 )
 
       # --> action
       $dimTemp = __C_INT17__.text
@@ -1136,7 +1162,7 @@ module Foma
     # parser rule attributes
     #
     # (in Foma.g)
-    # 195:1: attributes : type_s ID ( attributes_2 )* SEMICOLON ;
+    # 199:1: attributes : type_s ID ( attributes_2 )* SEMICOLON ;
     #
     def attributes
       # -> uncomment the next line to manually enable rule tracing
@@ -1148,8 +1174,8 @@ module Foma
 
 
       begin
-      # at line 196:5: type_s ID ( attributes_2 )* SEMICOLON
-      @state.following.push( TOKENS_FOLLOWING_type_s_IN_attributes_972 )
+      # at line 200:5: type_s ID ( attributes_2 )* SEMICOLON
+      @state.following.push( TOKENS_FOLLOWING_type_s_IN_attributes_993 )
       type_s18 = type_s
       @state.following.pop
 
@@ -1157,13 +1183,13 @@ module Foma
       $varType = ( type_s18 && @input.to_s( type_s18.start, type_s18.stop ) )
       # <-- action
 
-      __ID19__ = match( ID, TOKENS_FOLLOWING_ID_IN_attributes_976 )
+      __ID19__ = match( ID, TOKENS_FOLLOWING_ID_IN_attributes_997 )
 
       # --> action
       $program.add_var(__ID19__.text, $varType, $scope)
       # <-- action
 
-      # at line 196:92: ( attributes_2 )*
+      # at line 200:92: ( attributes_2 )*
       while true # decision 17
         alt_17 = 2
         look_17_0 = @input.peek( 1 )
@@ -1174,8 +1200,8 @@ module Foma
         end
         case alt_17
         when 1
-          # at line 196:92: attributes_2
-          @state.following.push( TOKENS_FOLLOWING_attributes_2_IN_attributes_980 )
+          # at line 200:92: attributes_2
+          @state.following.push( TOKENS_FOLLOWING_attributes_2_IN_attributes_1001 )
           attributes_2
           @state.following.pop
 
@@ -1184,7 +1210,7 @@ module Foma
         end
       end # loop for decision 17
 
-      match( SEMICOLON, TOKENS_FOLLOWING_SEMICOLON_IN_attributes_984 )
+      match( SEMICOLON, TOKENS_FOLLOWING_SEMICOLON_IN_attributes_1005 )
 
       rescue ANTLR3::Error::RecognitionError => re
         report_error(re)
@@ -1206,7 +1232,7 @@ module Foma
     # parser rule attributes_2
     #
     # (in Foma.g)
-    # 199:1: attributes_2 : COMMA ID ;
+    # 203:1: attributes_2 : COMMA ID ;
     #
     def attributes_2
       # -> uncomment the next line to manually enable rule tracing
@@ -1217,9 +1243,9 @@ module Foma
 
 
       begin
-      # at line 200:5: COMMA ID
-      match( COMMA, TOKENS_FOLLOWING_COMMA_IN_attributes_2_997 )
-      __ID20__ = match( ID, TOKENS_FOLLOWING_ID_IN_attributes_2_999 )
+      # at line 204:5: COMMA ID
+      match( COMMA, TOKENS_FOLLOWING_COMMA_IN_attributes_2_1018 )
+      __ID20__ = match( ID, TOKENS_FOLLOWING_ID_IN_attributes_2_1020 )
 
       # --> action
       $program.add_var(__ID20__.text, $varType, $scope)
@@ -1246,7 +1272,7 @@ module Foma
     # parser rule parameters
     #
     # (in Foma.g)
-    # 203:1: parameters : LP ( type_s ID ( parameters_2 )* )? RP ;
+    # 207:1: parameters : LP ( type_s ID ( parameters_2 )* )? RP ;
     #
     def parameters
       # -> uncomment the next line to manually enable rule tracing
@@ -1258,9 +1284,9 @@ module Foma
 
 
       begin
-      # at line 204:5: LP ( type_s ID ( parameters_2 )* )? RP
-      match( LP, TOKENS_FOLLOWING_LP_IN_parameters_1014 )
-      # at line 204:8: ( type_s ID ( parameters_2 )* )?
+      # at line 208:5: LP ( type_s ID ( parameters_2 )* )? RP
+      match( LP, TOKENS_FOLLOWING_LP_IN_parameters_1035 )
+      # at line 208:8: ( type_s ID ( parameters_2 )* )?
       alt_19 = 2
       look_19_0 = @input.peek( 1 )
 
@@ -1269,11 +1295,11 @@ module Foma
       end
       case alt_19
       when 1
-        # at line 204:9: type_s ID ( parameters_2 )*
-        @state.following.push( TOKENS_FOLLOWING_type_s_IN_parameters_1017 )
+        # at line 208:9: type_s ID ( parameters_2 )*
+        @state.following.push( TOKENS_FOLLOWING_type_s_IN_parameters_1038 )
         type_s22 = type_s
         @state.following.pop
-        __ID21__ = match( ID, TOKENS_FOLLOWING_ID_IN_parameters_1019 )
+        __ID21__ = match( ID, TOKENS_FOLLOWING_ID_IN_parameters_1040 )
 
         # --> action
         $program.add_var(__ID21__.text, ( type_s22 && @input.to_s( type_s22.start, type_s22.stop ) ), $scope)
@@ -1284,7 +1310,7 @@ module Foma
         $params += 1
         # <-- action
 
-        # at line 204:86: ( parameters_2 )*
+        # at line 208:86: ( parameters_2 )*
         while true # decision 18
           alt_18 = 2
           look_18_0 = @input.peek( 1 )
@@ -1295,8 +1321,8 @@ module Foma
           end
           case alt_18
           when 1
-            # at line 204:88: parameters_2
-            @state.following.push( TOKENS_FOLLOWING_parameters_2_IN_parameters_1025 )
+            # at line 208:88: parameters_2
+            @state.following.push( TOKENS_FOLLOWING_parameters_2_IN_parameters_1046 )
             parameters_2
             @state.following.pop
 
@@ -1307,7 +1333,7 @@ module Foma
 
 
       end
-      match( RP, TOKENS_FOLLOWING_RP_IN_parameters_1032 )
+      match( RP, TOKENS_FOLLOWING_RP_IN_parameters_1053 )
 
       rescue ANTLR3::Error::RecognitionError => re
         report_error(re)
@@ -1329,7 +1355,7 @@ module Foma
     # parser rule parameters_2
     #
     # (in Foma.g)
-    # 207:1: parameters_2 : COMMA type_s ID ;
+    # 211:1: parameters_2 : COMMA type_s ID ;
     #
     def parameters_2
       # -> uncomment the next line to manually enable rule tracing
@@ -1341,12 +1367,12 @@ module Foma
 
 
       begin
-      # at line 208:6: COMMA type_s ID
-      match( COMMA, TOKENS_FOLLOWING_COMMA_IN_parameters_2_1046 )
-      @state.following.push( TOKENS_FOLLOWING_type_s_IN_parameters_2_1048 )
+      # at line 212:6: COMMA type_s ID
+      match( COMMA, TOKENS_FOLLOWING_COMMA_IN_parameters_2_1067 )
+      @state.following.push( TOKENS_FOLLOWING_type_s_IN_parameters_2_1069 )
       type_s24 = type_s
       @state.following.pop
-      __ID23__ = match( ID, TOKENS_FOLLOWING_ID_IN_parameters_2_1050 )
+      __ID23__ = match( ID, TOKENS_FOLLOWING_ID_IN_parameters_2_1071 )
 
       # --> action
       $program.add_var(__ID23__.text, ( type_s24 && @input.to_s( type_s24.start, type_s24.stop ) ), $scope)
@@ -1378,7 +1404,7 @@ module Foma
     # parser rule type_s
     #
     # (in Foma.g)
-    # 211:1: type_s : ( INTEGER | FLOAT | CHAR | BOOL ) ;
+    # 215:1: type_s : ( INTEGER | FLOAT | CHAR | BOOL ) ;
     #
     def type_s
       # -> uncomment the next line to manually enable rule tracing
@@ -1429,7 +1455,7 @@ module Foma
     # parser rule type_c
     #
     # (in Foma.g)
-    # 215:1: type_c : ( type_s | ID ) ;
+    # 219:1: type_c : ( type_s | ID ) ;
     #
     def type_c
       # -> uncomment the next line to manually enable rule tracing
@@ -1443,8 +1469,8 @@ module Foma
 
 
       begin
-      # at line 216:5: ( type_s | ID )
-      # at line 216:5: ( type_s | ID )
+      # at line 220:5: ( type_s | ID )
+      # at line 220:5: ( type_s | ID )
       alt_20 = 2
       look_20_0 = @input.peek( 1 )
 
@@ -1458,14 +1484,14 @@ module Foma
       end
       case alt_20
       when 1
-        # at line 216:6: type_s
-        @state.following.push( TOKENS_FOLLOWING_type_s_IN_type_c_1094 )
+        # at line 220:6: type_s
+        @state.following.push( TOKENS_FOLLOWING_type_s_IN_type_c_1115 )
         type_s
         @state.following.pop
 
       when 2
-        # at line 216:15: ID
-        match( ID, TOKENS_FOLLOWING_ID_IN_type_c_1098 )
+        # at line 220:15: ID
+        match( ID, TOKENS_FOLLOWING_ID_IN_type_c_1119 )
 
       end
 
@@ -1493,7 +1519,7 @@ module Foma
     # parser rule type_f
     #
     # (in Foma.g)
-    # 219:1: type_f : ( type_s | VOID ) ;
+    # 223:1: type_f : ( type_s | VOID ) ;
     #
     def type_f
       # -> uncomment the next line to manually enable rule tracing
@@ -1507,8 +1533,8 @@ module Foma
 
 
       begin
-      # at line 220:5: ( type_s | VOID )
-      # at line 220:5: ( type_s | VOID )
+      # at line 224:5: ( type_s | VOID )
+      # at line 224:5: ( type_s | VOID )
       alt_21 = 2
       look_21_0 = @input.peek( 1 )
 
@@ -1522,14 +1548,14 @@ module Foma
       end
       case alt_21
       when 1
-        # at line 220:6: type_s
-        @state.following.push( TOKENS_FOLLOWING_type_s_IN_type_f_1113 )
+        # at line 224:6: type_s
+        @state.following.push( TOKENS_FOLLOWING_type_s_IN_type_f_1134 )
         type_s
         @state.following.pop
 
       when 2
-        # at line 220:15: VOID
-        match( VOID, TOKENS_FOLLOWING_VOID_IN_type_f_1117 )
+        # at line 224:15: VOID
+        match( VOID, TOKENS_FOLLOWING_VOID_IN_type_f_1138 )
 
       end
 
@@ -1557,7 +1583,7 @@ module Foma
     # parser rule block
     #
     # (in Foma.g)
-    # 223:1: block : START ( estatutes )* R_END ;
+    # 227:1: block : START ( estatutes )* R_END ;
     #
     def block
       # -> uncomment the next line to manually enable rule tracing
@@ -1565,9 +1591,9 @@ module Foma
 
 
       begin
-      # at line 224:5: START ( estatutes )* R_END
-      match( START, TOKENS_FOLLOWING_START_IN_block_1131 )
-      # at line 224:11: ( estatutes )*
+      # at line 228:5: START ( estatutes )* R_END
+      match( START, TOKENS_FOLLOWING_START_IN_block_1152 )
+      # at line 228:11: ( estatutes )*
       while true # decision 22
         alt_22 = 2
         look_22_0 = @input.peek( 1 )
@@ -1578,8 +1604,8 @@ module Foma
         end
         case alt_22
         when 1
-          # at line 224:11: estatutes
-          @state.following.push( TOKENS_FOLLOWING_estatutes_IN_block_1133 )
+          # at line 228:11: estatutes
+          @state.following.push( TOKENS_FOLLOWING_estatutes_IN_block_1154 )
           estatutes
           @state.following.pop
 
@@ -1588,7 +1614,7 @@ module Foma
         end
       end # loop for decision 22
 
-      match( R_END, TOKENS_FOLLOWING_R_END_IN_block_1136 )
+      match( R_END, TOKENS_FOLLOWING_R_END_IN_block_1157 )
 
       rescue ANTLR3::Error::RecognitionError => re
         report_error(re)
@@ -1610,7 +1636,7 @@ module Foma
     # parser rule super_expression
     #
     # (in Foma.g)
-    # 227:1: super_expression : expression ( ( AND | OR ) expression )* ;
+    # 231:1: super_expression : expression ( ( AND | OR ) expression )* ;
     #
     def super_expression
       # -> uncomment the next line to manually enable rule tracing
@@ -1622,11 +1648,11 @@ module Foma
 
 
       begin
-      # at line 228:5: expression ( ( AND | OR ) expression )*
-      @state.following.push( TOKENS_FOLLOWING_expression_IN_super_expression_1149 )
+      # at line 232:5: expression ( ( AND | OR ) expression )*
+      @state.following.push( TOKENS_FOLLOWING_expression_IN_super_expression_1170 )
       expression
       @state.following.pop
-      # at line 228:16: ( ( AND | OR ) expression )*
+      # at line 232:16: ( ( AND | OR ) expression )*
       while true # decision 24
         alt_24 = 2
         look_24_0 = @input.peek( 1 )
@@ -1637,8 +1663,8 @@ module Foma
         end
         case alt_24
         when 1
-          # at line 228:17: ( AND | OR ) expression
-          # at line 228:17: ( AND | OR )
+          # at line 232:17: ( AND | OR ) expression
+          # at line 232:17: ( AND | OR )
           alt_23 = 2
           look_23_0 = @input.peek( 1 )
 
@@ -1652,8 +1678,8 @@ module Foma
           end
           case alt_23
           when 1
-            # at line 228:18: AND
-            __AND25__ = match( AND, TOKENS_FOLLOWING_AND_IN_super_expression_1153 )
+            # at line 232:18: AND
+            __AND25__ = match( AND, TOKENS_FOLLOWING_AND_IN_super_expression_1174 )
 
             # --> action
             $cuads.add_SE(__AND25__.text)
@@ -1661,8 +1687,8 @@ module Foma
 
 
           when 2
-            # at line 228:51: OR
-            __OR26__ = match( OR, TOKENS_FOLLOWING_OR_IN_super_expression_1158 )
+            # at line 232:51: OR
+            __OR26__ = match( OR, TOKENS_FOLLOWING_OR_IN_super_expression_1179 )
 
             # --> action
             $cuads.add_SE(__OR26__.text)
@@ -1670,7 +1696,7 @@ module Foma
 
 
           end
-          @state.following.push( TOKENS_FOLLOWING_expression_IN_super_expression_1163 )
+          @state.following.push( TOKENS_FOLLOWING_expression_IN_super_expression_1184 )
           expression
           @state.following.pop
 
@@ -1700,7 +1726,7 @@ module Foma
     # parser rule expression
     #
     # (in Foma.g)
-    # 231:1: expression : exp ( ( LT | LEQ | GT | GEQ | EQ | NE ) exp )* ;
+    # 235:1: expression : exp ( ( LT | LEQ | GT | GEQ | EQ | NE ) exp )* ;
     #
     def expression
       # -> uncomment the next line to manually enable rule tracing
@@ -1716,11 +1742,11 @@ module Foma
 
 
       begin
-      # at line 232:5: exp ( ( LT | LEQ | GT | GEQ | EQ | NE ) exp )*
-      @state.following.push( TOKENS_FOLLOWING_exp_IN_expression_1178 )
+      # at line 236:5: exp ( ( LT | LEQ | GT | GEQ | EQ | NE ) exp )*
+      @state.following.push( TOKENS_FOLLOWING_exp_IN_expression_1199 )
       exp
       @state.following.pop
-      # at line 232:9: ( ( LT | LEQ | GT | GEQ | EQ | NE ) exp )*
+      # at line 236:9: ( ( LT | LEQ | GT | GEQ | EQ | NE ) exp )*
       while true # decision 26
         alt_26 = 2
         look_26_0 = @input.peek( 1 )
@@ -1731,8 +1757,8 @@ module Foma
         end
         case alt_26
         when 1
-          # at line 232:10: ( LT | LEQ | GT | GEQ | EQ | NE ) exp
-          # at line 232:10: ( LT | LEQ | GT | GEQ | EQ | NE )
+          # at line 236:10: ( LT | LEQ | GT | GEQ | EQ | NE ) exp
+          # at line 236:10: ( LT | LEQ | GT | GEQ | EQ | NE )
           alt_25 = 6
           case look_25 = @input.peek( 1 )
           when LT then alt_25 = 1
@@ -1747,8 +1773,8 @@ module Foma
           end
           case alt_25
           when 1
-            # at line 232:11: LT
-            __LT27__ = match( LT, TOKENS_FOLLOWING_LT_IN_expression_1182 )
+            # at line 236:11: LT
+            __LT27__ = match( LT, TOKENS_FOLLOWING_LT_IN_expression_1203 )
 
             # --> action
             $cuads.add_E(__LT27__.text)
@@ -1756,8 +1782,8 @@ module Foma
 
 
           when 2
-            # at line 232:42: LEQ
-            __LEQ28__ = match( LEQ, TOKENS_FOLLOWING_LEQ_IN_expression_1188 )
+            # at line 236:42: LEQ
+            __LEQ28__ = match( LEQ, TOKENS_FOLLOWING_LEQ_IN_expression_1209 )
 
             # --> action
             $cuads.add_E(__LEQ28__.text)
@@ -1765,8 +1791,8 @@ module Foma
 
 
           when 3
-            # at line 232:75: GT
-            __GT29__ = match( GT, TOKENS_FOLLOWING_GT_IN_expression_1194 )
+            # at line 236:75: GT
+            __GT29__ = match( GT, TOKENS_FOLLOWING_GT_IN_expression_1215 )
 
             # --> action
             $cuads.add_E(__GT29__.text)
@@ -1774,8 +1800,8 @@ module Foma
 
 
           when 4
-            # at line 232:106: GEQ
-            __GEQ30__ = match( GEQ, TOKENS_FOLLOWING_GEQ_IN_expression_1200 )
+            # at line 236:106: GEQ
+            __GEQ30__ = match( GEQ, TOKENS_FOLLOWING_GEQ_IN_expression_1221 )
 
             # --> action
             $cuads.add_E(__GEQ30__.text)
@@ -1783,8 +1809,8 @@ module Foma
 
 
           when 5
-            # at line 232:139: EQ
-            __EQ31__ = match( EQ, TOKENS_FOLLOWING_EQ_IN_expression_1206 )
+            # at line 236:139: EQ
+            __EQ31__ = match( EQ, TOKENS_FOLLOWING_EQ_IN_expression_1227 )
 
             # --> action
             $cuads.add_E(__EQ31__.text)
@@ -1792,8 +1818,8 @@ module Foma
 
 
           when 6
-            # at line 232:170: NE
-            __NE32__ = match( NE, TOKENS_FOLLOWING_NE_IN_expression_1212 )
+            # at line 236:170: NE
+            __NE32__ = match( NE, TOKENS_FOLLOWING_NE_IN_expression_1233 )
 
             # --> action
             $cuads.add_E(__NE32__.text)
@@ -1801,7 +1827,7 @@ module Foma
 
 
           end
-          @state.following.push( TOKENS_FOLLOWING_exp_IN_expression_1218 )
+          @state.following.push( TOKENS_FOLLOWING_exp_IN_expression_1239 )
           exp
           @state.following.pop
 
@@ -1831,7 +1857,7 @@ module Foma
     # parser rule exp
     #
     # (in Foma.g)
-    # 235:1: exp : term ( ( ADD | SUB ) term )* ;
+    # 239:1: exp : term ( ( ADD | SUB ) term )* ;
     #
     def exp
       # -> uncomment the next line to manually enable rule tracing
@@ -1843,11 +1869,11 @@ module Foma
 
 
       begin
-      # at line 236:5: term ( ( ADD | SUB ) term )*
-      @state.following.push( TOKENS_FOLLOWING_term_IN_exp_1233 )
+      # at line 240:5: term ( ( ADD | SUB ) term )*
+      @state.following.push( TOKENS_FOLLOWING_term_IN_exp_1254 )
       term
       @state.following.pop
-      # at line 236:10: ( ( ADD | SUB ) term )*
+      # at line 240:10: ( ( ADD | SUB ) term )*
       while true # decision 28
         alt_28 = 2
         look_28_0 = @input.peek( 1 )
@@ -1858,8 +1884,8 @@ module Foma
         end
         case alt_28
         when 1
-          # at line 236:11: ( ADD | SUB ) term
-          # at line 236:11: ( ADD | SUB )
+          # at line 240:11: ( ADD | SUB ) term
+          # at line 240:11: ( ADD | SUB )
           alt_27 = 2
           look_27_0 = @input.peek( 1 )
 
@@ -1873,8 +1899,8 @@ module Foma
           end
           case alt_27
           when 1
-            # at line 236:12: ADD
-            __ADD33__ = match( ADD, TOKENS_FOLLOWING_ADD_IN_exp_1237 )
+            # at line 240:12: ADD
+            __ADD33__ = match( ADD, TOKENS_FOLLOWING_ADD_IN_exp_1258 )
 
             # --> action
             $cuads.add_EXP(__ADD33__.text)
@@ -1882,8 +1908,8 @@ module Foma
 
 
           when 2
-            # at line 236:47: SUB
-            __SUB34__ = match( SUB, TOKENS_FOLLOWING_SUB_IN_exp_1243 )
+            # at line 240:47: SUB
+            __SUB34__ = match( SUB, TOKENS_FOLLOWING_SUB_IN_exp_1264 )
 
             # --> action
             $cuads.add_EXP(__SUB34__.text)
@@ -1891,7 +1917,7 @@ module Foma
 
 
           end
-          @state.following.push( TOKENS_FOLLOWING_term_IN_exp_1248 )
+          @state.following.push( TOKENS_FOLLOWING_term_IN_exp_1269 )
           term
           @state.following.pop
 
@@ -1921,7 +1947,7 @@ module Foma
     # parser rule term
     #
     # (in Foma.g)
-    # 239:1: term : factor ( ( MULT | DIV | MOD ) factor )* ;
+    # 243:1: term : factor ( ( MULT | DIV | MOD ) factor )* ;
     #
     def term
       # -> uncomment the next line to manually enable rule tracing
@@ -1934,11 +1960,11 @@ module Foma
 
 
       begin
-      # at line 240:5: factor ( ( MULT | DIV | MOD ) factor )*
-      @state.following.push( TOKENS_FOLLOWING_factor_IN_term_1263 )
+      # at line 244:5: factor ( ( MULT | DIV | MOD ) factor )*
+      @state.following.push( TOKENS_FOLLOWING_factor_IN_term_1284 )
       factor
       @state.following.pop
-      # at line 240:12: ( ( MULT | DIV | MOD ) factor )*
+      # at line 244:12: ( ( MULT | DIV | MOD ) factor )*
       while true # decision 30
         alt_30 = 2
         look_30_0 = @input.peek( 1 )
@@ -1949,8 +1975,8 @@ module Foma
         end
         case alt_30
         when 1
-          # at line 240:14: ( MULT | DIV | MOD ) factor
-          # at line 240:14: ( MULT | DIV | MOD )
+          # at line 244:14: ( MULT | DIV | MOD ) factor
+          # at line 244:14: ( MULT | DIV | MOD )
           alt_29 = 3
           case look_29 = @input.peek( 1 )
           when MULT then alt_29 = 1
@@ -1962,8 +1988,8 @@ module Foma
           end
           case alt_29
           when 1
-            # at line 240:16: MULT
-            __MULT35__ = match( MULT, TOKENS_FOLLOWING_MULT_IN_term_1269 )
+            # at line 244:16: MULT
+            __MULT35__ = match( MULT, TOKENS_FOLLOWING_MULT_IN_term_1290 )
 
             # --> action
             $cuads.add_T(__MULT35__.text)
@@ -1971,8 +1997,8 @@ module Foma
 
 
           when 2
-            # at line 240:51: DIV
-            __DIV36__ = match( DIV, TOKENS_FOLLOWING_DIV_IN_term_1275 )
+            # at line 244:51: DIV
+            __DIV36__ = match( DIV, TOKENS_FOLLOWING_DIV_IN_term_1296 )
 
             # --> action
             $cuads.add_T(__DIV36__.text)
@@ -1980,8 +2006,8 @@ module Foma
 
 
           when 3
-            # at line 240:83: MOD
-            __MOD37__ = match( MOD, TOKENS_FOLLOWING_MOD_IN_term_1280 )
+            # at line 244:83: MOD
+            __MOD37__ = match( MOD, TOKENS_FOLLOWING_MOD_IN_term_1301 )
 
             # --> action
             $cuads.add_T(__MOD37__.text)
@@ -1989,7 +2015,7 @@ module Foma
 
 
           end
-          @state.following.push( TOKENS_FOLLOWING_factor_IN_term_1286 )
+          @state.following.push( TOKENS_FOLLOWING_factor_IN_term_1307 )
           factor
           @state.following.pop
 
@@ -2019,7 +2045,7 @@ module Foma
     # parser rule factor
     #
     # (in Foma.g)
-    # 243:1: factor : ( LP super_expression RP | var_cte | func_call | method_call ) ;
+    # 247:1: factor : ( LP super_expression RP | var_cte | func_call | method_call ) ;
     #
     def factor
       # -> uncomment the next line to manually enable rule tracing
@@ -2030,8 +2056,8 @@ module Foma
 
 
       begin
-      # at line 244:5: ( LP super_expression RP | var_cte | func_call | method_call )
-      # at line 244:5: ( LP super_expression RP | var_cte | func_call | method_call )
+      # at line 248:5: ( LP super_expression RP | var_cte | func_call | method_call )
+      # at line 248:5: ( LP super_expression RP | var_cte | func_call | method_call )
       alt_31 = 4
       case look_31 = @input.peek( 1 )
       when LP then alt_31 = 1
@@ -2050,16 +2076,16 @@ module Foma
       end
       case alt_31
       when 1
-        # at line 244:6: LP super_expression RP
-        match( LP, TOKENS_FOLLOWING_LP_IN_factor_1303 )
-        @state.following.push( TOKENS_FOLLOWING_super_expression_IN_factor_1305 )
+        # at line 248:6: LP super_expression RP
+        match( LP, TOKENS_FOLLOWING_LP_IN_factor_1324 )
+        @state.following.push( TOKENS_FOLLOWING_super_expression_IN_factor_1326 )
         super_expression
         @state.following.pop
-        match( RP, TOKENS_FOLLOWING_RP_IN_factor_1307 )
+        match( RP, TOKENS_FOLLOWING_RP_IN_factor_1328 )
 
       when 2
-        # at line 244:31: var_cte
-        @state.following.push( TOKENS_FOLLOWING_var_cte_IN_factor_1311 )
+        # at line 248:31: var_cte
+        @state.following.push( TOKENS_FOLLOWING_var_cte_IN_factor_1332 )
         var_cte38 = var_cte
         @state.following.pop
 
@@ -2069,14 +2095,14 @@ module Foma
 
 
       when 3
-        # at line 244:80: func_call
-        @state.following.push( TOKENS_FOLLOWING_func_call_IN_factor_1318 )
+        # at line 248:80: func_call
+        @state.following.push( TOKENS_FOLLOWING_func_call_IN_factor_1339 )
         func_call
         @state.following.pop
 
       when 4
-        # at line 244:92: method_call
-        @state.following.push( TOKENS_FOLLOWING_method_call_IN_factor_1322 )
+        # at line 248:92: method_call
+        @state.following.push( TOKENS_FOLLOWING_method_call_IN_factor_1343 )
         method_call
         @state.following.pop
 
@@ -2102,7 +2128,7 @@ module Foma
     # parser rule var_cte
     #
     # (in Foma.g)
-    # 247:1: var_cte : ( var_access | C_INT | C_FLOAT | C_CHAR | C_BOOL ) ;
+    # 251:1: var_cte : ( var_access | C_INT | C_FLOAT | C_CHAR | C_BOOL ) ;
     #
     def var_cte
       # -> uncomment the next line to manually enable rule tracing
@@ -2116,8 +2142,8 @@ module Foma
 
 
       begin
-      # at line 248:5: ( var_access | C_INT | C_FLOAT | C_CHAR | C_BOOL )
-      # at line 248:5: ( var_access | C_INT | C_FLOAT | C_CHAR | C_BOOL )
+      # at line 252:5: ( var_access | C_INT | C_FLOAT | C_CHAR | C_BOOL )
+      # at line 252:5: ( var_access | C_INT | C_FLOAT | C_CHAR | C_BOOL )
       alt_32 = 5
       case look_32 = @input.peek( 1 )
       when ID then alt_32 = 1
@@ -2131,26 +2157,26 @@ module Foma
       end
       case alt_32
       when 1
-        # at line 248:6: var_access
-        @state.following.push( TOKENS_FOLLOWING_var_access_IN_var_cte_1337 )
+        # at line 252:6: var_access
+        @state.following.push( TOKENS_FOLLOWING_var_access_IN_var_cte_1358 )
         var_access
         @state.following.pop
 
       when 2
-        # at line 248:19: C_INT
-        match( C_INT, TOKENS_FOLLOWING_C_INT_IN_var_cte_1341 )
+        # at line 252:19: C_INT
+        match( C_INT, TOKENS_FOLLOWING_C_INT_IN_var_cte_1362 )
 
       when 3
-        # at line 248:27: C_FLOAT
-        match( C_FLOAT, TOKENS_FOLLOWING_C_FLOAT_IN_var_cte_1345 )
+        # at line 252:27: C_FLOAT
+        match( C_FLOAT, TOKENS_FOLLOWING_C_FLOAT_IN_var_cte_1366 )
 
       when 4
-        # at line 248:37: C_CHAR
-        match( C_CHAR, TOKENS_FOLLOWING_C_CHAR_IN_var_cte_1349 )
+        # at line 252:37: C_CHAR
+        match( C_CHAR, TOKENS_FOLLOWING_C_CHAR_IN_var_cte_1370 )
 
       when 5
-        # at line 248:46: C_BOOL
-        match( C_BOOL, TOKENS_FOLLOWING_C_BOOL_IN_var_cte_1353 )
+        # at line 252:46: C_BOOL
+        match( C_BOOL, TOKENS_FOLLOWING_C_BOOL_IN_var_cte_1374 )
 
       end
 
@@ -2178,7 +2204,7 @@ module Foma
     # parser rule var_access
     #
     # (in Foma.g)
-    # 251:1: var_access : ID ( LB exp RB ( LB exp RB )? )? ;
+    # 255:1: var_access : ID ( LB exp RB ( LB exp RB )? )? ;
     #
     def var_access
       # -> uncomment the next line to manually enable rule tracing
@@ -2192,9 +2218,9 @@ module Foma
 
 
       begin
-      # at line 252:5: ID ( LB exp RB ( LB exp RB )? )?
-      match( ID, TOKENS_FOLLOWING_ID_IN_var_access_1367 )
-      # at line 252:8: ( LB exp RB ( LB exp RB )? )?
+      # at line 256:5: ID ( LB exp RB ( LB exp RB )? )?
+      match( ID, TOKENS_FOLLOWING_ID_IN_var_access_1388 )
+      # at line 256:8: ( LB exp RB ( LB exp RB )? )?
       alt_34 = 2
       look_34_0 = @input.peek( 1 )
 
@@ -2203,14 +2229,14 @@ module Foma
       end
       case alt_34
       when 1
-        # at line 252:9: LB exp RB ( LB exp RB )?
-        match( LB, TOKENS_FOLLOWING_LB_IN_var_access_1370 )
+        # at line 256:9: LB exp RB ( LB exp RB )?
+        match( LB, TOKENS_FOLLOWING_LB_IN_var_access_1391 )
 
         # --> action
         $cuads.add_falseBottom
         # <-- action
 
-        @state.following.push( TOKENS_FOLLOWING_exp_IN_var_access_1375 )
+        @state.following.push( TOKENS_FOLLOWING_exp_IN_var_access_1396 )
         exp
         @state.following.pop
 
@@ -2223,8 +2249,8 @@ module Foma
         $cuads.drop_opp
         # <-- action
 
-        match( RB, TOKENS_FOLLOWING_RB_IN_var_access_1380 )
-        # at line 252:90: ( LB exp RB )?
+        match( RB, TOKENS_FOLLOWING_RB_IN_var_access_1401 )
+        # at line 256:90: ( LB exp RB )?
         alt_33 = 2
         look_33_0 = @input.peek( 1 )
 
@@ -2233,14 +2259,14 @@ module Foma
         end
         case alt_33
         when 1
-          # at line 252:91: LB exp RB
-          match( LB, TOKENS_FOLLOWING_LB_IN_var_access_1383 )
+          # at line 256:91: LB exp RB
+          match( LB, TOKENS_FOLLOWING_LB_IN_var_access_1404 )
 
           # --> action
           $cuads.add_falseBottom
           # <-- action
 
-          @state.following.push( TOKENS_FOLLOWING_exp_IN_var_access_1388 )
+          @state.following.push( TOKENS_FOLLOWING_exp_IN_var_access_1409 )
           exp
           @state.following.pop
 
@@ -2253,7 +2279,7 @@ module Foma
           $cuads.drop_opp
           # <-- action
 
-          match( RB, TOKENS_FOLLOWING_RB_IN_var_access_1394 )
+          match( RB, TOKENS_FOLLOWING_RB_IN_var_access_1415 )
 
         end
 
@@ -2283,7 +2309,7 @@ module Foma
     # parser rule estatutes
     #
     # (in Foma.g)
-    # 255:1: estatutes : ( assign SEMICOLON | condition | while_loop | for_loop | print | input | func_call SEMICOLON | method_call SEMICOLON ) ;
+    # 259:1: estatutes : ( assign SEMICOLON | condition | while_loop | for_loop | print | input | func_call SEMICOLON | method_call SEMICOLON ) ;
     #
     def estatutes
       # -> uncomment the next line to manually enable rule tracing
@@ -2291,8 +2317,8 @@ module Foma
 
 
       begin
-      # at line 256:5: ( assign SEMICOLON | condition | while_loop | for_loop | print | input | func_call SEMICOLON | method_call SEMICOLON )
-      # at line 256:5: ( assign SEMICOLON | condition | while_loop | for_loop | print | input | func_call SEMICOLON | method_call SEMICOLON )
+      # at line 260:5: ( assign SEMICOLON | condition | while_loop | for_loop | print | input | func_call SEMICOLON | method_call SEMICOLON )
+      # at line 260:5: ( assign SEMICOLON | condition | while_loop | for_loop | print | input | func_call SEMICOLON | method_call SEMICOLON )
       alt_35 = 8
       case look_35 = @input.peek( 1 )
       when ID then case look_35 = @input.peek( 2 )
@@ -2314,55 +2340,55 @@ module Foma
       end
       case alt_35
       when 1
-        # at line 256:6: assign SEMICOLON
-        @state.following.push( TOKENS_FOLLOWING_assign_IN_estatutes_1412 )
+        # at line 260:6: assign SEMICOLON
+        @state.following.push( TOKENS_FOLLOWING_assign_IN_estatutes_1433 )
         assign
         @state.following.pop
-        match( SEMICOLON, TOKENS_FOLLOWING_SEMICOLON_IN_estatutes_1414 )
+        match( SEMICOLON, TOKENS_FOLLOWING_SEMICOLON_IN_estatutes_1435 )
 
       when 2
-        # at line 256:25: condition
-        @state.following.push( TOKENS_FOLLOWING_condition_IN_estatutes_1418 )
+        # at line 260:25: condition
+        @state.following.push( TOKENS_FOLLOWING_condition_IN_estatutes_1439 )
         condition
         @state.following.pop
 
       when 3
-        # at line 256:37: while_loop
-        @state.following.push( TOKENS_FOLLOWING_while_loop_IN_estatutes_1422 )
+        # at line 260:37: while_loop
+        @state.following.push( TOKENS_FOLLOWING_while_loop_IN_estatutes_1443 )
         while_loop
         @state.following.pop
 
       when 4
-        # at line 256:50: for_loop
-        @state.following.push( TOKENS_FOLLOWING_for_loop_IN_estatutes_1426 )
+        # at line 260:50: for_loop
+        @state.following.push( TOKENS_FOLLOWING_for_loop_IN_estatutes_1447 )
         for_loop
         @state.following.pop
 
       when 5
-        # at line 256:61: print
-        @state.following.push( TOKENS_FOLLOWING_print_IN_estatutes_1430 )
+        # at line 260:61: print
+        @state.following.push( TOKENS_FOLLOWING_print_IN_estatutes_1451 )
         print
         @state.following.pop
 
       when 6
-        # at line 256:69: input
-        @state.following.push( TOKENS_FOLLOWING_input_IN_estatutes_1434 )
+        # at line 260:69: input
+        @state.following.push( TOKENS_FOLLOWING_input_IN_estatutes_1455 )
         input
         @state.following.pop
 
       when 7
-        # at line 256:77: func_call SEMICOLON
-        @state.following.push( TOKENS_FOLLOWING_func_call_IN_estatutes_1438 )
+        # at line 260:77: func_call SEMICOLON
+        @state.following.push( TOKENS_FOLLOWING_func_call_IN_estatutes_1459 )
         func_call
         @state.following.pop
-        match( SEMICOLON, TOKENS_FOLLOWING_SEMICOLON_IN_estatutes_1440 )
+        match( SEMICOLON, TOKENS_FOLLOWING_SEMICOLON_IN_estatutes_1461 )
 
       when 8
-        # at line 256:99: method_call SEMICOLON
-        @state.following.push( TOKENS_FOLLOWING_method_call_IN_estatutes_1444 )
+        # at line 260:99: method_call SEMICOLON
+        @state.following.push( TOKENS_FOLLOWING_method_call_IN_estatutes_1465 )
         method_call
         @state.following.pop
-        match( SEMICOLON, TOKENS_FOLLOWING_SEMICOLON_IN_estatutes_1446 )
+        match( SEMICOLON, TOKENS_FOLLOWING_SEMICOLON_IN_estatutes_1467 )
 
       end
 
@@ -2386,7 +2412,7 @@ module Foma
     # parser rule estatutes_f
     #
     # (in Foma.g)
-    # 259:1: estatutes_f : ( estatutes | r_return ) ;
+    # 263:1: estatutes_f : ( estatutes | r_return ) ;
     #
     def estatutes_f
       # -> uncomment the next line to manually enable rule tracing
@@ -2394,8 +2420,8 @@ module Foma
 
 
       begin
-      # at line 260:5: ( estatutes | r_return )
-      # at line 260:5: ( estatutes | r_return )
+      # at line 264:5: ( estatutes | r_return )
+      # at line 264:5: ( estatutes | r_return )
       alt_36 = 2
       look_36_0 = @input.peek( 1 )
 
@@ -2409,14 +2435,14 @@ module Foma
       end
       case alt_36
       when 1
-        # at line 260:6: estatutes
-        @state.following.push( TOKENS_FOLLOWING_estatutes_IN_estatutes_f_1462 )
+        # at line 264:6: estatutes
+        @state.following.push( TOKENS_FOLLOWING_estatutes_IN_estatutes_f_1483 )
         estatutes
         @state.following.pop
 
       when 2
-        # at line 260:18: r_return
-        @state.following.push( TOKENS_FOLLOWING_r_return_IN_estatutes_f_1466 )
+        # at line 264:18: r_return
+        @state.following.push( TOKENS_FOLLOWING_r_return_IN_estatutes_f_1487 )
         r_return
         @state.following.pop
 
@@ -2442,7 +2468,7 @@ module Foma
     # parser rule assign
     #
     # (in Foma.g)
-    # 263:1: assign : var_access ASSIGN super_expression ;
+    # 267:1: assign : var_access ASSIGN super_expression ;
     #
     def assign
       # -> uncomment the next line to manually enable rule tracing
@@ -2453,8 +2479,8 @@ module Foma
 
 
       begin
-      # at line 264:5: var_access ASSIGN super_expression
-      @state.following.push( TOKENS_FOLLOWING_var_access_IN_assign_1480 )
+      # at line 268:5: var_access ASSIGN super_expression
+      @state.following.push( TOKENS_FOLLOWING_var_access_IN_assign_1501 )
       var_access39 = var_access
       @state.following.pop
 
@@ -2462,13 +2488,13 @@ module Foma
       $cuads.add_operando(( var_access39 && @input.to_s( var_access39.start, var_access39.stop ) ))
       # <-- action
 
-      match( ASSIGN, TOKENS_FOLLOWING_ASSIGN_IN_assign_1484 )
+      match( ASSIGN, TOKENS_FOLLOWING_ASSIGN_IN_assign_1505 )
 
       # --> action
       $cuads.add_assign()
       # <-- action
 
-      @state.following.push( TOKENS_FOLLOWING_super_expression_IN_assign_1488 )
+      @state.following.push( TOKENS_FOLLOWING_super_expression_IN_assign_1509 )
       super_expression
       @state.following.pop
 
@@ -2497,7 +2523,7 @@ module Foma
     # parser rule condition
     #
     # (in Foma.g)
-    # 267:1: condition : IF LP super_expression RP block ( ELSE block )? ;
+    # 271:1: condition : IF LP super_expression RP block ( ELSE block )? ;
     #
     def condition
       # -> uncomment the next line to manually enable rule tracing
@@ -2505,15 +2531,15 @@ module Foma
 
 
       begin
-      # at line 268:5: IF LP super_expression RP block ( ELSE block )?
-      match( IF, TOKENS_FOLLOWING_IF_IN_condition_1503 )
-      match( LP, TOKENS_FOLLOWING_LP_IN_condition_1505 )
+      # at line 272:5: IF LP super_expression RP block ( ELSE block )?
+      match( IF, TOKENS_FOLLOWING_IF_IN_condition_1524 )
+      match( LP, TOKENS_FOLLOWING_LP_IN_condition_1526 )
 
       # --> action
       $cuads.add_falseBottom
       # <-- action
 
-      @state.following.push( TOKENS_FOLLOWING_super_expression_IN_condition_1509 )
+      @state.following.push( TOKENS_FOLLOWING_super_expression_IN_condition_1530 )
       super_expression
       @state.following.pop
 
@@ -2526,11 +2552,11 @@ module Foma
       $cuads.goto_falso
       # <-- action
 
-      match( RP, TOKENS_FOLLOWING_RP_IN_condition_1514 )
-      @state.following.push( TOKENS_FOLLOWING_block_IN_condition_1516 )
+      match( RP, TOKENS_FOLLOWING_RP_IN_condition_1535 )
+      @state.following.push( TOKENS_FOLLOWING_block_IN_condition_1537 )
       block
       @state.following.pop
-      # at line 268:109: ( ELSE block )?
+      # at line 272:109: ( ELSE block )?
       alt_37 = 2
       look_37_0 = @input.peek( 1 )
 
@@ -2539,14 +2565,14 @@ module Foma
       end
       case alt_37
       when 1
-        # at line 268:110: ELSE block
-        match( ELSE, TOKENS_FOLLOWING_ELSE_IN_condition_1519 )
+        # at line 272:110: ELSE block
+        match( ELSE, TOKENS_FOLLOWING_ELSE_IN_condition_1540 )
 
         # --> action
         $cuads.goto_else
         # <-- action
 
-        @state.following.push( TOKENS_FOLLOWING_block_IN_condition_1524 )
+        @state.following.push( TOKENS_FOLLOWING_block_IN_condition_1545 )
         block
         @state.following.pop
 
@@ -2577,7 +2603,7 @@ module Foma
     # parser rule while_loop
     #
     # (in Foma.g)
-    # 271:1: while_loop : WHILE LP super_expression RP block ;
+    # 275:1: while_loop : WHILE LP super_expression RP block ;
     #
     def while_loop
       # -> uncomment the next line to manually enable rule tracing
@@ -2585,9 +2611,9 @@ module Foma
 
 
       begin
-      # at line 272:5: WHILE LP super_expression RP block
-      match( WHILE, TOKENS_FOLLOWING_WHILE_IN_while_loop_1541 )
-      match( LP, TOKENS_FOLLOWING_LP_IN_while_loop_1543 )
+      # at line 276:5: WHILE LP super_expression RP block
+      match( WHILE, TOKENS_FOLLOWING_WHILE_IN_while_loop_1562 )
+      match( LP, TOKENS_FOLLOWING_LP_IN_while_loop_1564 )
 
       # --> action
       $cuads.save_spot
@@ -2598,7 +2624,7 @@ module Foma
       $cuads.add_falseBottom
       # <-- action
 
-      @state.following.push( TOKENS_FOLLOWING_super_expression_IN_while_loop_1548 )
+      @state.following.push( TOKENS_FOLLOWING_super_expression_IN_while_loop_1569 )
       super_expression
       @state.following.pop
 
@@ -2611,8 +2637,8 @@ module Foma
       $cuads.goto_falso
       # <-- action
 
-      match( RP, TOKENS_FOLLOWING_RP_IN_while_loop_1553 )
-      @state.following.push( TOKENS_FOLLOWING_block_IN_while_loop_1555 )
+      match( RP, TOKENS_FOLLOWING_RP_IN_while_loop_1574 )
+      @state.following.push( TOKENS_FOLLOWING_block_IN_while_loop_1576 )
       block
       @state.following.pop
 
@@ -2641,7 +2667,7 @@ module Foma
     # parser rule for_loop
     #
     # (in Foma.g)
-    # 275:1: for_loop : FOR LP ( assign )? SEMICOLON super_expression SEMICOLON ( assign )? RP block ;
+    # 279:1: for_loop : FOR LP ( assign )? SEMICOLON super_expression SEMICOLON ( assign )? RP block ;
     #
     def for_loop
       # -> uncomment the next line to manually enable rule tracing
@@ -2649,10 +2675,10 @@ module Foma
 
 
       begin
-      # at line 276:5: FOR LP ( assign )? SEMICOLON super_expression SEMICOLON ( assign )? RP block
-      match( FOR, TOKENS_FOLLOWING_FOR_IN_for_loop_1570 )
-      match( LP, TOKENS_FOLLOWING_LP_IN_for_loop_1572 )
-      # at line 276:12: ( assign )?
+      # at line 280:5: FOR LP ( assign )? SEMICOLON super_expression SEMICOLON ( assign )? RP block
+      match( FOR, TOKENS_FOLLOWING_FOR_IN_for_loop_1591 )
+      match( LP, TOKENS_FOLLOWING_LP_IN_for_loop_1593 )
+      # at line 280:12: ( assign )?
       alt_38 = 2
       look_38_0 = @input.peek( 1 )
 
@@ -2661,13 +2687,13 @@ module Foma
       end
       case alt_38
       when 1
-        # at line 276:12: assign
-        @state.following.push( TOKENS_FOLLOWING_assign_IN_for_loop_1574 )
+        # at line 280:12: assign
+        @state.following.push( TOKENS_FOLLOWING_assign_IN_for_loop_1595 )
         assign
         @state.following.pop
 
       end
-      match( SEMICOLON, TOKENS_FOLLOWING_SEMICOLON_IN_for_loop_1577 )
+      match( SEMICOLON, TOKENS_FOLLOWING_SEMICOLON_IN_for_loop_1598 )
 
       # --> action
       $cuads.save_spot
@@ -2678,7 +2704,7 @@ module Foma
       $cuads.add_falseBottom
       # <-- action
 
-      @state.following.push( TOKENS_FOLLOWING_super_expression_IN_for_loop_1582 )
+      @state.following.push( TOKENS_FOLLOWING_super_expression_IN_for_loop_1603 )
       super_expression
       @state.following.pop
 
@@ -2691,13 +2717,13 @@ module Foma
       $cuads.goto_falso
       # <-- action
 
-      match( SEMICOLON, TOKENS_FOLLOWING_SEMICOLON_IN_for_loop_1588 )
+      match( SEMICOLON, TOKENS_FOLLOWING_SEMICOLON_IN_for_loop_1609 )
 
       # --> action
       $cuads.add_swap
       # <-- action
 
-      # at line 276:167: ( assign )?
+      # at line 280:167: ( assign )?
       alt_39 = 2
       look_39_0 = @input.peek( 1 )
 
@@ -2706,8 +2732,8 @@ module Foma
       end
       case alt_39
       when 1
-        # at line 276:167: assign
-        @state.following.push( TOKENS_FOLLOWING_assign_IN_for_loop_1591 )
+        # at line 280:167: assign
+        @state.following.push( TOKENS_FOLLOWING_assign_IN_for_loop_1612 )
         assign
         @state.following.pop
 
@@ -2717,8 +2743,8 @@ module Foma
       $cuads.add_swap
       # <-- action
 
-      match( RP, TOKENS_FOLLOWING_RP_IN_for_loop_1596 )
-      @state.following.push( TOKENS_FOLLOWING_block_IN_for_loop_1598 )
+      match( RP, TOKENS_FOLLOWING_RP_IN_for_loop_1617 )
+      @state.following.push( TOKENS_FOLLOWING_block_IN_for_loop_1619 )
       block
       @state.following.pop
 
@@ -2752,7 +2778,7 @@ module Foma
     # parser rule print
     #
     # (in Foma.g)
-    # 279:1: print : PRINT LP ( super_expression ( COMMA super_expression )* ) RP SEMICOLON ;
+    # 283:1: print : PRINT LP ( super_expression ( print_2 )* ) RP SEMICOLON ;
     #
     def print
       # -> uncomment the next line to manually enable rule tracing
@@ -2760,15 +2786,25 @@ module Foma
 
 
       begin
-      # at line 280:5: PRINT LP ( super_expression ( COMMA super_expression )* ) RP SEMICOLON
-      match( PRINT, TOKENS_FOLLOWING_PRINT_IN_print_1614 )
-      match( LP, TOKENS_FOLLOWING_LP_IN_print_1616 )
-      # at line 280:14: ( super_expression ( COMMA super_expression )* )
-      # at line 280:15: super_expression ( COMMA super_expression )*
-      @state.following.push( TOKENS_FOLLOWING_super_expression_IN_print_1619 )
+      # at line 284:5: PRINT LP ( super_expression ( print_2 )* ) RP SEMICOLON
+      match( PRINT, TOKENS_FOLLOWING_PRINT_IN_print_1635 )
+      match( LP, TOKENS_FOLLOWING_LP_IN_print_1637 )
+      # at line 284:14: ( super_expression ( print_2 )* )
+      # at line 284:15: super_expression ( print_2 )*
+      @state.following.push( TOKENS_FOLLOWING_super_expression_IN_print_1640 )
       super_expression
       @state.following.pop
-      # at line 280:32: ( COMMA super_expression )*
+
+      # --> action
+      $cuads.emptyStack
+      # <-- action
+
+
+      # --> action
+      $cuads.do_print
+      # <-- action
+
+      # at line 284:70: ( print_2 )*
       while true # decision 40
         alt_40 = 2
         look_40_0 = @input.peek( 1 )
@@ -2779,10 +2815,9 @@ module Foma
         end
         case alt_40
         when 1
-          # at line 280:34: COMMA super_expression
-          match( COMMA, TOKENS_FOLLOWING_COMMA_IN_print_1623 )
-          @state.following.push( TOKENS_FOLLOWING_super_expression_IN_print_1625 )
-          super_expression
+          # at line 284:70: print_2
+          @state.following.push( TOKENS_FOLLOWING_print_2_IN_print_1644 )
+          print_2
           @state.following.pop
 
         else
@@ -2791,8 +2826,8 @@ module Foma
       end # loop for decision 40
 
 
-      match( RP, TOKENS_FOLLOWING_RP_IN_print_1631 )
-      match( SEMICOLON, TOKENS_FOLLOWING_SEMICOLON_IN_print_1633 )
+      match( RP, TOKENS_FOLLOWING_RP_IN_print_1649 )
+      match( SEMICOLON, TOKENS_FOLLOWING_SEMICOLON_IN_print_1651 )
 
       rescue ANTLR3::Error::RecognitionError => re
         report_error(re)
@@ -2811,23 +2846,32 @@ module Foma
 
 
     #
-    # parser rule input
+    # parser rule print_2
     #
     # (in Foma.g)
-    # 283:1: input : INPUT LP ID RP SEMICOLON ;
+    # 287:1: print_2 : COMMA super_expression ;
     #
-    def input
+    def print_2
       # -> uncomment the next line to manually enable rule tracing
       # trace_in( __method__, 36 )
 
 
       begin
-      # at line 284:5: INPUT LP ID RP SEMICOLON
-      match( INPUT, TOKENS_FOLLOWING_INPUT_IN_input_1646 )
-      match( LP, TOKENS_FOLLOWING_LP_IN_input_1648 )
-      match( ID, TOKENS_FOLLOWING_ID_IN_input_1650 )
-      match( RP, TOKENS_FOLLOWING_RP_IN_input_1652 )
-      match( SEMICOLON, TOKENS_FOLLOWING_SEMICOLON_IN_input_1654 )
+      # at line 288:6: COMMA super_expression
+      match( COMMA, TOKENS_FOLLOWING_COMMA_IN_print_2_1665 )
+      @state.following.push( TOKENS_FOLLOWING_super_expression_IN_print_2_1667 )
+      super_expression
+      @state.following.pop
+
+      # --> action
+      $cuads.emptyStack
+      # <-- action
+
+
+      # --> action
+      $cuads.do_print
+      # <-- action
+
 
       rescue ANTLR3::Error::RecognitionError => re
         report_error(re)
@@ -2846,54 +2890,36 @@ module Foma
 
 
     #
-    # parser rule func_call
+    # parser rule input
     #
     # (in Foma.g)
-    # 287:1: func_call : ID LP ( ID ( COMMA ID )* )? RP ;
+    # 291:1: input : INPUT LP ID RP SEMICOLON ;
     #
-    def func_call
+    def input
       # -> uncomment the next line to manually enable rule tracing
       # trace_in( __method__, 37 )
 
 
+      __ID40__ = nil
+
+
       begin
-      # at line 288:5: ID LP ( ID ( COMMA ID )* )? RP
-      match( ID, TOKENS_FOLLOWING_ID_IN_func_call_1667 )
-      match( LP, TOKENS_FOLLOWING_LP_IN_func_call_1669 )
-      # at line 288:11: ( ID ( COMMA ID )* )?
-      alt_42 = 2
-      look_42_0 = @input.peek( 1 )
+      # at line 292:5: INPUT LP ID RP SEMICOLON
+      match( INPUT, TOKENS_FOLLOWING_INPUT_IN_input_1683 )
+      match( LP, TOKENS_FOLLOWING_LP_IN_input_1685 )
+      __ID40__ = match( ID, TOKENS_FOLLOWING_ID_IN_input_1687 )
 
-      if ( look_42_0 == ID )
-        alt_42 = 1
-      end
-      case alt_42
-      when 1
-        # at line 288:12: ID ( COMMA ID )*
-        match( ID, TOKENS_FOLLOWING_ID_IN_func_call_1672 )
-        # at line 288:15: ( COMMA ID )*
-        while true # decision 41
-          alt_41 = 2
-          look_41_0 = @input.peek( 1 )
-
-          if ( look_41_0 == COMMA )
-            alt_41 = 1
-
-          end
-          case alt_41
-          when 1
-            # at line 288:16: COMMA ID
-            match( COMMA, TOKENS_FOLLOWING_COMMA_IN_func_call_1675 )
-            match( ID, TOKENS_FOLLOWING_ID_IN_func_call_1677 )
-
-          else
-            break # out of loop for decision 41
-          end
-        end # loop for decision 41
+      # --> action
+      $cuads.add_operando(__ID40__.text)
+      # <-- action
 
 
-      end
-      match( RP, TOKENS_FOLLOWING_RP_IN_func_call_1683 )
+      # --> action
+      $cuads.do_input
+      # <-- action
+
+      match( RP, TOKENS_FOLLOWING_RP_IN_input_1693 )
+      match( SEMICOLON, TOKENS_FOLLOWING_SEMICOLON_IN_input_1695 )
 
       rescue ANTLR3::Error::RecognitionError => re
         report_error(re)
@@ -2912,55 +2938,54 @@ module Foma
 
 
     #
-    # parser rule method_call
+    # parser rule func_call
     #
     # (in Foma.g)
-    # 291:1: method_call : ID POINT LP ( ID ( COMMA ID )* )? RP ;
+    # 295:1: func_call : ID LP ( ID ( COMMA ID )* )? RP ;
     #
-    def method_call
+    def func_call
       # -> uncomment the next line to manually enable rule tracing
       # trace_in( __method__, 38 )
 
 
       begin
-      # at line 292:5: ID POINT LP ( ID ( COMMA ID )* )? RP
-      match( ID, TOKENS_FOLLOWING_ID_IN_method_call_1696 )
-      match( POINT, TOKENS_FOLLOWING_POINT_IN_method_call_1698 )
-      match( LP, TOKENS_FOLLOWING_LP_IN_method_call_1700 )
-      # at line 292:17: ( ID ( COMMA ID )* )?
-      alt_44 = 2
-      look_44_0 = @input.peek( 1 )
+      # at line 296:5: ID LP ( ID ( COMMA ID )* )? RP
+      match( ID, TOKENS_FOLLOWING_ID_IN_func_call_1708 )
+      match( LP, TOKENS_FOLLOWING_LP_IN_func_call_1710 )
+      # at line 296:11: ( ID ( COMMA ID )* )?
+      alt_42 = 2
+      look_42_0 = @input.peek( 1 )
 
-      if ( look_44_0 == ID )
-        alt_44 = 1
+      if ( look_42_0 == ID )
+        alt_42 = 1
       end
-      case alt_44
+      case alt_42
       when 1
-        # at line 292:18: ID ( COMMA ID )*
-        match( ID, TOKENS_FOLLOWING_ID_IN_method_call_1703 )
-        # at line 292:21: ( COMMA ID )*
-        while true # decision 43
-          alt_43 = 2
-          look_43_0 = @input.peek( 1 )
+        # at line 296:12: ID ( COMMA ID )*
+        match( ID, TOKENS_FOLLOWING_ID_IN_func_call_1713 )
+        # at line 296:15: ( COMMA ID )*
+        while true # decision 41
+          alt_41 = 2
+          look_41_0 = @input.peek( 1 )
 
-          if ( look_43_0 == COMMA )
-            alt_43 = 1
+          if ( look_41_0 == COMMA )
+            alt_41 = 1
 
           end
-          case alt_43
+          case alt_41
           when 1
-            # at line 292:22: COMMA ID
-            match( COMMA, TOKENS_FOLLOWING_COMMA_IN_method_call_1706 )
-            match( ID, TOKENS_FOLLOWING_ID_IN_method_call_1708 )
+            # at line 296:16: COMMA ID
+            match( COMMA, TOKENS_FOLLOWING_COMMA_IN_func_call_1716 )
+            match( ID, TOKENS_FOLLOWING_ID_IN_func_call_1718 )
 
           else
-            break # out of loop for decision 43
+            break # out of loop for decision 41
           end
-        end # loop for decision 43
+        end # loop for decision 41
 
 
       end
-      match( RP, TOKENS_FOLLOWING_RP_IN_method_call_1714 )
+      match( RP, TOKENS_FOLLOWING_RP_IN_func_call_1724 )
 
       rescue ANTLR3::Error::RecognitionError => re
         report_error(re)
@@ -2979,23 +3004,55 @@ module Foma
 
 
     #
-    # parser rule r_return
+    # parser rule method_call
     #
     # (in Foma.g)
-    # 295:1: r_return : RETURN super_expression SEMICOLON ;
+    # 299:1: method_call : ID POINT LP ( ID ( COMMA ID )* )? RP ;
     #
-    def r_return
+    def method_call
       # -> uncomment the next line to manually enable rule tracing
       # trace_in( __method__, 39 )
 
 
       begin
-      # at line 296:4: RETURN super_expression SEMICOLON
-      match( RETURN, TOKENS_FOLLOWING_RETURN_IN_r_return_1726 )
-      @state.following.push( TOKENS_FOLLOWING_super_expression_IN_r_return_1728 )
-      super_expression
-      @state.following.pop
-      match( SEMICOLON, TOKENS_FOLLOWING_SEMICOLON_IN_r_return_1730 )
+      # at line 300:5: ID POINT LP ( ID ( COMMA ID )* )? RP
+      match( ID, TOKENS_FOLLOWING_ID_IN_method_call_1737 )
+      match( POINT, TOKENS_FOLLOWING_POINT_IN_method_call_1739 )
+      match( LP, TOKENS_FOLLOWING_LP_IN_method_call_1741 )
+      # at line 300:17: ( ID ( COMMA ID )* )?
+      alt_44 = 2
+      look_44_0 = @input.peek( 1 )
+
+      if ( look_44_0 == ID )
+        alt_44 = 1
+      end
+      case alt_44
+      when 1
+        # at line 300:18: ID ( COMMA ID )*
+        match( ID, TOKENS_FOLLOWING_ID_IN_method_call_1744 )
+        # at line 300:21: ( COMMA ID )*
+        while true # decision 43
+          alt_43 = 2
+          look_43_0 = @input.peek( 1 )
+
+          if ( look_43_0 == COMMA )
+            alt_43 = 1
+
+          end
+          case alt_43
+          when 1
+            # at line 300:22: COMMA ID
+            match( COMMA, TOKENS_FOLLOWING_COMMA_IN_method_call_1747 )
+            match( ID, TOKENS_FOLLOWING_ID_IN_method_call_1749 )
+
+          else
+            break # out of loop for decision 43
+          end
+        end # loop for decision 43
+
+
+      end
+      match( RP, TOKENS_FOLLOWING_RP_IN_method_call_1755 )
 
       rescue ANTLR3::Error::RecognitionError => re
         report_error(re)
@@ -3013,197 +3070,233 @@ module Foma
 
 
 
+    #
+    # parser rule r_return
+    #
+    # (in Foma.g)
+    # 303:1: r_return : RETURN super_expression SEMICOLON ;
+    #
+    def r_return
+      # -> uncomment the next line to manually enable rule tracing
+      # trace_in( __method__, 40 )
+
+
+      begin
+      # at line 304:4: RETURN super_expression SEMICOLON
+      match( RETURN, TOKENS_FOLLOWING_RETURN_IN_r_return_1767 )
+      @state.following.push( TOKENS_FOLLOWING_super_expression_IN_r_return_1769 )
+      super_expression
+      @state.following.pop
+      match( SEMICOLON, TOKENS_FOLLOWING_SEMICOLON_IN_r_return_1771 )
+
+      rescue ANTLR3::Error::RecognitionError => re
+        report_error(re)
+        recover(re)
+
+      ensure
+        # -> uncomment the next line to manually enable rule tracing
+        # trace_out( __method__, 40 )
+
+
+      end
+
+      return 
+    end
+
+
+
     TOKENS_FOLLOWING_r_class_IN_commence_585 = Set[ 7, 8, 9, 19, 21, 24, 28, 43 ]
-    TOKENS_FOLLOWING_variables_IN_commence_594 = Set[ 7, 8, 19, 21, 24, 28, 43 ]
-    TOKENS_FOLLOWING_function_IN_commence_601 = Set[ 21, 43 ]
-    TOKENS_FOLLOWING_program_IN_commence_605 = Set[ 1 ]
-    TOKENS_FOLLOWING_CLASS_IN_r_class_628 = Set[ 24 ]
-    TOKENS_FOLLOWING_ID_IN_r_class_630 = Set[ 26, 50 ]
-    TOKENS_FOLLOWING_inherits_IN_r_class_635 = Set[ 50 ]
-    TOKENS_FOLLOWING_START_IN_r_class_638 = Set[ 7, 8, 19, 24, 28 ]
-    TOKENS_FOLLOWING_attributes_IN_r_class_643 = Set[ 7, 8, 19, 24, 28 ]
-    TOKENS_FOLLOWING_constructor_IN_r_class_651 = Set[ 7, 8, 19, 28, 48, 52 ]
-    TOKENS_FOLLOWING_method_IN_r_class_656 = Set[ 7, 8, 19, 28, 48, 52 ]
-    TOKENS_FOLLOWING_R_END_IN_r_class_664 = Set[ 1 ]
-    TOKENS_FOLLOWING_INHER_IN_inherits_678 = Set[ 24 ]
-    TOKENS_FOLLOWING_ID_IN_inherits_680 = Set[ 1 ]
-    TOKENS_FOLLOWING_FUNCTION_IN_function_695 = Set[ 7, 8, 19, 28, 52 ]
-    TOKENS_FOLLOWING_type_f_IN_function_698 = Set[ 24 ]
-    TOKENS_FOLLOWING_ID_IN_function_700 = Set[ 32 ]
-    TOKENS_FOLLOWING_parameters_IN_function_705 = Set[ 50 ]
-    TOKENS_FOLLOWING_START_IN_function_707 = Set[ 7, 8, 19, 20, 24, 25, 27, 28, 42, 46, 48, 53 ]
-    TOKENS_FOLLOWING_attributes_IN_function_710 = Set[ 7, 8, 19, 20, 24, 25, 27, 28, 42, 46, 48, 53 ]
-    TOKENS_FOLLOWING_estatutes_f_IN_function_717 = Set[ 20, 24, 25, 27, 42, 46, 48, 53 ]
-    TOKENS_FOLLOWING_R_END_IN_function_721 = Set[ 1 ]
-    TOKENS_FOLLOWING_type_f_IN_method_734 = Set[ 24 ]
-    TOKENS_FOLLOWING_ID_IN_method_736 = Set[ 32 ]
-    TOKENS_FOLLOWING_parameters_IN_method_738 = Set[ 50 ]
-    TOKENS_FOLLOWING_START_IN_method_740 = Set[ 7, 8, 19, 20, 24, 25, 27, 28, 42, 46, 48, 53 ]
-    TOKENS_FOLLOWING_attributes_IN_method_743 = Set[ 7, 8, 19, 20, 24, 25, 27, 28, 42, 46, 48, 53 ]
-    TOKENS_FOLLOWING_estatutes_f_IN_method_753 = Set[ 20, 24, 25, 27, 42, 46, 48, 53 ]
-    TOKENS_FOLLOWING_R_END_IN_method_758 = Set[ 1 ]
-    TOKENS_FOLLOWING_ID_IN_constructor_772 = Set[ 32 ]
-    TOKENS_FOLLOWING_parameters_IN_constructor_774 = Set[ 50 ]
-    TOKENS_FOLLOWING_START_IN_constructor_777 = Set[ 7, 8, 19, 20, 24, 25, 27, 28, 42, 48, 53 ]
-    TOKENS_FOLLOWING_attributes_IN_constructor_780 = Set[ 7, 8, 19, 20, 24, 25, 27, 28, 42, 48, 53 ]
-    TOKENS_FOLLOWING_estatutes_IN_constructor_785 = Set[ 20, 24, 25, 27, 42, 48, 53 ]
-    TOKENS_FOLLOWING_R_END_IN_constructor_792 = Set[ 1 ]
-    TOKENS_FOLLOWING_PROGRAM_IN_program_805 = Set[ 24 ]
-    TOKENS_FOLLOWING_ID_IN_program_807 = Set[ 50 ]
-    TOKENS_FOLLOWING_START_IN_program_809 = Set[ 7, 8, 19, 20, 24, 25, 27, 28, 42, 48, 53 ]
-    TOKENS_FOLLOWING_attributes_IN_program_812 = Set[ 7, 8, 19, 20, 24, 25, 27, 28, 42, 48, 53 ]
-    TOKENS_FOLLOWING_estatutes_IN_program_819 = Set[ 20, 24, 25, 27, 42, 48, 53 ]
-    TOKENS_FOLLOWING_R_END_IN_program_823 = Set[ 1 ]
-    TOKENS_FOLLOWING_dec_var_IN_variables_837 = Set[ 1 ]
-    TOKENS_FOLLOWING_dec_arr_IN_variables_841 = Set[ 1 ]
-    TOKENS_FOLLOWING_dec_mat_IN_variables_845 = Set[ 1 ]
-    TOKENS_FOLLOWING_type_c_IN_dec_var_859 = Set[ 24 ]
-    TOKENS_FOLLOWING_ID_IN_dec_var_863 = Set[ 11, 49 ]
-    TOKENS_FOLLOWING_dec_var_2_IN_dec_var_867 = Set[ 11, 49 ]
-    TOKENS_FOLLOWING_SEMICOLON_IN_dec_var_870 = Set[ 1 ]
-    TOKENS_FOLLOWING_COMMA_IN_dec_var_2_883 = Set[ 24 ]
-    TOKENS_FOLLOWING_ID_IN_dec_var_2_885 = Set[ 1 ]
-    TOKENS_FOLLOWING_type_s_IN_dec_arr_900 = Set[ 24 ]
-    TOKENS_FOLLOWING_ID_IN_dec_arr_902 = Set[ 29 ]
-    TOKENS_FOLLOWING_LB_IN_dec_arr_904 = Set[ 15 ]
-    TOKENS_FOLLOWING_C_INT_IN_dec_arr_906 = Set[ 44 ]
-    TOKENS_FOLLOWING_RB_IN_dec_arr_908 = Set[ 49 ]
-    TOKENS_FOLLOWING_SEMICOLON_IN_dec_arr_910 = Set[ 1 ]
-    TOKENS_FOLLOWING_type_s_IN_dec_mat_925 = Set[ 24 ]
-    TOKENS_FOLLOWING_ID_IN_dec_mat_927 = Set[ 29 ]
-    TOKENS_FOLLOWING_LB_IN_dec_mat_929 = Set[ 15 ]
-    TOKENS_FOLLOWING_C_INT_IN_dec_mat_931 = Set[ 44 ]
-    TOKENS_FOLLOWING_RB_IN_dec_mat_933 = Set[ 29 ]
-    TOKENS_FOLLOWING_dim_2_IN_dec_mat_936 = Set[ 49 ]
-    TOKENS_FOLLOWING_SEMICOLON_IN_dec_mat_938 = Set[ 1 ]
-    TOKENS_FOLLOWING_LB_IN_dim_2_953 = Set[ 15 ]
-    TOKENS_FOLLOWING_C_INT_IN_dim_2_955 = Set[ 44 ]
-    TOKENS_FOLLOWING_RB_IN_dim_2_957 = Set[ 1 ]
-    TOKENS_FOLLOWING_type_s_IN_attributes_972 = Set[ 24 ]
-    TOKENS_FOLLOWING_ID_IN_attributes_976 = Set[ 11, 49 ]
-    TOKENS_FOLLOWING_attributes_2_IN_attributes_980 = Set[ 11, 49 ]
-    TOKENS_FOLLOWING_SEMICOLON_IN_attributes_984 = Set[ 1 ]
-    TOKENS_FOLLOWING_COMMA_IN_attributes_2_997 = Set[ 24 ]
-    TOKENS_FOLLOWING_ID_IN_attributes_2_999 = Set[ 1 ]
-    TOKENS_FOLLOWING_LP_IN_parameters_1014 = Set[ 7, 8, 19, 28, 47 ]
-    TOKENS_FOLLOWING_type_s_IN_parameters_1017 = Set[ 24 ]
-    TOKENS_FOLLOWING_ID_IN_parameters_1019 = Set[ 11, 47 ]
-    TOKENS_FOLLOWING_parameters_2_IN_parameters_1025 = Set[ 11, 47 ]
-    TOKENS_FOLLOWING_RP_IN_parameters_1032 = Set[ 1 ]
-    TOKENS_FOLLOWING_COMMA_IN_parameters_2_1046 = Set[ 7, 8, 19, 28 ]
-    TOKENS_FOLLOWING_type_s_IN_parameters_2_1048 = Set[ 24 ]
-    TOKENS_FOLLOWING_ID_IN_parameters_2_1050 = Set[ 1 ]
-    TOKENS_FOLLOWING_type_s_IN_type_c_1094 = Set[ 1 ]
-    TOKENS_FOLLOWING_ID_IN_type_c_1098 = Set[ 1 ]
-    TOKENS_FOLLOWING_type_s_IN_type_f_1113 = Set[ 1 ]
-    TOKENS_FOLLOWING_VOID_IN_type_f_1117 = Set[ 1 ]
-    TOKENS_FOLLOWING_START_IN_block_1131 = Set[ 20, 24, 25, 27, 42, 48, 53 ]
-    TOKENS_FOLLOWING_estatutes_IN_block_1133 = Set[ 20, 24, 25, 27, 42, 48, 53 ]
-    TOKENS_FOLLOWING_R_END_IN_block_1136 = Set[ 1 ]
-    TOKENS_FOLLOWING_expression_IN_super_expression_1149 = Set[ 1, 5, 40 ]
-    TOKENS_FOLLOWING_AND_IN_super_expression_1153 = Set[ 12, 13, 14, 15, 24, 32 ]
-    TOKENS_FOLLOWING_OR_IN_super_expression_1158 = Set[ 12, 13, 14, 15, 24, 32 ]
-    TOKENS_FOLLOWING_expression_IN_super_expression_1163 = Set[ 1, 5, 40 ]
-    TOKENS_FOLLOWING_exp_IN_expression_1178 = Set[ 1, 18, 22, 23, 31, 33, 36 ]
-    TOKENS_FOLLOWING_LT_IN_expression_1182 = Set[ 12, 13, 14, 15, 24, 32 ]
-    TOKENS_FOLLOWING_LEQ_IN_expression_1188 = Set[ 12, 13, 14, 15, 24, 32 ]
-    TOKENS_FOLLOWING_GT_IN_expression_1194 = Set[ 12, 13, 14, 15, 24, 32 ]
-    TOKENS_FOLLOWING_GEQ_IN_expression_1200 = Set[ 12, 13, 14, 15, 24, 32 ]
-    TOKENS_FOLLOWING_EQ_IN_expression_1206 = Set[ 12, 13, 14, 15, 24, 32 ]
-    TOKENS_FOLLOWING_NE_IN_expression_1212 = Set[ 12, 13, 14, 15, 24, 32 ]
-    TOKENS_FOLLOWING_exp_IN_expression_1218 = Set[ 1, 18, 22, 23, 31, 33, 36 ]
-    TOKENS_FOLLOWING_term_IN_exp_1233 = Set[ 1, 4, 51 ]
-    TOKENS_FOLLOWING_ADD_IN_exp_1237 = Set[ 12, 13, 14, 15, 24, 32 ]
-    TOKENS_FOLLOWING_SUB_IN_exp_1243 = Set[ 12, 13, 14, 15, 24, 32 ]
-    TOKENS_FOLLOWING_term_IN_exp_1248 = Set[ 1, 4, 51 ]
-    TOKENS_FOLLOWING_factor_IN_term_1263 = Set[ 1, 16, 34, 35 ]
-    TOKENS_FOLLOWING_MULT_IN_term_1269 = Set[ 12, 13, 14, 15, 24, 32 ]
-    TOKENS_FOLLOWING_DIV_IN_term_1275 = Set[ 12, 13, 14, 15, 24, 32 ]
-    TOKENS_FOLLOWING_MOD_IN_term_1280 = Set[ 12, 13, 14, 15, 24, 32 ]
-    TOKENS_FOLLOWING_factor_IN_term_1286 = Set[ 1, 16, 34, 35 ]
-    TOKENS_FOLLOWING_LP_IN_factor_1303 = Set[ 12, 13, 14, 15, 24, 32 ]
-    TOKENS_FOLLOWING_super_expression_IN_factor_1305 = Set[ 47 ]
-    TOKENS_FOLLOWING_RP_IN_factor_1307 = Set[ 1 ]
-    TOKENS_FOLLOWING_var_cte_IN_factor_1311 = Set[ 1 ]
-    TOKENS_FOLLOWING_func_call_IN_factor_1318 = Set[ 1 ]
-    TOKENS_FOLLOWING_method_call_IN_factor_1322 = Set[ 1 ]
-    TOKENS_FOLLOWING_var_access_IN_var_cte_1337 = Set[ 1 ]
-    TOKENS_FOLLOWING_C_INT_IN_var_cte_1341 = Set[ 1 ]
-    TOKENS_FOLLOWING_C_FLOAT_IN_var_cte_1345 = Set[ 1 ]
-    TOKENS_FOLLOWING_C_CHAR_IN_var_cte_1349 = Set[ 1 ]
-    TOKENS_FOLLOWING_C_BOOL_IN_var_cte_1353 = Set[ 1 ]
-    TOKENS_FOLLOWING_ID_IN_var_access_1367 = Set[ 1, 29 ]
-    TOKENS_FOLLOWING_LB_IN_var_access_1370 = Set[ 12, 13, 14, 15, 24, 32 ]
-    TOKENS_FOLLOWING_exp_IN_var_access_1375 = Set[ 44 ]
-    TOKENS_FOLLOWING_RB_IN_var_access_1380 = Set[ 1, 29 ]
-    TOKENS_FOLLOWING_LB_IN_var_access_1383 = Set[ 12, 13, 14, 15, 24, 32 ]
-    TOKENS_FOLLOWING_exp_IN_var_access_1388 = Set[ 44 ]
-    TOKENS_FOLLOWING_RB_IN_var_access_1394 = Set[ 1 ]
-    TOKENS_FOLLOWING_assign_IN_estatutes_1412 = Set[ 49 ]
-    TOKENS_FOLLOWING_SEMICOLON_IN_estatutes_1414 = Set[ 1 ]
-    TOKENS_FOLLOWING_condition_IN_estatutes_1418 = Set[ 1 ]
-    TOKENS_FOLLOWING_while_loop_IN_estatutes_1422 = Set[ 1 ]
-    TOKENS_FOLLOWING_for_loop_IN_estatutes_1426 = Set[ 1 ]
-    TOKENS_FOLLOWING_print_IN_estatutes_1430 = Set[ 1 ]
-    TOKENS_FOLLOWING_input_IN_estatutes_1434 = Set[ 1 ]
-    TOKENS_FOLLOWING_func_call_IN_estatutes_1438 = Set[ 49 ]
-    TOKENS_FOLLOWING_SEMICOLON_IN_estatutes_1440 = Set[ 1 ]
-    TOKENS_FOLLOWING_method_call_IN_estatutes_1444 = Set[ 49 ]
-    TOKENS_FOLLOWING_SEMICOLON_IN_estatutes_1446 = Set[ 1 ]
-    TOKENS_FOLLOWING_estatutes_IN_estatutes_f_1462 = Set[ 1 ]
-    TOKENS_FOLLOWING_r_return_IN_estatutes_f_1466 = Set[ 1 ]
-    TOKENS_FOLLOWING_var_access_IN_assign_1480 = Set[ 6 ]
-    TOKENS_FOLLOWING_ASSIGN_IN_assign_1484 = Set[ 12, 13, 14, 15, 24, 32 ]
-    TOKENS_FOLLOWING_super_expression_IN_assign_1488 = Set[ 1 ]
-    TOKENS_FOLLOWING_IF_IN_condition_1503 = Set[ 32 ]
-    TOKENS_FOLLOWING_LP_IN_condition_1505 = Set[ 12, 13, 14, 15, 24, 32 ]
-    TOKENS_FOLLOWING_super_expression_IN_condition_1509 = Set[ 47 ]
-    TOKENS_FOLLOWING_RP_IN_condition_1514 = Set[ 50 ]
-    TOKENS_FOLLOWING_block_IN_condition_1516 = Set[ 1, 17 ]
-    TOKENS_FOLLOWING_ELSE_IN_condition_1519 = Set[ 50 ]
-    TOKENS_FOLLOWING_block_IN_condition_1524 = Set[ 1 ]
-    TOKENS_FOLLOWING_WHILE_IN_while_loop_1541 = Set[ 32 ]
-    TOKENS_FOLLOWING_LP_IN_while_loop_1543 = Set[ 12, 13, 14, 15, 24, 32 ]
-    TOKENS_FOLLOWING_super_expression_IN_while_loop_1548 = Set[ 47 ]
-    TOKENS_FOLLOWING_RP_IN_while_loop_1553 = Set[ 50 ]
-    TOKENS_FOLLOWING_block_IN_while_loop_1555 = Set[ 1 ]
-    TOKENS_FOLLOWING_FOR_IN_for_loop_1570 = Set[ 32 ]
-    TOKENS_FOLLOWING_LP_IN_for_loop_1572 = Set[ 24, 49 ]
-    TOKENS_FOLLOWING_assign_IN_for_loop_1574 = Set[ 49 ]
-    TOKENS_FOLLOWING_SEMICOLON_IN_for_loop_1577 = Set[ 12, 13, 14, 15, 24, 32 ]
-    TOKENS_FOLLOWING_super_expression_IN_for_loop_1582 = Set[ 49 ]
-    TOKENS_FOLLOWING_SEMICOLON_IN_for_loop_1588 = Set[ 24, 47 ]
-    TOKENS_FOLLOWING_assign_IN_for_loop_1591 = Set[ 47 ]
-    TOKENS_FOLLOWING_RP_IN_for_loop_1596 = Set[ 50 ]
-    TOKENS_FOLLOWING_block_IN_for_loop_1598 = Set[ 1 ]
-    TOKENS_FOLLOWING_PRINT_IN_print_1614 = Set[ 32 ]
-    TOKENS_FOLLOWING_LP_IN_print_1616 = Set[ 12, 13, 14, 15, 24, 32 ]
-    TOKENS_FOLLOWING_super_expression_IN_print_1619 = Set[ 11, 47 ]
-    TOKENS_FOLLOWING_COMMA_IN_print_1623 = Set[ 12, 13, 14, 15, 24, 32 ]
-    TOKENS_FOLLOWING_super_expression_IN_print_1625 = Set[ 11, 47 ]
-    TOKENS_FOLLOWING_RP_IN_print_1631 = Set[ 49 ]
-    TOKENS_FOLLOWING_SEMICOLON_IN_print_1633 = Set[ 1 ]
-    TOKENS_FOLLOWING_INPUT_IN_input_1646 = Set[ 32 ]
-    TOKENS_FOLLOWING_LP_IN_input_1648 = Set[ 24 ]
-    TOKENS_FOLLOWING_ID_IN_input_1650 = Set[ 47 ]
-    TOKENS_FOLLOWING_RP_IN_input_1652 = Set[ 49 ]
-    TOKENS_FOLLOWING_SEMICOLON_IN_input_1654 = Set[ 1 ]
-    TOKENS_FOLLOWING_ID_IN_func_call_1667 = Set[ 32 ]
-    TOKENS_FOLLOWING_LP_IN_func_call_1669 = Set[ 24, 47 ]
-    TOKENS_FOLLOWING_ID_IN_func_call_1672 = Set[ 11, 47 ]
-    TOKENS_FOLLOWING_COMMA_IN_func_call_1675 = Set[ 24 ]
-    TOKENS_FOLLOWING_ID_IN_func_call_1677 = Set[ 11, 47 ]
-    TOKENS_FOLLOWING_RP_IN_func_call_1683 = Set[ 1 ]
-    TOKENS_FOLLOWING_ID_IN_method_call_1696 = Set[ 41 ]
-    TOKENS_FOLLOWING_POINT_IN_method_call_1698 = Set[ 32 ]
-    TOKENS_FOLLOWING_LP_IN_method_call_1700 = Set[ 24, 47 ]
-    TOKENS_FOLLOWING_ID_IN_method_call_1703 = Set[ 11, 47 ]
-    TOKENS_FOLLOWING_COMMA_IN_method_call_1706 = Set[ 24 ]
-    TOKENS_FOLLOWING_ID_IN_method_call_1708 = Set[ 11, 47 ]
-    TOKENS_FOLLOWING_RP_IN_method_call_1714 = Set[ 1 ]
-    TOKENS_FOLLOWING_RETURN_IN_r_return_1726 = Set[ 12, 13, 14, 15, 24, 32 ]
-    TOKENS_FOLLOWING_super_expression_IN_r_return_1728 = Set[ 49 ]
-    TOKENS_FOLLOWING_SEMICOLON_IN_r_return_1730 = Set[ 1 ]
+    TOKENS_FOLLOWING_variables_IN_commence_596 = Set[ 7, 8, 19, 21, 24, 28, 43 ]
+    TOKENS_FOLLOWING_function_IN_commence_607 = Set[ 21, 43 ]
+    TOKENS_FOLLOWING_program_IN_commence_615 = Set[ 1 ]
+    TOKENS_FOLLOWING_CLASS_IN_r_class_639 = Set[ 24 ]
+    TOKENS_FOLLOWING_ID_IN_r_class_641 = Set[ 26, 50 ]
+    TOKENS_FOLLOWING_inherits_IN_r_class_646 = Set[ 50 ]
+    TOKENS_FOLLOWING_START_IN_r_class_649 = Set[ 7, 8, 19, 24, 28 ]
+    TOKENS_FOLLOWING_attributes_IN_r_class_654 = Set[ 7, 8, 19, 24, 28 ]
+    TOKENS_FOLLOWING_constructor_IN_r_class_662 = Set[ 7, 8, 19, 28, 48, 52 ]
+    TOKENS_FOLLOWING_method_IN_r_class_667 = Set[ 7, 8, 19, 28, 48, 52 ]
+    TOKENS_FOLLOWING_R_END_IN_r_class_675 = Set[ 1 ]
+    TOKENS_FOLLOWING_INHER_IN_inherits_689 = Set[ 24 ]
+    TOKENS_FOLLOWING_ID_IN_inherits_691 = Set[ 1 ]
+    TOKENS_FOLLOWING_FUNCTION_IN_function_706 = Set[ 7, 8, 19, 28, 52 ]
+    TOKENS_FOLLOWING_type_f_IN_function_710 = Set[ 24 ]
+    TOKENS_FOLLOWING_ID_IN_function_712 = Set[ 32 ]
+    TOKENS_FOLLOWING_parameters_IN_function_717 = Set[ 50 ]
+    TOKENS_FOLLOWING_START_IN_function_719 = Set[ 7, 8, 19, 20, 24, 25, 27, 28, 42, 46, 48, 53 ]
+    TOKENS_FOLLOWING_attributes_IN_function_725 = Set[ 7, 8, 19, 20, 24, 25, 27, 28, 42, 46, 48, 53 ]
+    TOKENS_FOLLOWING_estatutes_f_IN_function_732 = Set[ 20, 24, 25, 27, 42, 46, 48, 53 ]
+    TOKENS_FOLLOWING_R_END_IN_function_736 = Set[ 1 ]
+    TOKENS_FOLLOWING_type_f_IN_method_749 = Set[ 24 ]
+    TOKENS_FOLLOWING_ID_IN_method_751 = Set[ 32 ]
+    TOKENS_FOLLOWING_parameters_IN_method_753 = Set[ 50 ]
+    TOKENS_FOLLOWING_START_IN_method_755 = Set[ 7, 8, 19, 20, 24, 25, 27, 28, 42, 46, 48, 53 ]
+    TOKENS_FOLLOWING_attributes_IN_method_760 = Set[ 7, 8, 19, 20, 24, 25, 27, 28, 42, 46, 48, 53 ]
+    TOKENS_FOLLOWING_estatutes_f_IN_method_770 = Set[ 20, 24, 25, 27, 42, 46, 48, 53 ]
+    TOKENS_FOLLOWING_R_END_IN_method_775 = Set[ 1 ]
+    TOKENS_FOLLOWING_ID_IN_constructor_789 = Set[ 32 ]
+    TOKENS_FOLLOWING_parameters_IN_constructor_791 = Set[ 50 ]
+    TOKENS_FOLLOWING_START_IN_constructor_794 = Set[ 7, 8, 19, 20, 24, 25, 27, 28, 42, 48, 53 ]
+    TOKENS_FOLLOWING_attributes_IN_constructor_799 = Set[ 7, 8, 19, 20, 24, 25, 27, 28, 42, 48, 53 ]
+    TOKENS_FOLLOWING_estatutes_IN_constructor_804 = Set[ 20, 24, 25, 27, 42, 48, 53 ]
+    TOKENS_FOLLOWING_R_END_IN_constructor_811 = Set[ 1 ]
+    TOKENS_FOLLOWING_PROGRAM_IN_program_824 = Set[ 24 ]
+    TOKENS_FOLLOWING_ID_IN_program_826 = Set[ 50 ]
+    TOKENS_FOLLOWING_START_IN_program_828 = Set[ 7, 8, 19, 20, 24, 25, 27, 28, 42, 48, 53 ]
+    TOKENS_FOLLOWING_attributes_IN_program_833 = Set[ 7, 8, 19, 20, 24, 25, 27, 28, 42, 48, 53 ]
+    TOKENS_FOLLOWING_estatutes_IN_program_840 = Set[ 20, 24, 25, 27, 42, 48, 53 ]
+    TOKENS_FOLLOWING_R_END_IN_program_844 = Set[ 1 ]
+    TOKENS_FOLLOWING_dec_var_IN_variables_858 = Set[ 1 ]
+    TOKENS_FOLLOWING_dec_arr_IN_variables_862 = Set[ 1 ]
+    TOKENS_FOLLOWING_dec_mat_IN_variables_866 = Set[ 1 ]
+    TOKENS_FOLLOWING_type_c_IN_dec_var_880 = Set[ 24 ]
+    TOKENS_FOLLOWING_ID_IN_dec_var_884 = Set[ 11, 49 ]
+    TOKENS_FOLLOWING_dec_var_2_IN_dec_var_888 = Set[ 11, 49 ]
+    TOKENS_FOLLOWING_SEMICOLON_IN_dec_var_891 = Set[ 1 ]
+    TOKENS_FOLLOWING_COMMA_IN_dec_var_2_904 = Set[ 24 ]
+    TOKENS_FOLLOWING_ID_IN_dec_var_2_906 = Set[ 1 ]
+    TOKENS_FOLLOWING_type_s_IN_dec_arr_921 = Set[ 24 ]
+    TOKENS_FOLLOWING_ID_IN_dec_arr_923 = Set[ 29 ]
+    TOKENS_FOLLOWING_LB_IN_dec_arr_925 = Set[ 15 ]
+    TOKENS_FOLLOWING_C_INT_IN_dec_arr_927 = Set[ 44 ]
+    TOKENS_FOLLOWING_RB_IN_dec_arr_929 = Set[ 49 ]
+    TOKENS_FOLLOWING_SEMICOLON_IN_dec_arr_931 = Set[ 1 ]
+    TOKENS_FOLLOWING_type_s_IN_dec_mat_946 = Set[ 24 ]
+    TOKENS_FOLLOWING_ID_IN_dec_mat_948 = Set[ 29 ]
+    TOKENS_FOLLOWING_LB_IN_dec_mat_950 = Set[ 15 ]
+    TOKENS_FOLLOWING_C_INT_IN_dec_mat_952 = Set[ 44 ]
+    TOKENS_FOLLOWING_RB_IN_dec_mat_954 = Set[ 29 ]
+    TOKENS_FOLLOWING_dim_2_IN_dec_mat_957 = Set[ 49 ]
+    TOKENS_FOLLOWING_SEMICOLON_IN_dec_mat_959 = Set[ 1 ]
+    TOKENS_FOLLOWING_LB_IN_dim_2_974 = Set[ 15 ]
+    TOKENS_FOLLOWING_C_INT_IN_dim_2_976 = Set[ 44 ]
+    TOKENS_FOLLOWING_RB_IN_dim_2_978 = Set[ 1 ]
+    TOKENS_FOLLOWING_type_s_IN_attributes_993 = Set[ 24 ]
+    TOKENS_FOLLOWING_ID_IN_attributes_997 = Set[ 11, 49 ]
+    TOKENS_FOLLOWING_attributes_2_IN_attributes_1001 = Set[ 11, 49 ]
+    TOKENS_FOLLOWING_SEMICOLON_IN_attributes_1005 = Set[ 1 ]
+    TOKENS_FOLLOWING_COMMA_IN_attributes_2_1018 = Set[ 24 ]
+    TOKENS_FOLLOWING_ID_IN_attributes_2_1020 = Set[ 1 ]
+    TOKENS_FOLLOWING_LP_IN_parameters_1035 = Set[ 7, 8, 19, 28, 47 ]
+    TOKENS_FOLLOWING_type_s_IN_parameters_1038 = Set[ 24 ]
+    TOKENS_FOLLOWING_ID_IN_parameters_1040 = Set[ 11, 47 ]
+    TOKENS_FOLLOWING_parameters_2_IN_parameters_1046 = Set[ 11, 47 ]
+    TOKENS_FOLLOWING_RP_IN_parameters_1053 = Set[ 1 ]
+    TOKENS_FOLLOWING_COMMA_IN_parameters_2_1067 = Set[ 7, 8, 19, 28 ]
+    TOKENS_FOLLOWING_type_s_IN_parameters_2_1069 = Set[ 24 ]
+    TOKENS_FOLLOWING_ID_IN_parameters_2_1071 = Set[ 1 ]
+    TOKENS_FOLLOWING_type_s_IN_type_c_1115 = Set[ 1 ]
+    TOKENS_FOLLOWING_ID_IN_type_c_1119 = Set[ 1 ]
+    TOKENS_FOLLOWING_type_s_IN_type_f_1134 = Set[ 1 ]
+    TOKENS_FOLLOWING_VOID_IN_type_f_1138 = Set[ 1 ]
+    TOKENS_FOLLOWING_START_IN_block_1152 = Set[ 20, 24, 25, 27, 42, 48, 53 ]
+    TOKENS_FOLLOWING_estatutes_IN_block_1154 = Set[ 20, 24, 25, 27, 42, 48, 53 ]
+    TOKENS_FOLLOWING_R_END_IN_block_1157 = Set[ 1 ]
+    TOKENS_FOLLOWING_expression_IN_super_expression_1170 = Set[ 1, 5, 40 ]
+    TOKENS_FOLLOWING_AND_IN_super_expression_1174 = Set[ 12, 13, 14, 15, 24, 32 ]
+    TOKENS_FOLLOWING_OR_IN_super_expression_1179 = Set[ 12, 13, 14, 15, 24, 32 ]
+    TOKENS_FOLLOWING_expression_IN_super_expression_1184 = Set[ 1, 5, 40 ]
+    TOKENS_FOLLOWING_exp_IN_expression_1199 = Set[ 1, 18, 22, 23, 31, 33, 36 ]
+    TOKENS_FOLLOWING_LT_IN_expression_1203 = Set[ 12, 13, 14, 15, 24, 32 ]
+    TOKENS_FOLLOWING_LEQ_IN_expression_1209 = Set[ 12, 13, 14, 15, 24, 32 ]
+    TOKENS_FOLLOWING_GT_IN_expression_1215 = Set[ 12, 13, 14, 15, 24, 32 ]
+    TOKENS_FOLLOWING_GEQ_IN_expression_1221 = Set[ 12, 13, 14, 15, 24, 32 ]
+    TOKENS_FOLLOWING_EQ_IN_expression_1227 = Set[ 12, 13, 14, 15, 24, 32 ]
+    TOKENS_FOLLOWING_NE_IN_expression_1233 = Set[ 12, 13, 14, 15, 24, 32 ]
+    TOKENS_FOLLOWING_exp_IN_expression_1239 = Set[ 1, 18, 22, 23, 31, 33, 36 ]
+    TOKENS_FOLLOWING_term_IN_exp_1254 = Set[ 1, 4, 51 ]
+    TOKENS_FOLLOWING_ADD_IN_exp_1258 = Set[ 12, 13, 14, 15, 24, 32 ]
+    TOKENS_FOLLOWING_SUB_IN_exp_1264 = Set[ 12, 13, 14, 15, 24, 32 ]
+    TOKENS_FOLLOWING_term_IN_exp_1269 = Set[ 1, 4, 51 ]
+    TOKENS_FOLLOWING_factor_IN_term_1284 = Set[ 1, 16, 34, 35 ]
+    TOKENS_FOLLOWING_MULT_IN_term_1290 = Set[ 12, 13, 14, 15, 24, 32 ]
+    TOKENS_FOLLOWING_DIV_IN_term_1296 = Set[ 12, 13, 14, 15, 24, 32 ]
+    TOKENS_FOLLOWING_MOD_IN_term_1301 = Set[ 12, 13, 14, 15, 24, 32 ]
+    TOKENS_FOLLOWING_factor_IN_term_1307 = Set[ 1, 16, 34, 35 ]
+    TOKENS_FOLLOWING_LP_IN_factor_1324 = Set[ 12, 13, 14, 15, 24, 32 ]
+    TOKENS_FOLLOWING_super_expression_IN_factor_1326 = Set[ 47 ]
+    TOKENS_FOLLOWING_RP_IN_factor_1328 = Set[ 1 ]
+    TOKENS_FOLLOWING_var_cte_IN_factor_1332 = Set[ 1 ]
+    TOKENS_FOLLOWING_func_call_IN_factor_1339 = Set[ 1 ]
+    TOKENS_FOLLOWING_method_call_IN_factor_1343 = Set[ 1 ]
+    TOKENS_FOLLOWING_var_access_IN_var_cte_1358 = Set[ 1 ]
+    TOKENS_FOLLOWING_C_INT_IN_var_cte_1362 = Set[ 1 ]
+    TOKENS_FOLLOWING_C_FLOAT_IN_var_cte_1366 = Set[ 1 ]
+    TOKENS_FOLLOWING_C_CHAR_IN_var_cte_1370 = Set[ 1 ]
+    TOKENS_FOLLOWING_C_BOOL_IN_var_cte_1374 = Set[ 1 ]
+    TOKENS_FOLLOWING_ID_IN_var_access_1388 = Set[ 1, 29 ]
+    TOKENS_FOLLOWING_LB_IN_var_access_1391 = Set[ 12, 13, 14, 15, 24, 32 ]
+    TOKENS_FOLLOWING_exp_IN_var_access_1396 = Set[ 44 ]
+    TOKENS_FOLLOWING_RB_IN_var_access_1401 = Set[ 1, 29 ]
+    TOKENS_FOLLOWING_LB_IN_var_access_1404 = Set[ 12, 13, 14, 15, 24, 32 ]
+    TOKENS_FOLLOWING_exp_IN_var_access_1409 = Set[ 44 ]
+    TOKENS_FOLLOWING_RB_IN_var_access_1415 = Set[ 1 ]
+    TOKENS_FOLLOWING_assign_IN_estatutes_1433 = Set[ 49 ]
+    TOKENS_FOLLOWING_SEMICOLON_IN_estatutes_1435 = Set[ 1 ]
+    TOKENS_FOLLOWING_condition_IN_estatutes_1439 = Set[ 1 ]
+    TOKENS_FOLLOWING_while_loop_IN_estatutes_1443 = Set[ 1 ]
+    TOKENS_FOLLOWING_for_loop_IN_estatutes_1447 = Set[ 1 ]
+    TOKENS_FOLLOWING_print_IN_estatutes_1451 = Set[ 1 ]
+    TOKENS_FOLLOWING_input_IN_estatutes_1455 = Set[ 1 ]
+    TOKENS_FOLLOWING_func_call_IN_estatutes_1459 = Set[ 49 ]
+    TOKENS_FOLLOWING_SEMICOLON_IN_estatutes_1461 = Set[ 1 ]
+    TOKENS_FOLLOWING_method_call_IN_estatutes_1465 = Set[ 49 ]
+    TOKENS_FOLLOWING_SEMICOLON_IN_estatutes_1467 = Set[ 1 ]
+    TOKENS_FOLLOWING_estatutes_IN_estatutes_f_1483 = Set[ 1 ]
+    TOKENS_FOLLOWING_r_return_IN_estatutes_f_1487 = Set[ 1 ]
+    TOKENS_FOLLOWING_var_access_IN_assign_1501 = Set[ 6 ]
+    TOKENS_FOLLOWING_ASSIGN_IN_assign_1505 = Set[ 12, 13, 14, 15, 24, 32 ]
+    TOKENS_FOLLOWING_super_expression_IN_assign_1509 = Set[ 1 ]
+    TOKENS_FOLLOWING_IF_IN_condition_1524 = Set[ 32 ]
+    TOKENS_FOLLOWING_LP_IN_condition_1526 = Set[ 12, 13, 14, 15, 24, 32 ]
+    TOKENS_FOLLOWING_super_expression_IN_condition_1530 = Set[ 47 ]
+    TOKENS_FOLLOWING_RP_IN_condition_1535 = Set[ 50 ]
+    TOKENS_FOLLOWING_block_IN_condition_1537 = Set[ 1, 17 ]
+    TOKENS_FOLLOWING_ELSE_IN_condition_1540 = Set[ 50 ]
+    TOKENS_FOLLOWING_block_IN_condition_1545 = Set[ 1 ]
+    TOKENS_FOLLOWING_WHILE_IN_while_loop_1562 = Set[ 32 ]
+    TOKENS_FOLLOWING_LP_IN_while_loop_1564 = Set[ 12, 13, 14, 15, 24, 32 ]
+    TOKENS_FOLLOWING_super_expression_IN_while_loop_1569 = Set[ 47 ]
+    TOKENS_FOLLOWING_RP_IN_while_loop_1574 = Set[ 50 ]
+    TOKENS_FOLLOWING_block_IN_while_loop_1576 = Set[ 1 ]
+    TOKENS_FOLLOWING_FOR_IN_for_loop_1591 = Set[ 32 ]
+    TOKENS_FOLLOWING_LP_IN_for_loop_1593 = Set[ 24, 49 ]
+    TOKENS_FOLLOWING_assign_IN_for_loop_1595 = Set[ 49 ]
+    TOKENS_FOLLOWING_SEMICOLON_IN_for_loop_1598 = Set[ 12, 13, 14, 15, 24, 32 ]
+    TOKENS_FOLLOWING_super_expression_IN_for_loop_1603 = Set[ 49 ]
+    TOKENS_FOLLOWING_SEMICOLON_IN_for_loop_1609 = Set[ 24, 47 ]
+    TOKENS_FOLLOWING_assign_IN_for_loop_1612 = Set[ 47 ]
+    TOKENS_FOLLOWING_RP_IN_for_loop_1617 = Set[ 50 ]
+    TOKENS_FOLLOWING_block_IN_for_loop_1619 = Set[ 1 ]
+    TOKENS_FOLLOWING_PRINT_IN_print_1635 = Set[ 32 ]
+    TOKENS_FOLLOWING_LP_IN_print_1637 = Set[ 12, 13, 14, 15, 24, 32 ]
+    TOKENS_FOLLOWING_super_expression_IN_print_1640 = Set[ 11, 47 ]
+    TOKENS_FOLLOWING_print_2_IN_print_1644 = Set[ 11, 47 ]
+    TOKENS_FOLLOWING_RP_IN_print_1649 = Set[ 49 ]
+    TOKENS_FOLLOWING_SEMICOLON_IN_print_1651 = Set[ 1 ]
+    TOKENS_FOLLOWING_COMMA_IN_print_2_1665 = Set[ 12, 13, 14, 15, 24, 32 ]
+    TOKENS_FOLLOWING_super_expression_IN_print_2_1667 = Set[ 1 ]
+    TOKENS_FOLLOWING_INPUT_IN_input_1683 = Set[ 32 ]
+    TOKENS_FOLLOWING_LP_IN_input_1685 = Set[ 24 ]
+    TOKENS_FOLLOWING_ID_IN_input_1687 = Set[ 47 ]
+    TOKENS_FOLLOWING_RP_IN_input_1693 = Set[ 49 ]
+    TOKENS_FOLLOWING_SEMICOLON_IN_input_1695 = Set[ 1 ]
+    TOKENS_FOLLOWING_ID_IN_func_call_1708 = Set[ 32 ]
+    TOKENS_FOLLOWING_LP_IN_func_call_1710 = Set[ 24, 47 ]
+    TOKENS_FOLLOWING_ID_IN_func_call_1713 = Set[ 11, 47 ]
+    TOKENS_FOLLOWING_COMMA_IN_func_call_1716 = Set[ 24 ]
+    TOKENS_FOLLOWING_ID_IN_func_call_1718 = Set[ 11, 47 ]
+    TOKENS_FOLLOWING_RP_IN_func_call_1724 = Set[ 1 ]
+    TOKENS_FOLLOWING_ID_IN_method_call_1737 = Set[ 41 ]
+    TOKENS_FOLLOWING_POINT_IN_method_call_1739 = Set[ 32 ]
+    TOKENS_FOLLOWING_LP_IN_method_call_1741 = Set[ 24, 47 ]
+    TOKENS_FOLLOWING_ID_IN_method_call_1744 = Set[ 11, 47 ]
+    TOKENS_FOLLOWING_COMMA_IN_method_call_1747 = Set[ 24 ]
+    TOKENS_FOLLOWING_ID_IN_method_call_1749 = Set[ 11, 47 ]
+    TOKENS_FOLLOWING_RP_IN_method_call_1755 = Set[ 1 ]
+    TOKENS_FOLLOWING_RETURN_IN_r_return_1767 = Set[ 12, 13, 14, 15, 24, 32 ]
+    TOKENS_FOLLOWING_super_expression_IN_r_return_1769 = Set[ 49 ]
+    TOKENS_FOLLOWING_SEMICOLON_IN_r_return_1771 = Set[ 1 ]
 
   end # class Parser < ANTLR3::Parser
 

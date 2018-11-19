@@ -8,8 +8,8 @@ class FunctionTable
     @functions = {}
   end
 
-  def add_func(id, type, params, dirVars)
-    @functions[id] = Function.new(id, type, params, dirVars)
+  def add_func(id, type, params, cuadInicial, dirVars)
+    @functions[id] = Function.new(id, type, params, cuadInicial, dirVars)
   end
 
   def exists (id)
@@ -23,7 +23,7 @@ class FunctionTable
   def display()
 
     @functions.each do |key, funcElements|
-      puts "ID = #{key} TYPE = #{funcElements.type} PARAMS = #{funcElements.params}"
+      puts "ID = #{key} TYPE = #{funcElements.type} PARAMS = #{funcElements.params} CUAD Inicial = #{funcElements.cuadInicial}"
       puts "VARS: "
       funcElements.dirVars.display
     end

@@ -2,7 +2,7 @@ require_relative 'Cuadruplos'
 
 class CuadruplosTable
 
-  attr_accessor :cuads
+  attr_accessor :cuads, :num
 
   def initialize()
     @cuads = []
@@ -176,7 +176,7 @@ class CuadruplosTable
   end
 
   def add_operando (operando)
-    puts "OPERNADO #{operando}"
+    puts "OPERANDO #{operando}"
     @pOperandos.push(operando)
 
   end
@@ -189,7 +189,7 @@ class CuadruplosTable
   end
 
   def goto_else ()
-    puts "IN"
+
     saltoAnt = @pilaSaltos.pop
     @cuads[saltoAnt].resultado = @num + 1
 
@@ -226,33 +226,30 @@ class CuadruplosTable
 
     cuadsTemp = []
 
-    puts "Alive 1"
     for i in low_lim...upp_lim do
       cuadsTemp[i-low_lim] = @cuads[i]
     end
 
-
-    puts "#{upp_lim}  #{low_lim}"
     for i in upp_lim ... @num do
       @cuads[i - (upp_lim - low_lim)] = @cuads[i]
       @cuads[i - (upp_lim - low_lim)].num = i - (upp_lim - low_lim)
     end
 
-    puts "Alive 3" 
     for i in (@num - (upp_lim - low_lim)) ... @num do
       @cuads[i] = cuadsTemp[i - (@num - (upp_lim - low_lim))]
       @cuads[i].num = i
     end
-
-
   end
 
+  def do_print()
+    resultado = @pOperandos.pop
+    add_cuad("print", "---", "---", resultado)
+  end
 
-
-
-
-
-
+  def do_input()
+    resultado = @pOperandos.pop
+    add_cuad("input", "---", "---", resultado)
+  end
 
 
   def display()

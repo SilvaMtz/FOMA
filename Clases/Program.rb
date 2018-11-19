@@ -49,8 +49,8 @@ class Program
     # @dirVars.add_var(id, type)
   end
 
-  def add_func(id, type, params)
-    @dirFunc.add_func(id, type, params, @dirVars)
+  def add_func(id, type, params, cuadInicial)
+    @dirFunc.add_func(id, type, params, cuadInicial, @dirVars)
     @dirVars = VarTable.new()
     @memory.reset
   end

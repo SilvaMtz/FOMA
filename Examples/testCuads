@@ -25,6 +25,13 @@ start
     v = d;
   end
 
+  print(a);
+  print(c, d);
+  print(e + f * g);
+
+  input(x);
+  input(y);
+
   x = 10;
 
 end

@@ -18,6 +18,7 @@ options { language = Ruby; }
   \$varId
   \$varType
   \$dimTemp
+  \$numTemp
 }
 
 // ******************************************************************************
@@ -140,7 +141,10 @@ NEWLINE: ( '\n' | '\r' )+ { $channel = HIDDEN };
 
 
 commence
-  : {\$scope = "class"}( r_class  )* {\$scope = "global"} (variables)* {\$program.add_func("global", "void", 0)} (function)* program  {\$cuads.display}{puts "EXITS"}
+  : {\$scope = "class"} (r_class)*
+    {\$scope = "global"} (variables)* {\$program.add_func("global", "void", 0, "NA")}
+    (function)*
+    program  {\$program.display}{\$cuads.display}{puts "EXITS"}
   ;
   finally { exit }
 
@@ -153,19 +157,19 @@ inherits
   ;
 
 function
-  : FUNCTION  type_f ID {\$scope = $ID.text}  parameters START (attributes)* {\$program.add_func($ID.text, $type_f.text, \$params)}{\$params = 0}(estatutes_f)* R_END
+  : FUNCTION   type_f ID {\$scope = $ID.text}  parameters START {\$numTemp = \$cuads.num}  (attributes)* {\$program.add_func($ID.text, $type_f.text, \$params, \$numTemp)}{\$params = 0}(estatutes_f)* R_END
   ;
 
 method
-  : type_f ID parameters START (attributes)*  {\$program.add_func($ID.text, $type_f.text, \$params)}{\$params = 0}  (estatutes_f)*  R_END
+  : type_f ID parameters START {\$numTemp = \$cuads.num} (attributes)*  {\$program.add_func($ID.text, $type_f.text, \$params, \$numTemp)}{\$params = 0}  (estatutes_f)*  R_END
   ;
 
 constructor
-  :  ID parameters  START (attributes)* (estatutes)* {\$program.add_func($ID.text, "CONST", \$params)}{\$params = 0} R_END
+  :  ID parameters  START {\$numTemp = \$cuads.num} (attributes)* (estatutes)* {\$program.add_func($ID.text, "CONST", \$params, \$numTemp)}{\$params = 0} R_END
   ;
 
 program
-  : PROGRAM ID START (attributes)* {\$program.add_func($ID.text, "void", 0)} (estatutes)* R_END
+  : PROGRAM ID START {\$numTemp = \$cuads.num} (attributes)* {\$program.add_func($ID.text, "void", 0, \$numTemp)} (estatutes)* R_END
   ;
 
 variables
@@ -277,11 +281,15 @@ for_loop
   ;
 
 print
-  : PRINT LP (super_expression ( COMMA super_expression)* ) RP SEMICOLON
+  : PRINT LP (super_expression{\$cuads.emptyStack}{\$cuads.do_print} print_2* ) RP SEMICOLON
+  ;
+
+print_2
+  :  COMMA super_expression{\$cuads.emptyStack} {\$cuads.do_print}
   ;
 
 input
-  : INPUT LP ID RP SEMICOLON
+  : INPUT LP ID {\$cuads.add_operando($ID.text)} {\$cuads.do_input} RP SEMICOLON
   ;
 
 func_call

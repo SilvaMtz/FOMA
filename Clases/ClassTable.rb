@@ -8,8 +8,8 @@ class ClassTable
     @classes = {}
   end
 
-  def add_class(id, dirAttrs, dirFunc)
-    @classes[id] = ClassElements.new(id, dirAttrs, dirFunc)
+  def add_class(id, dirAttrs)
+    @classes[id] = ClassElements.new(id, dirAttrs)
   end
 
   def exists (id)
@@ -21,16 +21,11 @@ class ClassTable
   end
 
   def display()
-    puts "Tabla de Clases:"
-    puts ""
+
     @classes.each do |key, classElements|
-      puts "CLASS ID = #{key}"
-      puts "ATTRS: "
+      puts "\tCLASS #{key}"
       classElements.dirAttrs.display
-      puts "METHODS"
-      classElements.dirFunc.display
     end
-    puts ""
   end
 
 end

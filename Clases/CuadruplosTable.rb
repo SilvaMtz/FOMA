@@ -4,9 +4,10 @@ class CuadruplosTable
 
   attr_accessor :cuads, :num
 
-  def initialize()
+  def initialize(program)
     @cuads = []
     @num = 0
+    @program = program
 
     @memTemp = 10_000
 
@@ -176,7 +177,6 @@ class CuadruplosTable
   end
 
   def add_operando (operando)
-    puts "OPERANDO #{operando}"
     @pOperandos.push(operando)
 
   end
@@ -251,11 +251,37 @@ class CuadruplosTable
     add_cuad("input", "---", "---", resultado)
   end
 
+  def end_proc
+    add_cuad("endproc", "---", "---", "---")
+  end
+
+  def params(paramNum)
+    resultado = @pOperandos.pop
+    add_cuad("param",resultado, "---" , "param#{paramNum + 1}")
+  end
+
+  def go_sub(id)
+    add_cuad("gosub",id, "---" ,  @program.dirFunc.get_function(id).cuadInicial)
+  end
+
+  def era(id)
+    if !@program.dirFunc.exists(id)
+      puts "ERROR. LA FUNCION #{id} NO EXISTE"
+      exit
+    else
+      add_cuad("era",id, "---" , "---")
+    end
+  end
+
+
+
 
   def display()
-   @cuads.each do |cuad|
-     puts "#{cuad.num}\t#{cuad.operador}\t#{cuad.operIzq}\t#{cuad.operDer}\t#{cuad.resultado}"
-   end
+
+    @program.display
+    @cuads.each do |cuad|
+      puts "#{cuad.num}\t#{cuad.operador}\t#{cuad.operIzq}\t#{cuad.operDer}\t#{cuad.resultado}"
+    end
   end
 
 end

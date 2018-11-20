@@ -23,8 +23,9 @@ class FunctionTable
   def display()
 
     @functions.each do |key, funcElements|
-      puts "ID = #{key} TYPE = #{funcElements.type} PARAMS = #{funcElements.params} CUAD Inicial = #{funcElements.cuadInicial}"
-      puts "VARS: "
+
+      puts "\t#{funcElements.type} #{key} (#{funcElements.params}) ##{funcElements.cuadInicial}"
+
       funcElements.dirVars.display
     end
     puts ""

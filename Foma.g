@@ -11,7 +11,7 @@ options { language = Ruby; }
 
 @members {
   \$program = Program.new()
-  \$cuads = CuadruplosTable.new()
+  \$cuads = CuadruplosTable.new(\$program )
   \$params = 0
   \$classId
   \$scope
@@ -141,15 +141,16 @@ NEWLINE: ( '\n' | '\r' )+ { $channel = HIDDEN };
 
 
 commence
-  : {\$scope = "class"} (r_class)*
+  :  (r_class)*
     {\$scope = "global"} (variables)* {\$program.add_func("global", "void", 0, "NA")}
     (function)*
-    program  {\$program.display}{\$cuads.display}{puts "EXITS"}
+    program  {\$cuads.display} {puts "EXITS"}
   ;
   finally { exit }
 
+
 r_class
-  : CLASS ID {\$classId = $ID.text}  inherits? START  ( attributes )* {\$program.add_attrs()}  constructor  ( method )* {\$program.add_class(\$classId)}  R_END
+  : CLASS {\$scope = "class"} ID {\$classId = $ID.text}  inherits? START  ( attributes )* {\$program.add_attrs()}  constructor  ( method )* {\$program.add_class(\$classId)}  R_END
   ;
 
 inherits
@@ -157,15 +158,15 @@ inherits
   ;
 
 function
-  : FUNCTION   type_f ID {\$scope = $ID.text}  parameters START {\$numTemp = \$cuads.num}  (attributes)* {\$program.add_func($ID.text, $type_f.text, \$params, \$numTemp)}{\$params = 0}(estatutes_f)* R_END
+  : FUNCTION type_f ID {\$scope = $ID.text}  parameters START {\$numTemp = \$cuads.num}  (attributes)* {\$program.add_func($ID.text, $type_f.text, \$params, \$numTemp)}{\$params = 0}(estatutes_f)* R_END {\$cuads.end_proc}
   ;
 
 method
-  : type_f ID parameters START {\$numTemp = \$cuads.num} (attributes)*  {\$program.add_func($ID.text, $type_f.text, \$params, \$numTemp)}{\$params = 0}  (estatutes_f)*  R_END
+  : type_f ID {\$scope = $ID.text} parameters START {\$numTemp = \$cuads.num} (attributes)*  {\$program.add_func("#{\$classId}.#{$ID.text}", $type_f.text, \$params, \$numTemp)}{\$params = 0}  (estatutes_f)*  R_END {\$cuads.end_proc}
   ;
 
 constructor
-  :  ID parameters  START {\$numTemp = \$cuads.num} (attributes)* (estatutes)* {\$program.add_func($ID.text, "CONST", \$params, \$numTemp)}{\$params = 0} R_END
+  :  ID {\$scope = $ID.text} parameters  START {\$numTemp = \$cuads.num} (attributes)* (estatutes)* {\$program.add_func("#{\$classId}.#{$ID.text}", "CONST", \$params, \$numTemp)}{\$params = 0} R_END {\$cuads.end_proc}
   ;
 
 program
@@ -293,11 +294,23 @@ input
   ;
 
 func_call
-  : ID LP (ID (COMMA ID)*)? RP
+  : ID {\$cuads.era($ID.text)} LP {\$params = 0} call_params?  {\$cuads.go_sub($ID.text)}RP
   ;
 
+call_params
+  :  super_expression{\$cuads.emptyStack} {\$cuads.params(\$params)}{\$params +=1} call_params2*
+  ;
+
+call_params2
+    : COMMA super_expression{\$cuads.emptyStack} {\$cuads.params(\$params)}{\$params +=1}
+    ;
+
 method_call
-  : ID POINT LP (ID (COMMA ID)*)? RP
+  : ID   {\$varType = \$program.dirFunc.functions["global"].dirVars.variables[$ID.text].type}POINT method_call_2 LP call_params? {\$cuads.go_sub("#{\$varType}.#{\$varId}")}RP
+  ;
+
+method_call_2
+  : ID  {\$varId = $ID.text}{\$cuads.era("#{\$varType}.#{\$varId}")}
   ;
 
 r_return

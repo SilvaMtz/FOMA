@@ -3,13 +3,12 @@ require_relative 'FunctionTable'
 
 class ClassElements
 
-  attr_accessor :id , :dirAttrs, :dirFunc
+  attr_accessor :id , :dirAttrs
 
-  def initialize (id, dirAttrs, dirFunc)
+  def initialize (id, dirAttrs)
 
     @id = id
     @dirAttrs = dirAttrs
-    @dirFunc = dirFunc
 
   end
 

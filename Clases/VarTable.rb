@@ -22,9 +22,9 @@ class VarTable
 
   def display()
 
-    puts "ID \tTYPE\tMEMORY"
+
     @variables.each do |key, variable|
-      puts("#{variable.id}\t#{variable.type}\t#{variable.memory}")
+      puts("\t#{variable.type}\t#{variable.id}\t#{variable.memory}")
     end
     puts ""
   end

@@ -4,7 +4,7 @@ start
 	bool b;
 	char c;
 	float d;
-	
+
 
 	A()
 	start
@@ -59,6 +59,8 @@ start
 	m = 2;
 
 	thisIsAFunc(err, m);
+
+	obj.test(m);
 
 	arr[5 + 3] = mat[4+1][m];
 

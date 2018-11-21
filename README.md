@@ -1,4 +1,6 @@
 # FOMA
 Proyecto final: Diseño de compiladores
 
-## Leer el USER_MANUAL para mas detalles
+##### Leer:
+#### [USER_MANUAL
+](https://github.com/SilvaMtz/FOMA/blob/Forbes/USER_MANUAL.md)

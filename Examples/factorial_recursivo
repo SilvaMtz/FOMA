@@ -1,0 +1,31 @@
+
+int n;
+int resultado;
+int x;
+
+function int factorial (int n, int resultado)
+start
+
+  if (n > 0)
+  start
+    return n * factorial(n-1, resultado) ;
+  end
+  else
+  start
+    return resultado;
+  end
+end
+
+
+
+program Factorial_Recursivo_Global
+start
+
+  n = 5;
+  resultado = 1;
+
+  x = factorial(n, resultado);
+
+  print (x);
+
+end

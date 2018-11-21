@@ -33,7 +33,7 @@ class VM
         when 14_000...15_000, 24_000...25_000
           value = @runningMem[memoryNumber]
         when 34_000...34_005
-          value =  @program.dirConstantes.invert[memoryNumberq]
+          value =  @program.dirConstantes.invert[memoryNumber]
         else
           puts "ERROR. EN GOTO_F"
           exit
@@ -1069,16 +1069,106 @@ class VM
 
       when "era"
 
+        @functionName = @cuadruplos.cuads[@cuadActual].operIzq
         @newMem = {}
         @cuadActual += 1
 
       when "param"
-        puts "PARAMETROS NO DEFINIDOS"
+        leftMemoryNumber = @cuadruplos.cuads[@cuadActual].operIzq
+        case leftMemoryNumber
+        when 1_000...2_000
+          leftValue = @globalMem[leftMemoryNumber].to_i
+        when 2_000...3_000
+          leftValue = @globalMem[leftMemoryNumber].to_f
+        when 3_000...4_000
+          leftValue = @globalMem[leftMemoryNumber]
+        when 4_000...5_000
+          leftValue = @globalMem[leftMemoryNumber]
+
+        when 11_000...12_000, 21_000...22_000
+          leftValue = @runningMem[leftMemoryNumber].to_i
+        when 12_000...13_000, 22_000...23_000
+          leftValue = @runningMem[leftMemoryNumber].to_f
+        when 13_000...14_000, 23_000...24_000
+          leftValue = @runningMem[leftMemoryNumber]
+        when 14_000...15_000, 24_000...25_000
+          leftValue = @runningMem[leftMemoryNumber]
+
+        when 31_000...32_000
+          leftValue =  @program.dirConstantes.invert[leftMemoryNumber].to_i
+        when 32_000...33_000
+          leftValue =  @program.dirConstantes.invert[leftMemoryNumber].to_f
+        when 33_000...34_000
+          leftValue =  @program.dirConstantes.invert[leftMemoryNumber]
+        when 34_000...34_005
+          leftValue =  @program.dirConstantes.invert[leftMemoryNumber]
+        else
+          puts "ERROR. EN DESIGUALDAD VALOR IZQUIERDO"
+
+          exit
+        end
+
+        paramPos = @cuadruplos.cuads[@cuadActual].resultado.to_i
+        memoryNumber = @program.dirFunc.get_function(@functionName).paramsMemory[paramPos]
+
+
+        @newMem[memoryNumber] = leftValue
+
+        @cuadActual += 1
 
       when "endproc"
 
         @cuadActual = @cuadsAnt.pop
         @runningMem = @activeRecord.pop
+
+      when "return"
+
+        resMemoryNumber = @cuadruplos.cuads[@cuadActual].resultado
+        case resMemoryNumber
+        when 1_000...5_000
+          resValue = @globalMem[resMemoryNumber]
+        when 11_000...15_000, 21_000...25_000
+          resValue = @runningMem[resMemoryNumber]
+        when 31_000...34_005
+          resValue =  @program.dirConstantes.invert[resMemoryNumber]
+        else
+          puts "ERROR. EN PRINT VALOR RESULTADO"
+          exit
+        end
+        
+
+
+        @cuadActual = @cuadsAnt.pop
+        @runningMem = @activeRecord.pop
+
+        leftMemoryNumber = @cuadruplos.cuads[@cuadActual].operIzq
+        case leftMemoryNumber
+        when 1_000...2_000
+          @globalMem[leftMemoryNumber] = resValue.to_i
+        when 2_000...3_000
+          @globalMem[leftMemoryNumber] = resValue.to_f
+        when 3_000...4_000
+          @globalMem[leftMemoryNumber] = resValue
+        when 4_000...5_000
+          @globalMem[leftMemoryNumber] = resValue
+
+        when 11_000...12_000, 21_000...22_000
+          @runningMem[leftMemoryNumber] = resValue.to_i
+        when 12_000...13_000, 22_000...23_000
+          @runningMem[leftMemoryNumber] = resValue.to_f
+        when 13_000...14_000, 23_000...24_000
+          @runningMem[leftMemoryNumber] = resValue
+        when 14_000...15_000, 24_000...25_000
+          @runningMem[leftMemoryNumber] = resValue
+
+        else
+          puts "ERROR. EN DESIGUALDAD VALOR IZQUIERDO"
+          exit
+        end
+
+
+      when "retorno"
+          @cuadActual += 1
 
       when "endprogram"
         exit

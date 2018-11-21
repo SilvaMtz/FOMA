@@ -17,6 +17,7 @@ options { language = Ruby; }
   \$params = 0
   \$classId
   \$scope
+  \$funcId
   \$varId
   \$varType
   \$dimTemp
@@ -161,11 +162,11 @@ inherits
   ;
 
 function
-  : FUNCTION type_f ID {\$scope = $ID.text}  parameters START {\$numTemp = \$cuads.num}  (attributes)* {\$program.add_func($ID.text, $type_f.text, \$params, \$numTemp)}{\$params = 0}(estatutes_f)* R_END {\$cuads.end_proc}
+  : FUNCTION type_f ID {\$scope = $ID.text}  parameters START {\$numTemp = \$cuads.num}  (attributes)* {\$program.add_func($ID.text, $type_f.text, \$params, \$numTemp)}{\$params = 0}(estatutes)* R_END {\$cuads.end_proc}
   ;
 
 method
-  : type_f ID {\$scope = "#{\$classId}.#{$ID.text}"} parameters START {\$numTemp = \$cuads.num} (attributes)*  {\$program.add_func("#{\$classId}.#{$ID.text}", $type_f.text, \$params, \$numTemp)}{\$params = 0}  (estatutes_f)*  R_END {\$cuads.end_proc}
+  : type_f ID {\$scope = "#{\$classId}.#{$ID.text}"} parameters START {\$numTemp = \$cuads.num} (attributes)*  {\$program.add_func("#{\$classId}.#{$ID.text}", $type_f.text, \$params, \$numTemp)}{\$params = 0}  (estatutes)*  R_END {\$cuads.end_proc}
   ;
 
 constructor
@@ -209,11 +210,11 @@ attributes_2
   ;
 
 parameters
-  : LP (type_s ID {\$program.add_var($ID.text, $type_s.text, \$scope)}{\$params += 1}( parameters_2 )*)? RP
+  : LP (type_s ID {\$program.add_var($ID.text, $type_s.text, \$scope)}{\$program.add_param_mem($ID.text)}{\$params += 1}( parameters_2 )*)? RP
   ;
 
 parameters_2
-  :  COMMA type_s ID {\$program.add_var($ID.text, $type_s.text, \$scope)}{\$params += 1}
+  :  COMMA type_s ID {\$program.add_var($ID.text, $type_s.text, \$scope)}{\$program.add_param_mem($ID.text)}{\$params += 1}
   ;
 
 type_s
@@ -231,6 +232,7 @@ type_f
 block
   : START estatutes* R_END
   ;
+
 
 super_expression
   : expression ((AND {\$cuads.add_SE($AND.text)}| OR {\$cuads.add_SE($OR.text)}) expression)*
@@ -265,15 +267,11 @@ var_access
   ;
 
 estatutes
-  : (assign SEMICOLON | condition | while_loop | for_loop | print | input | func_call SEMICOLON | method_call SEMICOLON )
-  ;
-
-estatutes_f
-  : (estatutes | r_return)
+  : (assign SEMICOLON | condition | while_loop | for_loop | print | input | func_call SEMICOLON | method_call SEMICOLON  | r_return )
   ;
 
 assign
-  : var_access {\$cuads.add_operando($var_access.text, \$scope)} ASSIGN {\$cuads.add_assign()} super_expression {\$cuads.emptyStack}
+  : var_access {\$cuads.add_operando($var_access.text, \$scope)} ASSIGN {\$cuads.add_assign()} {\$cuads.add_falseBottom} super_expression {\$cuads.rem_falseBottom} {\$cuads.emptyStack}
   ;
 
 condition
@@ -301,15 +299,15 @@ input
   ;
 
 func_call
-  : ID {\$cuads.era($ID.text)} LP {\$params = 0} call_params?  {\$cuads.go_sub($ID.text)}RP
+  : ID {\$cuads.era($ID.text)} LP {\$params = 0} call_params?  {\$cuads.go_sub($ID.text)} {\$cuads.return_type($ID.text)} RP
   ;
 
 call_params
-  :  super_expression{\$cuads.emptyStack} {\$cuads.params(\$params)}{\$params +=1} call_params2*
+  :   {\$cuads.add_falseBottom} super_expression {\$cuads.rem_falseBottom} {\$cuads.params(\$params)}{\$params +=1} call_params2*
   ;
 
 call_params2
-    : COMMA super_expression{\$cuads.emptyStack} {\$cuads.params(\$params)}{\$params +=1}
+    : COMMA {\$cuads.add_falseBottom} super_expression {\$cuads.rem_falseBottom}  {\$cuads.params(\$params)}{\$params +=1}
     ;
 
 method_call
@@ -321,5 +319,5 @@ method_call_2
   ;
 
 r_return
- : RETURN super_expression SEMICOLON
+ : RETURN {\$cuads.add_falseBottom} super_expression {\$cuads.rem_falseBottom}  {\$cuads.do_return(\$scope)} SEMICOLON
  ;

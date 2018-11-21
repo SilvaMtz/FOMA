@@ -10,6 +10,7 @@ class Program
     @dirVars = VarTable.new()
     @dirAttrs = VarTable.new()
     @dirClass = ClassTable.new()
+    @paramsMemory = []
     @memory = Memory.new()
     @dirConstantes = {}
   end
@@ -47,8 +48,11 @@ class Program
       end
     end
 
+  end
 
-
+  def add_param_mem(id)
+    
+    @paramsMemory.push( @dirVars.variables[id].memory)
   end
 
   def add_dim(id, type, dim1, dim2)
@@ -69,9 +73,12 @@ class Program
   end
 
   def add_func(id, type, params, cuadInicial)
-    @dirFunc.add_func(id, type, params, cuadInicial, @dirVars)
+
+    @dirFunc.add_func(id, type, params, @paramsMemory, cuadInicial, @dirVars)
     @dirVars = VarTable.new()
     @memory.reset
+    @paramsMemory = []
+
   end
 
   def add_class (id)

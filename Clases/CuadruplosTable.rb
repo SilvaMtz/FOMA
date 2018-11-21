@@ -326,11 +326,13 @@ class CuadruplosTable
 
   def params(paramNum)
     resultado = @pOperandos.pop
-    add_cuad("param",resultado, "---" , "param#{paramNum + 1}")
+    add_cuad("param",resultado, "---" , "#{paramNum}")
   end
 
   def go_sub(id)
     add_cuad("gosub",id, "---" ,  @program.dirFunc.get_function(id).cuadInicial)
+
+
   end
 
   def era(id)
@@ -340,6 +342,29 @@ class CuadruplosTable
     else
       add_cuad("era",id, "---" , "---")
     end
+  end
+
+  def do_return(scope)
+    resultado = @pOperandos.pop
+    add_cuad("return","---", "---" , resultado)
+
+
+
+  end
+
+  def return_type(id)
+
+    puts "#{id}"
+    puts @program.dirFunc.functions[id].type
+
+    if @program.dirFunc.functions[id].type != "void"
+      memT = @mem.get_temp(@program.dirFunc.functions[id].type)
+      @pOperandos.push(memT)
+      add_cuad("retorno", memT, "---", "---")
+
+    end
+
+
   end
 
 

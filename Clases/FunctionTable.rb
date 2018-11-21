@@ -8,8 +8,8 @@ class FunctionTable
     @functions = {}
   end
 
-  def add_func(id, type, params, cuadInicial, dirVars)
-    @functions[id] = Function.new(id, type, params, cuadInicial, dirVars)
+  def add_func(id, type, params, paramsMemory, cuadInicial, dirVars)
+    @functions[id] = Function.new(id, type, params, paramsMemory ,cuadInicial, dirVars)
   end
 
   def exists (id)

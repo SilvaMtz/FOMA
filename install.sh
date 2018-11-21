@@ -9,6 +9,6 @@ if [ -z $foma ]; then
     echo 'export PATH="$HOME/.foma:$PATH"' >> ~/.zshrc
 fi
 
-chmod 755 foma
+echo 'chmod 755 PATH="$HOME/.foma:$PATH/foma"'
 
 echo 'FINISHED! Now reset the terminal!'

@@ -329,8 +329,8 @@ Se requiere de un programa al final del código escrito, por ejemplo:
 1. Descargar el codigo de github y desarchivarlo.
 2. En la Terminal correr los siguientes comandos dentor de la carpeta del proyecto:
 	
-	antlr4ruby Foma.g
-	
-	ruby Main.rb <nombre_del_archivo>
+		antlr4ruby Foma.g
+
+		ruby Main.rb <nombre_del_archivo>
 	
 3. Los archivos a compilar deben ser de texto.

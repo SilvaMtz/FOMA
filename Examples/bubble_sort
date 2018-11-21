@@ -1,0 +1,12 @@
+int arr[10];
+
+program bubble_sort
+start
+  arr[0] = 15;
+
+
+
+  print (arr[0] );
+
+
+end

@@ -182,11 +182,11 @@ variables
   ;
 
 dec_var
-  : type_c {\$varType = $type_c.text} ID {\$program.add_var($ID.text, \$varType, \$scope)} dec_var_2* SEMICOLON
+  : type_c {\$varType = $type_c.text} ID {\$program.add_var($ID.text, \$varType, \$scope, 1, 0, 0)} dec_var_2* SEMICOLON
   ;
 
 dec_var_2
-  : COMMA ID {\$program.add_var($ID.text, \$varType, \$scope)}
+  : COMMA ID {\$program.add_var($ID.text, \$varType, \$scope, 1, 0, 0)}
   ;
 
 dec_arr
@@ -202,19 +202,19 @@ dim_2
   ;
 
 attributes
-  : type_s {\$varType = $type_s.text} ID {\$program.add_var($ID.text, \$varType, \$scope)} attributes_2*  SEMICOLON
+  : type_s {\$varType = $type_s.text} ID {\$program.add_var($ID.text, \$varType, \$scope, 1, 0, 0)} attributes_2*  SEMICOLON
   ;
 
 attributes_2
-  : COMMA ID {\$program.add_var($ID.text, \$varType, \$scope)}
+  : COMMA ID {\$program.add_var($ID.text, \$varType, \$scope, 1, 0, 0)}
   ;
 
 parameters
-  : LP (type_s ID {\$program.add_var($ID.text, $type_s.text, \$scope)}{\$program.add_param_mem($ID.text)}{\$params += 1}( parameters_2 )*)? RP
+  : LP (type_s ID {\$program.add_var($ID.text, $type_s.text, \$scope, 1, 0, 0)}{\$program.add_param_mem($ID.text)}{\$params += 1}( parameters_2 )*)? RP
   ;
 
 parameters_2
-  :  COMMA type_s ID {\$program.add_var($ID.text, $type_s.text, \$scope)}{\$program.add_param_mem($ID.text)}{\$params += 1}
+  :  COMMA type_s ID {\$program.add_var($ID.text, $type_s.text, \$scope, 1, 0, 0)}{\$program.add_param_mem($ID.text)}{\$params += 1}
   ;
 
 type_s
@@ -255,7 +255,7 @@ factor
   ;
 
 var_cte
-  : (var_access {\$cuads.add_operando($var_access.text, \$scope)}
+  : (var_access
   | C_INT {\$program.add_const($C_INT.text, "int")} {\$cuads.add_oper_const($C_INT.text)}
   | C_FLOAT {\$program.add_const($C_FLOAT.text, "float")}  {\$cuads.add_oper_const($C_FLOAT.text)}
   | C_CHAR {\$program.add_const($C_CHAR.text, "char")}  {\$cuads.add_oper_const($C_CHAR.text)}
@@ -263,15 +263,24 @@ var_cte
   ;
 
 var_access
-  : ID (LB {\$cuads.add_falseBottom}  exp  {\$cuads.rem_falseBottom}{\$cuads.drop_opp}RB (LB {\$cuads.add_falseBottom}  exp  {\$cuads.rem_falseBottom} {\$cuads.drop_opp}RB)?)?
+  : ID {\$cuads.add_operando($ID.text, \$scope)} (arr_access {\$cuads.add_arr($ID.text)}(mat_access {\$cuads.add_mat($ID.text)})?)?
   ;
+
+arr_access
+  :LB {\$cuads.add_falseBottom}  super_expression  {\$cuads.rem_falseBottom} RB
+  ;
+
+mat_access
+  :LB {\$cuads.add_falseBottom}  super_expression  {\$cuads.rem_falseBottom} RB
+  ;
+
 
 estatutes
   : (assign SEMICOLON | condition | while_loop | for_loop | print | input | func_call SEMICOLON | method_call SEMICOLON  | r_return )
   ;
 
 assign
-  : var_access {\$cuads.add_operando($var_access.text, \$scope)} ASSIGN {\$cuads.add_assign()} {\$cuads.add_falseBottom} super_expression {\$cuads.rem_falseBottom} {\$cuads.emptyStack}
+  : var_access  ASSIGN {\$cuads.add_assign()} {\$cuads.add_falseBottom} super_expression {\$cuads.rem_falseBottom} {\$cuads.emptyStack}
   ;
 
 condition

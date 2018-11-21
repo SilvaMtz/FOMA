@@ -8,8 +8,8 @@ class VarTable
     @variables = {}
   end
 
-  def add_var(id, type, memory)
-    @variables[id] = Vars.new(id, type, memory)
+  def add_var(id, type, memory, size, dim1, dim2)
+    @variables[id] = Vars.new(id, type, memory, size, dim1, dim2)
   end
 
   def exists (id)

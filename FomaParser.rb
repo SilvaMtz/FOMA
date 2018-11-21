@@ -5,7 +5,7 @@
 # Generated using ANTLR version: 3.5
 # Ruby runtime library version: 1.10.0
 # Input grammar file: Foma.g
-# Generated at: 2018-11-21 04:20:42
+# Generated at: 2018-11-21 10:15:23
 #
 
 # ~~~> start load path setup
@@ -117,10 +117,10 @@ module Foma
                      :dec_arr, :dec_mat, :dim_2, :attributes, :attributes_2, 
                      :parameters, :parameters_2, :type_s, :type_c, :type_f, 
                      :block, :super_expression, :expression, :exp, :term, 
-                     :factor, :var_cte, :var_access, :estatutes, :assign, 
-                     :condition, :while_loop, :for_loop, :print, :print_2, 
-                     :input, :func_call, :call_params, :call_params2, :method_call, 
-                     :method_call_2, :r_return ].freeze
+                     :factor, :var_cte, :var_access, :arr_access, :mat_access, 
+                     :estatutes, :assign, :condition, :while_loop, :for_loop, 
+                     :print, :print_2, :input, :func_call, :call_params, 
+                     :call_params2, :method_call, :method_call_2, :r_return ].freeze
 
     include TokenData
 
@@ -985,10 +985,10 @@ module Foma
       __ID9__ = match( ID, TOKENS_FOLLOWING_ID_IN_dec_var_906 )
 
       # --> action
-      $program.add_var(__ID9__.text, $varType, $scope)
+      $program.add_var(__ID9__.text, $varType, $scope, 1, 0, 0)
       # <-- action
 
-      # at line 185:92: ( dec_var_2 )*
+      # at line 185:101: ( dec_var_2 )*
       while true # decision 16
         alt_16 = 2
         look_16_0 = @input.peek( 1 )
@@ -999,7 +999,7 @@ module Foma
         end
         case alt_16
         when 1
-          # at line 185:92: dec_var_2
+          # at line 185:101: dec_var_2
           @state.following.push( TOKENS_FOLLOWING_dec_var_2_IN_dec_var_910 )
           dec_var_2
           @state.following.pop
@@ -1047,7 +1047,7 @@ module Foma
       __ID10__ = match( ID, TOKENS_FOLLOWING_ID_IN_dec_var_2_928 )
 
       # --> action
-      $program.add_var(__ID10__.text, $varType, $scope)
+      $program.add_var(__ID10__.text, $varType, $scope, 1, 0, 0)
       # <-- action
 
 
@@ -1235,10 +1235,10 @@ module Foma
       __ID19__ = match( ID, TOKENS_FOLLOWING_ID_IN_attributes_1019 )
 
       # --> action
-      $program.add_var(__ID19__.text, $varType, $scope)
+      $program.add_var(__ID19__.text, $varType, $scope, 1, 0, 0)
       # <-- action
 
-      # at line 205:92: ( attributes_2 )*
+      # at line 205:101: ( attributes_2 )*
       while true # decision 17
         alt_17 = 2
         look_17_0 = @input.peek( 1 )
@@ -1249,7 +1249,7 @@ module Foma
         end
         case alt_17
         when 1
-          # at line 205:92: attributes_2
+          # at line 205:101: attributes_2
           @state.following.push( TOKENS_FOLLOWING_attributes_2_IN_attributes_1023 )
           attributes_2
           @state.following.pop
@@ -1297,7 +1297,7 @@ module Foma
       __ID20__ = match( ID, TOKENS_FOLLOWING_ID_IN_attributes_2_1042 )
 
       # --> action
-      $program.add_var(__ID20__.text, $varType, $scope)
+      $program.add_var(__ID20__.text, $varType, $scope, 1, 0, 0)
       # <-- action
 
 
@@ -1351,7 +1351,7 @@ module Foma
         __ID21__ = match( ID, TOKENS_FOLLOWING_ID_IN_parameters_1062 )
 
         # --> action
-        $program.add_var(__ID21__.text, ( type_s22 && @input.to_s( type_s22.start, type_s22.stop ) ), $scope)
+        $program.add_var(__ID21__.text, ( type_s22 && @input.to_s( type_s22.start, type_s22.stop ) ), $scope, 1, 0, 0)
         # <-- action
 
 
@@ -1364,7 +1364,7 @@ module Foma
         $params += 1
         # <-- action
 
-        # at line 213:121: ( parameters_2 )*
+        # at line 213:130: ( parameters_2 )*
         while true # decision 18
           alt_18 = 2
           look_18_0 = @input.peek( 1 )
@@ -1375,7 +1375,7 @@ module Foma
           end
           case alt_18
           when 1
-            # at line 213:123: parameters_2
+            # at line 213:132: parameters_2
             @state.following.push( TOKENS_FOLLOWING_parameters_2_IN_parameters_1069 )
             parameters_2
             @state.following.pop
@@ -1429,7 +1429,7 @@ module Foma
       __ID23__ = match( ID, TOKENS_FOLLOWING_ID_IN_parameters_2_1094 )
 
       # --> action
-      $program.add_var(__ID23__.text, ( type_s24 && @input.to_s( type_s24.start, type_s24.stop ) ), $scope)
+      $program.add_var(__ID23__.text, ( type_s24 && @input.to_s( type_s24.start, type_s24.stop ) ), $scope, 1, 0, 0)
       # <-- action
 
 
@@ -2196,11 +2196,10 @@ module Foma
       # trace_in( __method__, 27 )
 
 
-      __C_INT39__ = nil
-      __C_FLOAT40__ = nil
-      __C_CHAR41__ = nil
-      __C_BOOL42__ = nil
-      var_access38 = nil
+      __C_INT38__ = nil
+      __C_FLOAT39__ = nil
+      __C_CHAR40__ = nil
+      __C_BOOL41__ = nil
 
 
       begin
@@ -2221,67 +2220,62 @@ module Foma
       when 1
         # at line 258:6: var_access
         @state.following.push( TOKENS_FOLLOWING_var_access_IN_var_cte_1386 )
-        var_access38 = var_access
+        var_access
         @state.following.pop
-
-        # --> action
-        $cuads.add_operando(( var_access38 && @input.to_s( var_access38.start, var_access38.stop ) ), $scope)
-        # <-- action
-
 
       when 2
         # at line 259:5: C_INT
-        __C_INT39__ = match( C_INT, TOKENS_FOLLOWING_C_INT_IN_var_cte_1394 )
+        __C_INT38__ = match( C_INT, TOKENS_FOLLOWING_C_INT_IN_var_cte_1392 )
 
         # --> action
-        $program.add_const(__C_INT39__.text, "int")
+        $program.add_const(__C_INT38__.text, "int")
         # <-- action
 
 
         # --> action
-        $cuads.add_oper_const(__C_INT39__.text)
+        $cuads.add_oper_const(__C_INT38__.text)
         # <-- action
 
 
       when 3
         # at line 260:5: C_FLOAT
-        __C_FLOAT40__ = match( C_FLOAT, TOKENS_FOLLOWING_C_FLOAT_IN_var_cte_1404 )
+        __C_FLOAT39__ = match( C_FLOAT, TOKENS_FOLLOWING_C_FLOAT_IN_var_cte_1402 )
 
         # --> action
-        $program.add_const(__C_FLOAT40__.text, "float")
+        $program.add_const(__C_FLOAT39__.text, "float")
         # <-- action
 
 
         # --> action
-        $cuads.add_oper_const(__C_FLOAT40__.text)
+        $cuads.add_oper_const(__C_FLOAT39__.text)
         # <-- action
 
 
       when 4
         # at line 261:5: C_CHAR
-        __C_CHAR41__ = match( C_CHAR, TOKENS_FOLLOWING_C_CHAR_IN_var_cte_1415 )
+        __C_CHAR40__ = match( C_CHAR, TOKENS_FOLLOWING_C_CHAR_IN_var_cte_1413 )
 
         # --> action
-        $program.add_const(__C_CHAR41__.text, "char")
+        $program.add_const(__C_CHAR40__.text, "char")
         # <-- action
 
 
         # --> action
-        $cuads.add_oper_const(__C_CHAR41__.text)
+        $cuads.add_oper_const(__C_CHAR40__.text)
         # <-- action
 
 
       when 5
         # at line 262:5: C_BOOL
-        __C_BOOL42__ = match( C_BOOL, TOKENS_FOLLOWING_C_BOOL_IN_var_cte_1426 )
+        __C_BOOL41__ = match( C_BOOL, TOKENS_FOLLOWING_C_BOOL_IN_var_cte_1424 )
 
         # --> action
-        $program.add_const(__C_BOOL42__.text, "bool")
+        $program.add_const(__C_BOOL41__.text, "bool")
         # <-- action
 
 
         # --> action
-        $cuads.add_oper_const(__C_BOOL42__.text)
+        $cuads.add_oper_const(__C_BOOL41__.text)
         # <-- action
 
 
@@ -2301,29 +2295,31 @@ module Foma
       return 
     end
 
-    VarAccessReturnValue = define_return_scope
+
 
     #
     # parser rule var_access
     #
     # (in Foma.g)
-    # 265:1: var_access : ID ( LB exp RB ( LB exp RB )? )? ;
+    # 265:1: var_access : ID ( arr_access ( mat_access )? )? ;
     #
     def var_access
       # -> uncomment the next line to manually enable rule tracing
       # trace_in( __method__, 28 )
 
 
-      return_value = VarAccessReturnValue.new
-
-      # $rule.start = the first token seen before matching
-      return_value.start = @input.look
+      __ID42__ = nil
 
 
       begin
-      # at line 266:5: ID ( LB exp RB ( LB exp RB )? )?
-      match( ID, TOKENS_FOLLOWING_ID_IN_var_access_1445 )
-      # at line 266:8: ( LB exp RB ( LB exp RB )? )?
+      # at line 266:5: ID ( arr_access ( mat_access )? )?
+      __ID42__ = match( ID, TOKENS_FOLLOWING_ID_IN_var_access_1443 )
+
+      # --> action
+      $cuads.add_operando(__ID42__.text, $scope)
+      # <-- action
+
+      # at line 266:50: ( arr_access ( mat_access )? )?
       alt_34 = 2
       look_34_0 = @input.peek( 1 )
 
@@ -2332,28 +2328,16 @@ module Foma
       end
       case alt_34
       when 1
-        # at line 266:9: LB exp RB ( LB exp RB )?
-        match( LB, TOKENS_FOLLOWING_LB_IN_var_access_1448 )
-
-        # --> action
-        $cuads.add_falseBottom
-        # <-- action
-
-        @state.following.push( TOKENS_FOLLOWING_exp_IN_var_access_1453 )
-        exp
+        # at line 266:51: arr_access ( mat_access )?
+        @state.following.push( TOKENS_FOLLOWING_arr_access_IN_var_access_1448 )
+        arr_access
         @state.following.pop
 
         # --> action
-        $cuads.rem_falseBottom
+        $cuads.add_arr(__ID42__.text)
         # <-- action
 
-
-        # --> action
-        $cuads.drop_opp
-        # <-- action
-
-        match( RB, TOKENS_FOLLOWING_RB_IN_var_access_1458 )
-        # at line 266:90: ( LB exp RB )?
+        # at line 266:89: ( mat_access )?
         alt_33 = 2
         look_33_0 = @input.peek( 1 )
 
@@ -2362,35 +2346,19 @@ module Foma
         end
         case alt_33
         when 1
-          # at line 266:91: LB exp RB
-          match( LB, TOKENS_FOLLOWING_LB_IN_var_access_1461 )
-
-          # --> action
-          $cuads.add_falseBottom
-          # <-- action
-
-          @state.following.push( TOKENS_FOLLOWING_exp_IN_var_access_1466 )
-          exp
+          # at line 266:90: mat_access
+          @state.following.push( TOKENS_FOLLOWING_mat_access_IN_var_access_1452 )
+          mat_access
           @state.following.pop
 
           # --> action
-          $cuads.rem_falseBottom
+          $cuads.add_mat(__ID42__.text)
           # <-- action
 
-
-          # --> action
-          $cuads.drop_opp
-          # <-- action
-
-          match( RB, TOKENS_FOLLOWING_RB_IN_var_access_1472 )
 
         end
 
       end
-
-      # - - - - - - - rule clean up - - - - - - - -
-      return_value.stop = @input.look( -1 )
-
 
       rescue ANTLR3::Error::RecognitionError => re
         report_error(re)
@@ -2403,7 +2371,97 @@ module Foma
 
       end
 
-      return return_value
+      return 
+    end
+
+
+
+    #
+    # parser rule arr_access
+    #
+    # (in Foma.g)
+    # 269:1: arr_access : LB super_expression RB ;
+    #
+    def arr_access
+      # -> uncomment the next line to manually enable rule tracing
+      # trace_in( __method__, 29 )
+
+
+      begin
+      # at line 270:4: LB super_expression RB
+      match( LB, TOKENS_FOLLOWING_LB_IN_arr_access_1470 )
+
+      # --> action
+      $cuads.add_falseBottom
+      # <-- action
+
+      @state.following.push( TOKENS_FOLLOWING_super_expression_IN_arr_access_1475 )
+      super_expression
+      @state.following.pop
+
+      # --> action
+      $cuads.rem_falseBottom
+      # <-- action
+
+      match( RB, TOKENS_FOLLOWING_RB_IN_arr_access_1480 )
+
+      rescue ANTLR3::Error::RecognitionError => re
+        report_error(re)
+        recover(re)
+
+      ensure
+        # -> uncomment the next line to manually enable rule tracing
+        # trace_out( __method__, 29 )
+
+
+      end
+
+      return 
+    end
+
+
+
+    #
+    # parser rule mat_access
+    #
+    # (in Foma.g)
+    # 273:1: mat_access : LB super_expression RB ;
+    #
+    def mat_access
+      # -> uncomment the next line to manually enable rule tracing
+      # trace_in( __method__, 30 )
+
+
+      begin
+      # at line 274:4: LB super_expression RB
+      match( LB, TOKENS_FOLLOWING_LB_IN_mat_access_1492 )
+
+      # --> action
+      $cuads.add_falseBottom
+      # <-- action
+
+      @state.following.push( TOKENS_FOLLOWING_super_expression_IN_mat_access_1497 )
+      super_expression
+      @state.following.pop
+
+      # --> action
+      $cuads.rem_falseBottom
+      # <-- action
+
+      match( RB, TOKENS_FOLLOWING_RB_IN_mat_access_1502 )
+
+      rescue ANTLR3::Error::RecognitionError => re
+        report_error(re)
+        recover(re)
+
+      ensure
+        # -> uncomment the next line to manually enable rule tracing
+        # trace_out( __method__, 30 )
+
+
+      end
+
+      return 
     end
 
 
@@ -2412,16 +2470,16 @@ module Foma
     # parser rule estatutes
     #
     # (in Foma.g)
-    # 269:1: estatutes : ( assign SEMICOLON | condition | while_loop | for_loop | print | input | func_call SEMICOLON | method_call SEMICOLON | r_return ) ;
+    # 278:1: estatutes : ( assign SEMICOLON | condition | while_loop | for_loop | print | input | func_call SEMICOLON | method_call SEMICOLON | r_return ) ;
     #
     def estatutes
       # -> uncomment the next line to manually enable rule tracing
-      # trace_in( __method__, 29 )
+      # trace_in( __method__, 31 )
 
 
       begin
-      # at line 270:5: ( assign SEMICOLON | condition | while_loop | for_loop | print | input | func_call SEMICOLON | method_call SEMICOLON | r_return )
-      # at line 270:5: ( assign SEMICOLON | condition | while_loop | for_loop | print | input | func_call SEMICOLON | method_call SEMICOLON | r_return )
+      # at line 279:5: ( assign SEMICOLON | condition | while_loop | for_loop | print | input | func_call SEMICOLON | method_call SEMICOLON | r_return )
+      # at line 279:5: ( assign SEMICOLON | condition | while_loop | for_loop | print | input | func_call SEMICOLON | method_call SEMICOLON | r_return )
       alt_35 = 9
       case look_35 = @input.peek( 1 )
       when ID then case look_35 = @input.peek( 2 )
@@ -2444,208 +2502,63 @@ module Foma
       end
       case alt_35
       when 1
-        # at line 270:6: assign SEMICOLON
-        @state.following.push( TOKENS_FOLLOWING_assign_IN_estatutes_1490 )
+        # at line 279:6: assign SEMICOLON
+        @state.following.push( TOKENS_FOLLOWING_assign_IN_estatutes_1517 )
         assign
         @state.following.pop
-        match( SEMICOLON, TOKENS_FOLLOWING_SEMICOLON_IN_estatutes_1492 )
+        match( SEMICOLON, TOKENS_FOLLOWING_SEMICOLON_IN_estatutes_1519 )
 
       when 2
-        # at line 270:25: condition
-        @state.following.push( TOKENS_FOLLOWING_condition_IN_estatutes_1496 )
+        # at line 279:25: condition
+        @state.following.push( TOKENS_FOLLOWING_condition_IN_estatutes_1523 )
         condition
         @state.following.pop
 
       when 3
-        # at line 270:37: while_loop
-        @state.following.push( TOKENS_FOLLOWING_while_loop_IN_estatutes_1500 )
+        # at line 279:37: while_loop
+        @state.following.push( TOKENS_FOLLOWING_while_loop_IN_estatutes_1527 )
         while_loop
         @state.following.pop
 
       when 4
-        # at line 270:50: for_loop
-        @state.following.push( TOKENS_FOLLOWING_for_loop_IN_estatutes_1504 )
+        # at line 279:50: for_loop
+        @state.following.push( TOKENS_FOLLOWING_for_loop_IN_estatutes_1531 )
         for_loop
         @state.following.pop
 
       when 5
-        # at line 270:61: print
-        @state.following.push( TOKENS_FOLLOWING_print_IN_estatutes_1508 )
+        # at line 279:61: print
+        @state.following.push( TOKENS_FOLLOWING_print_IN_estatutes_1535 )
         print
         @state.following.pop
 
       when 6
-        # at line 270:69: input
-        @state.following.push( TOKENS_FOLLOWING_input_IN_estatutes_1512 )
+        # at line 279:69: input
+        @state.following.push( TOKENS_FOLLOWING_input_IN_estatutes_1539 )
         input
         @state.following.pop
 
       when 7
-        # at line 270:77: func_call SEMICOLON
-        @state.following.push( TOKENS_FOLLOWING_func_call_IN_estatutes_1516 )
+        # at line 279:77: func_call SEMICOLON
+        @state.following.push( TOKENS_FOLLOWING_func_call_IN_estatutes_1543 )
         func_call
         @state.following.pop
-        match( SEMICOLON, TOKENS_FOLLOWING_SEMICOLON_IN_estatutes_1518 )
+        match( SEMICOLON, TOKENS_FOLLOWING_SEMICOLON_IN_estatutes_1545 )
 
       when 8
-        # at line 270:99: method_call SEMICOLON
-        @state.following.push( TOKENS_FOLLOWING_method_call_IN_estatutes_1522 )
+        # at line 279:99: method_call SEMICOLON
+        @state.following.push( TOKENS_FOLLOWING_method_call_IN_estatutes_1549 )
         method_call
         @state.following.pop
-        match( SEMICOLON, TOKENS_FOLLOWING_SEMICOLON_IN_estatutes_1524 )
+        match( SEMICOLON, TOKENS_FOLLOWING_SEMICOLON_IN_estatutes_1551 )
 
       when 9
-        # at line 270:124: r_return
-        @state.following.push( TOKENS_FOLLOWING_r_return_IN_estatutes_1529 )
+        # at line 279:124: r_return
+        @state.following.push( TOKENS_FOLLOWING_r_return_IN_estatutes_1556 )
         r_return
         @state.following.pop
 
       end
-
-      rescue ANTLR3::Error::RecognitionError => re
-        report_error(re)
-        recover(re)
-
-      ensure
-        # -> uncomment the next line to manually enable rule tracing
-        # trace_out( __method__, 29 )
-
-
-      end
-
-      return 
-    end
-
-
-
-    #
-    # parser rule assign
-    #
-    # (in Foma.g)
-    # 273:1: assign : var_access ASSIGN super_expression ;
-    #
-    def assign
-      # -> uncomment the next line to manually enable rule tracing
-      # trace_in( __method__, 30 )
-
-
-      var_access43 = nil
-
-
-      begin
-      # at line 274:5: var_access ASSIGN super_expression
-      @state.following.push( TOKENS_FOLLOWING_var_access_IN_assign_1544 )
-      var_access43 = var_access
-      @state.following.pop
-
-      # --> action
-      $cuads.add_operando(( var_access43 && @input.to_s( var_access43.start, var_access43.stop ) ), $scope)
-      # <-- action
-
-      match( ASSIGN, TOKENS_FOLLOWING_ASSIGN_IN_assign_1548 )
-
-      # --> action
-      $cuads.add_assign()
-      # <-- action
-
-
-      # --> action
-      $cuads.add_falseBottom
-      # <-- action
-
-      @state.following.push( TOKENS_FOLLOWING_super_expression_IN_assign_1554 )
-      super_expression
-      @state.following.pop
-
-      # --> action
-      $cuads.rem_falseBottom
-      # <-- action
-
-
-      # --> action
-      $cuads.emptyStack
-      # <-- action
-
-
-      rescue ANTLR3::Error::RecognitionError => re
-        report_error(re)
-        recover(re)
-
-      ensure
-        # -> uncomment the next line to manually enable rule tracing
-        # trace_out( __method__, 30 )
-
-
-      end
-
-      return 
-    end
-
-
-
-    #
-    # parser rule condition
-    #
-    # (in Foma.g)
-    # 277:1: condition : IF LP super_expression RP block ( ELSE block )? ;
-    #
-    def condition
-      # -> uncomment the next line to manually enable rule tracing
-      # trace_in( __method__, 31 )
-
-
-      begin
-      # at line 278:5: IF LP super_expression RP block ( ELSE block )?
-      match( IF, TOKENS_FOLLOWING_IF_IN_condition_1571 )
-      match( LP, TOKENS_FOLLOWING_LP_IN_condition_1573 )
-
-      # --> action
-      $cuads.add_falseBottom
-      # <-- action
-
-      @state.following.push( TOKENS_FOLLOWING_super_expression_IN_condition_1577 )
-      super_expression
-      @state.following.pop
-
-      # --> action
-      $cuads.rem_falseBottom
-      # <-- action
-
-
-      # --> action
-      $cuads.goto_falso
-      # <-- action
-
-      match( RP, TOKENS_FOLLOWING_RP_IN_condition_1582 )
-      @state.following.push( TOKENS_FOLLOWING_block_IN_condition_1584 )
-      block
-      @state.following.pop
-      # at line 278:109: ( ELSE block )?
-      alt_36 = 2
-      look_36_0 = @input.peek( 1 )
-
-      if ( look_36_0 == ELSE )
-        alt_36 = 1
-      end
-      case alt_36
-      when 1
-        # at line 278:110: ELSE block
-        match( ELSE, TOKENS_FOLLOWING_ELSE_IN_condition_1587 )
-
-        # --> action
-        $cuads.goto_else
-        # <-- action
-
-        @state.following.push( TOKENS_FOLLOWING_block_IN_condition_1592 )
-        block
-        @state.following.pop
-
-      end
-
-      # --> action
-      $cuads.fill_goto
-      # <-- action
-
 
       rescue ANTLR3::Error::RecognitionError => re
         report_error(re)
@@ -2664,23 +2577,25 @@ module Foma
 
 
     #
-    # parser rule while_loop
+    # parser rule assign
     #
     # (in Foma.g)
-    # 281:1: while_loop : WHILE LP super_expression RP block ;
+    # 282:1: assign : var_access ASSIGN super_expression ;
     #
-    def while_loop
+    def assign
       # -> uncomment the next line to manually enable rule tracing
       # trace_in( __method__, 32 )
 
 
       begin
-      # at line 282:5: WHILE LP super_expression RP block
-      match( WHILE, TOKENS_FOLLOWING_WHILE_IN_while_loop_1609 )
-      match( LP, TOKENS_FOLLOWING_LP_IN_while_loop_1611 )
+      # at line 283:5: var_access ASSIGN super_expression
+      @state.following.push( TOKENS_FOLLOWING_var_access_IN_assign_1571 )
+      var_access
+      @state.following.pop
+      match( ASSIGN, TOKENS_FOLLOWING_ASSIGN_IN_assign_1574 )
 
       # --> action
-      $cuads.save_spot
+      $cuads.add_assign()
       # <-- action
 
 
@@ -2688,7 +2603,7 @@ module Foma
       $cuads.add_falseBottom
       # <-- action
 
-      @state.following.push( TOKENS_FOLLOWING_super_expression_IN_while_loop_1616 )
+      @state.following.push( TOKENS_FOLLOWING_super_expression_IN_assign_1580 )
       super_expression
       @state.following.pop
 
@@ -2698,16 +2613,7 @@ module Foma
 
 
       # --> action
-      $cuads.goto_falso
-      # <-- action
-
-      match( RP, TOKENS_FOLLOWING_RP_IN_while_loop_1621 )
-      @state.following.push( TOKENS_FOLLOWING_block_IN_while_loop_1623 )
-      block
-      @state.following.pop
-
-      # --> action
-      $cuads.goto_loop
+      $cuads.emptyStack
       # <-- action
 
 
@@ -2728,47 +2634,26 @@ module Foma
 
 
     #
-    # parser rule for_loop
+    # parser rule condition
     #
     # (in Foma.g)
-    # 285:1: for_loop : FOR LP ( assign )? SEMICOLON super_expression SEMICOLON ( assign )? RP block ;
+    # 286:1: condition : IF LP super_expression RP block ( ELSE block )? ;
     #
-    def for_loop
+    def condition
       # -> uncomment the next line to manually enable rule tracing
       # trace_in( __method__, 33 )
 
 
       begin
-      # at line 286:5: FOR LP ( assign )? SEMICOLON super_expression SEMICOLON ( assign )? RP block
-      match( FOR, TOKENS_FOLLOWING_FOR_IN_for_loop_1638 )
-      match( LP, TOKENS_FOLLOWING_LP_IN_for_loop_1640 )
-      # at line 286:12: ( assign )?
-      alt_37 = 2
-      look_37_0 = @input.peek( 1 )
-
-      if ( look_37_0 == ID )
-        alt_37 = 1
-      end
-      case alt_37
-      when 1
-        # at line 286:12: assign
-        @state.following.push( TOKENS_FOLLOWING_assign_IN_for_loop_1642 )
-        assign
-        @state.following.pop
-
-      end
-      match( SEMICOLON, TOKENS_FOLLOWING_SEMICOLON_IN_for_loop_1645 )
-
-      # --> action
-      $cuads.save_spot
-      # <-- action
-
+      # at line 287:5: IF LP super_expression RP block ( ELSE block )?
+      match( IF, TOKENS_FOLLOWING_IF_IN_condition_1597 )
+      match( LP, TOKENS_FOLLOWING_LP_IN_condition_1599 )
 
       # --> action
       $cuads.add_falseBottom
       # <-- action
 
-      @state.following.push( TOKENS_FOLLOWING_super_expression_IN_for_loop_1650 )
+      @state.following.push( TOKENS_FOLLOWING_super_expression_IN_condition_1603 )
       super_expression
       @state.following.pop
 
@@ -2781,44 +2666,34 @@ module Foma
       $cuads.goto_falso
       # <-- action
 
-      match( SEMICOLON, TOKENS_FOLLOWING_SEMICOLON_IN_for_loop_1656 )
+      match( RP, TOKENS_FOLLOWING_RP_IN_condition_1608 )
+      @state.following.push( TOKENS_FOLLOWING_block_IN_condition_1610 )
+      block
+      @state.following.pop
+      # at line 287:109: ( ELSE block )?
+      alt_36 = 2
+      look_36_0 = @input.peek( 1 )
 
-      # --> action
-      $cuads.add_swap
-      # <-- action
-
-      # at line 286:167: ( assign )?
-      alt_38 = 2
-      look_38_0 = @input.peek( 1 )
-
-      if ( look_38_0 == ID )
-        alt_38 = 1
+      if ( look_36_0 == ELSE )
+        alt_36 = 1
       end
-      case alt_38
+      case alt_36
       when 1
-        # at line 286:167: assign
-        @state.following.push( TOKENS_FOLLOWING_assign_IN_for_loop_1659 )
-        assign
+        # at line 287:110: ELSE block
+        match( ELSE, TOKENS_FOLLOWING_ELSE_IN_condition_1613 )
+
+        # --> action
+        $cuads.goto_else
+        # <-- action
+
+        @state.following.push( TOKENS_FOLLOWING_block_IN_condition_1618 )
+        block
         @state.following.pop
 
       end
 
       # --> action
-      $cuads.add_swap
-      # <-- action
-
-      match( RP, TOKENS_FOLLOWING_RP_IN_for_loop_1664 )
-      @state.following.push( TOKENS_FOLLOWING_block_IN_for_loop_1666 )
-      block
-      @state.following.pop
-
-      # --> action
-      $cuads.do_swap
-      # <-- action
-
-
-      # --> action
-      $cuads.goto_loop
+      $cuads.fill_goto
       # <-- action
 
 
@@ -2839,59 +2714,52 @@ module Foma
 
 
     #
-    # parser rule print
+    # parser rule while_loop
     #
     # (in Foma.g)
-    # 289:1: print : PRINT LP ( super_expression ( print_2 )* ) RP SEMICOLON ;
+    # 290:1: while_loop : WHILE LP super_expression RP block ;
     #
-    def print
+    def while_loop
       # -> uncomment the next line to manually enable rule tracing
       # trace_in( __method__, 34 )
 
 
       begin
-      # at line 290:5: PRINT LP ( super_expression ( print_2 )* ) RP SEMICOLON
-      match( PRINT, TOKENS_FOLLOWING_PRINT_IN_print_1682 )
-      match( LP, TOKENS_FOLLOWING_LP_IN_print_1684 )
-      # at line 290:14: ( super_expression ( print_2 )* )
-      # at line 290:15: super_expression ( print_2 )*
-      @state.following.push( TOKENS_FOLLOWING_super_expression_IN_print_1687 )
+      # at line 291:5: WHILE LP super_expression RP block
+      match( WHILE, TOKENS_FOLLOWING_WHILE_IN_while_loop_1635 )
+      match( LP, TOKENS_FOLLOWING_LP_IN_while_loop_1637 )
+
+      # --> action
+      $cuads.save_spot
+      # <-- action
+
+
+      # --> action
+      $cuads.add_falseBottom
+      # <-- action
+
+      @state.following.push( TOKENS_FOLLOWING_super_expression_IN_while_loop_1642 )
       super_expression
       @state.following.pop
 
       # --> action
-      $cuads.emptyStack
+      $cuads.rem_falseBottom
       # <-- action
 
 
       # --> action
-      $cuads.do_print
+      $cuads.goto_falso
       # <-- action
 
-      # at line 290:70: ( print_2 )*
-      while true # decision 39
-        alt_39 = 2
-        look_39_0 = @input.peek( 1 )
+      match( RP, TOKENS_FOLLOWING_RP_IN_while_loop_1647 )
+      @state.following.push( TOKENS_FOLLOWING_block_IN_while_loop_1649 )
+      block
+      @state.following.pop
 
-        if ( look_39_0 == COMMA )
-          alt_39 = 1
+      # --> action
+      $cuads.goto_loop
+      # <-- action
 
-        end
-        case alt_39
-        when 1
-          # at line 290:70: print_2
-          @state.following.push( TOKENS_FOLLOWING_print_2_IN_print_1691 )
-          print_2
-          @state.following.pop
-
-        else
-          break # out of loop for decision 39
-        end
-      end # loop for decision 39
-
-
-      match( RP, TOKENS_FOLLOWING_RP_IN_print_1696 )
-      match( SEMICOLON, TOKENS_FOLLOWING_SEMICOLON_IN_print_1698 )
 
       rescue ANTLR3::Error::RecognitionError => re
         report_error(re)
@@ -2910,30 +2778,97 @@ module Foma
 
 
     #
-    # parser rule print_2
+    # parser rule for_loop
     #
     # (in Foma.g)
-    # 293:1: print_2 : COMMA super_expression ;
+    # 294:1: for_loop : FOR LP ( assign )? SEMICOLON super_expression SEMICOLON ( assign )? RP block ;
     #
-    def print_2
+    def for_loop
       # -> uncomment the next line to manually enable rule tracing
       # trace_in( __method__, 35 )
 
 
       begin
-      # at line 294:6: COMMA super_expression
-      match( COMMA, TOKENS_FOLLOWING_COMMA_IN_print_2_1712 )
-      @state.following.push( TOKENS_FOLLOWING_super_expression_IN_print_2_1714 )
-      super_expression
-      @state.following.pop
+      # at line 295:5: FOR LP ( assign )? SEMICOLON super_expression SEMICOLON ( assign )? RP block
+      match( FOR, TOKENS_FOLLOWING_FOR_IN_for_loop_1664 )
+      match( LP, TOKENS_FOLLOWING_LP_IN_for_loop_1666 )
+      # at line 295:12: ( assign )?
+      alt_37 = 2
+      look_37_0 = @input.peek( 1 )
+
+      if ( look_37_0 == ID )
+        alt_37 = 1
+      end
+      case alt_37
+      when 1
+        # at line 295:12: assign
+        @state.following.push( TOKENS_FOLLOWING_assign_IN_for_loop_1668 )
+        assign
+        @state.following.pop
+
+      end
+      match( SEMICOLON, TOKENS_FOLLOWING_SEMICOLON_IN_for_loop_1671 )
 
       # --> action
-      $cuads.emptyStack
+      $cuads.save_spot
       # <-- action
 
 
       # --> action
-      $cuads.do_print
+      $cuads.add_falseBottom
+      # <-- action
+
+      @state.following.push( TOKENS_FOLLOWING_super_expression_IN_for_loop_1676 )
+      super_expression
+      @state.following.pop
+
+      # --> action
+      $cuads.rem_falseBottom
+      # <-- action
+
+
+      # --> action
+      $cuads.goto_falso
+      # <-- action
+
+      match( SEMICOLON, TOKENS_FOLLOWING_SEMICOLON_IN_for_loop_1682 )
+
+      # --> action
+      $cuads.add_swap
+      # <-- action
+
+      # at line 295:167: ( assign )?
+      alt_38 = 2
+      look_38_0 = @input.peek( 1 )
+
+      if ( look_38_0 == ID )
+        alt_38 = 1
+      end
+      case alt_38
+      when 1
+        # at line 295:167: assign
+        @state.following.push( TOKENS_FOLLOWING_assign_IN_for_loop_1685 )
+        assign
+        @state.following.pop
+
+      end
+
+      # --> action
+      $cuads.add_swap
+      # <-- action
+
+      match( RP, TOKENS_FOLLOWING_RP_IN_for_loop_1690 )
+      @state.following.push( TOKENS_FOLLOWING_block_IN_for_loop_1692 )
+      block
+      @state.following.pop
+
+      # --> action
+      $cuads.do_swap
+      # <-- action
+
+
+      # --> action
+      $cuads.goto_loop
       # <-- action
 
 
@@ -2954,36 +2889,59 @@ module Foma
 
 
     #
-    # parser rule input
+    # parser rule print
     #
     # (in Foma.g)
-    # 297:1: input : INPUT LP ID RP SEMICOLON ;
+    # 298:1: print : PRINT LP ( super_expression ( print_2 )* ) RP SEMICOLON ;
     #
-    def input
+    def print
       # -> uncomment the next line to manually enable rule tracing
       # trace_in( __method__, 36 )
 
 
-      __ID44__ = nil
-
-
       begin
-      # at line 298:5: INPUT LP ID RP SEMICOLON
-      match( INPUT, TOKENS_FOLLOWING_INPUT_IN_input_1730 )
-      match( LP, TOKENS_FOLLOWING_LP_IN_input_1732 )
-      __ID44__ = match( ID, TOKENS_FOLLOWING_ID_IN_input_1734 )
+      # at line 299:5: PRINT LP ( super_expression ( print_2 )* ) RP SEMICOLON
+      match( PRINT, TOKENS_FOLLOWING_PRINT_IN_print_1708 )
+      match( LP, TOKENS_FOLLOWING_LP_IN_print_1710 )
+      # at line 299:14: ( super_expression ( print_2 )* )
+      # at line 299:15: super_expression ( print_2 )*
+      @state.following.push( TOKENS_FOLLOWING_super_expression_IN_print_1713 )
+      super_expression
+      @state.following.pop
 
       # --> action
-      $cuads.add_operando(__ID44__.text, $scope)
+      $cuads.emptyStack
       # <-- action
 
 
       # --> action
-      $cuads.do_input
+      $cuads.do_print
       # <-- action
 
-      match( RP, TOKENS_FOLLOWING_RP_IN_input_1740 )
-      match( SEMICOLON, TOKENS_FOLLOWING_SEMICOLON_IN_input_1742 )
+      # at line 299:70: ( print_2 )*
+      while true # decision 39
+        alt_39 = 2
+        look_39_0 = @input.peek( 1 )
+
+        if ( look_39_0 == COMMA )
+          alt_39 = 1
+
+        end
+        case alt_39
+        when 1
+          # at line 299:70: print_2
+          @state.following.push( TOKENS_FOLLOWING_print_2_IN_print_1717 )
+          print_2
+          @state.following.pop
+
+        else
+          break # out of loop for decision 39
+        end
+      end # loop for decision 39
+
+
+      match( RP, TOKENS_FOLLOWING_RP_IN_print_1722 )
+      match( SEMICOLON, TOKENS_FOLLOWING_SEMICOLON_IN_print_1724 )
 
       rescue ANTLR3::Error::RecognitionError => re
         report_error(re)
@@ -3002,59 +2960,32 @@ module Foma
 
 
     #
-    # parser rule func_call
+    # parser rule print_2
     #
     # (in Foma.g)
-    # 301:1: func_call : ID LP ( call_params )? RP ;
+    # 302:1: print_2 : COMMA super_expression ;
     #
-    def func_call
+    def print_2
       # -> uncomment the next line to manually enable rule tracing
       # trace_in( __method__, 37 )
 
 
-      __ID45__ = nil
-
-
       begin
-      # at line 302:5: ID LP ( call_params )? RP
-      __ID45__ = match( ID, TOKENS_FOLLOWING_ID_IN_func_call_1755 )
+      # at line 303:6: COMMA super_expression
+      match( COMMA, TOKENS_FOLLOWING_COMMA_IN_print_2_1738 )
+      @state.following.push( TOKENS_FOLLOWING_super_expression_IN_print_2_1740 )
+      super_expression
+      @state.following.pop
 
       # --> action
-      $cuads.era(__ID45__.text)
-      # <-- action
-
-      match( LP, TOKENS_FOLLOWING_LP_IN_func_call_1759 )
-
-      # --> action
-      $params = 0
-      # <-- action
-
-      # at line 302:50: ( call_params )?
-      alt_40 = 2
-      look_40_0 = @input.peek( 1 )
-
-      if ( look_40_0.between?( C_BOOL, C_INT ) || look_40_0 == ID || look_40_0 == LP )
-        alt_40 = 1
-      end
-      case alt_40
-      when 1
-        # at line 302:50: call_params
-        @state.following.push( TOKENS_FOLLOWING_call_params_IN_func_call_1763 )
-        call_params
-        @state.following.pop
-
-      end
-
-      # --> action
-      $cuads.go_sub(__ID45__.text)
+      $cuads.emptyStack
       # <-- action
 
 
       # --> action
-      $cuads.return_type(__ID45__.text)
+      $cuads.do_print
       # <-- action
 
-      match( RP, TOKENS_FOLLOWING_RP_IN_func_call_1771 )
 
       rescue ANTLR3::Error::RecognitionError => re
         report_error(re)
@@ -3073,61 +3004,36 @@ module Foma
 
 
     #
-    # parser rule call_params
+    # parser rule input
     #
     # (in Foma.g)
-    # 305:1: call_params : super_expression ( call_params2 )* ;
+    # 306:1: input : INPUT LP ID RP SEMICOLON ;
     #
-    def call_params
+    def input
       # -> uncomment the next line to manually enable rule tracing
       # trace_in( __method__, 38 )
 
 
+      __ID43__ = nil
+
+
       begin
-      # at line 306:7: super_expression ( call_params2 )*
-      # --> action
-      $cuads.add_falseBottom
-      # <-- action
-
-      @state.following.push( TOKENS_FOLLOWING_super_expression_IN_call_params_1788 )
-      super_expression
-      @state.following.pop
+      # at line 307:5: INPUT LP ID RP SEMICOLON
+      match( INPUT, TOKENS_FOLLOWING_INPUT_IN_input_1756 )
+      match( LP, TOKENS_FOLLOWING_LP_IN_input_1758 )
+      __ID43__ = match( ID, TOKENS_FOLLOWING_ID_IN_input_1760 )
 
       # --> action
-      $cuads.rem_falseBottom
+      $cuads.add_operando(__ID43__.text, $scope)
       # <-- action
 
 
       # --> action
-      $cuads.params($params)
+      $cuads.do_input
       # <-- action
 
-
-      # --> action
-      $params +=1
-      # <-- action
-
-      # at line 306:117: ( call_params2 )*
-      while true # decision 41
-        alt_41 = 2
-        look_41_0 = @input.peek( 1 )
-
-        if ( look_41_0 == COMMA )
-          alt_41 = 1
-
-        end
-        case alt_41
-        when 1
-          # at line 306:117: call_params2
-          @state.following.push( TOKENS_FOLLOWING_call_params2_IN_call_params_1795 )
-          call_params2
-          @state.following.pop
-
-        else
-          break # out of loop for decision 41
-        end
-      end # loop for decision 41
-
+      match( RP, TOKENS_FOLLOWING_RP_IN_input_1766 )
+      match( SEMICOLON, TOKENS_FOLLOWING_SEMICOLON_IN_input_1768 )
 
       rescue ANTLR3::Error::RecognitionError => re
         report_error(re)
@@ -3146,42 +3052,59 @@ module Foma
 
 
     #
-    # parser rule call_params2
+    # parser rule func_call
     #
     # (in Foma.g)
-    # 309:1: call_params2 : COMMA super_expression ;
+    # 310:1: func_call : ID LP ( call_params )? RP ;
     #
-    def call_params2
+    def func_call
       # -> uncomment the next line to manually enable rule tracing
       # trace_in( __method__, 39 )
 
 
+      __ID44__ = nil
+
+
       begin
-      # at line 310:7: COMMA super_expression
-      match( COMMA, TOKENS_FOLLOWING_COMMA_IN_call_params2_1811 )
+      # at line 311:5: ID LP ( call_params )? RP
+      __ID44__ = match( ID, TOKENS_FOLLOWING_ID_IN_func_call_1781 )
 
       # --> action
-      $cuads.add_falseBottom
+      $cuads.era(__ID44__.text)
       # <-- action
 
-      @state.following.push( TOKENS_FOLLOWING_super_expression_IN_call_params2_1815 )
-      super_expression
-      @state.following.pop
+      match( LP, TOKENS_FOLLOWING_LP_IN_func_call_1785 )
 
       # --> action
-      $cuads.rem_falseBottom
+      $params = 0
+      # <-- action
+
+      # at line 311:50: ( call_params )?
+      alt_40 = 2
+      look_40_0 = @input.peek( 1 )
+
+      if ( look_40_0.between?( C_BOOL, C_INT ) || look_40_0 == ID || look_40_0 == LP )
+        alt_40 = 1
+      end
+      case alt_40
+      when 1
+        # at line 311:50: call_params
+        @state.following.push( TOKENS_FOLLOWING_call_params_IN_func_call_1789 )
+        call_params
+        @state.following.pop
+
+      end
+
+      # --> action
+      $cuads.go_sub(__ID44__.text)
       # <-- action
 
 
       # --> action
-      $cuads.params($params)
+      $cuads.return_type(__ID44__.text)
       # <-- action
 
-
-      # --> action
-      $params +=1
-      # <-- action
-
+      match( RP, TOKENS_FOLLOWING_RP_IN_func_call_1797 )
 
       rescue ANTLR3::Error::RecognitionError => re
         report_error(re)
@@ -3200,53 +3123,61 @@ module Foma
 
 
     #
-    # parser rule method_call
+    # parser rule call_params
     #
     # (in Foma.g)
-    # 313:1: method_call : ID POINT method_call_2 LP ( call_params )? RP ;
+    # 314:1: call_params : super_expression ( call_params2 )* ;
     #
-    def method_call
+    def call_params
       # -> uncomment the next line to manually enable rule tracing
       # trace_in( __method__, 40 )
 
 
-      __ID46__ = nil
-
-
       begin
-      # at line 314:5: ID POINT method_call_2 LP ( call_params )? RP
-      __ID46__ = match( ID, TOKENS_FOLLOWING_ID_IN_method_call_1836 )
-
+      # at line 315:7: super_expression ( call_params2 )*
       # --> action
-      $varType = $program.dirFunc.functions["global"].dirVars.variables[__ID46__.text].type
+      $cuads.add_falseBottom
       # <-- action
 
-      match( POINT, TOKENS_FOLLOWING_POINT_IN_method_call_1841 )
-      @state.following.push( TOKENS_FOLLOWING_method_call_2_IN_method_call_1843 )
-      method_call_2
+      @state.following.push( TOKENS_FOLLOWING_super_expression_IN_call_params_1814 )
+      super_expression
       @state.following.pop
-      match( LP, TOKENS_FOLLOWING_LP_IN_method_call_1845 )
-      # at line 314:117: ( call_params )?
-      alt_42 = 2
-      look_42_0 = @input.peek( 1 )
-
-      if ( look_42_0.between?( C_BOOL, C_INT ) || look_42_0 == ID || look_42_0 == LP )
-        alt_42 = 1
-      end
-      case alt_42
-      when 1
-        # at line 314:117: call_params
-        @state.following.push( TOKENS_FOLLOWING_call_params_IN_method_call_1847 )
-        call_params
-        @state.following.pop
-
-      end
 
       # --> action
-      $cuads.go_sub("#{$varType}.#{$varId}")
+      $cuads.rem_falseBottom
       # <-- action
 
-      match( RP, TOKENS_FOLLOWING_RP_IN_method_call_1851 )
+
+      # --> action
+      $cuads.params($params)
+      # <-- action
+
+
+      # --> action
+      $params +=1
+      # <-- action
+
+      # at line 315:117: ( call_params2 )*
+      while true # decision 41
+        alt_41 = 2
+        look_41_0 = @input.peek( 1 )
+
+        if ( look_41_0 == COMMA )
+          alt_41 = 1
+
+        end
+        case alt_41
+        when 1
+          # at line 315:117: call_params2
+          @state.following.push( TOKENS_FOLLOWING_call_params2_IN_call_params_1821 )
+          call_params2
+          @state.following.pop
+
+        else
+          break # out of loop for decision 41
+        end
+      end # loop for decision 41
+
 
       rescue ANTLR3::Error::RecognitionError => re
         report_error(re)
@@ -3265,30 +3196,40 @@ module Foma
 
 
     #
-    # parser rule method_call_2
+    # parser rule call_params2
     #
     # (in Foma.g)
-    # 317:1: method_call_2 : ID ;
+    # 318:1: call_params2 : COMMA super_expression ;
     #
-    def method_call_2
+    def call_params2
       # -> uncomment the next line to manually enable rule tracing
       # trace_in( __method__, 41 )
 
 
-      __ID47__ = nil
-
-
       begin
-      # at line 318:5: ID
-      __ID47__ = match( ID, TOKENS_FOLLOWING_ID_IN_method_call_2_1864 )
+      # at line 319:7: COMMA super_expression
+      match( COMMA, TOKENS_FOLLOWING_COMMA_IN_call_params2_1837 )
 
       # --> action
-      $varId = __ID47__.text
+      $cuads.add_falseBottom
+      # <-- action
+
+      @state.following.push( TOKENS_FOLLOWING_super_expression_IN_call_params2_1841 )
+      super_expression
+      @state.following.pop
+
+      # --> action
+      $cuads.rem_falseBottom
       # <-- action
 
 
       # --> action
-      $cuads.era("#{$varType}.#{$varId}")
+      $cuads.params($params)
+      # <-- action
+
+
+      # --> action
+      $params +=1
       # <-- action
 
 
@@ -3309,25 +3250,134 @@ module Foma
 
 
     #
-    # parser rule r_return
+    # parser rule method_call
     #
     # (in Foma.g)
-    # 321:1: r_return : RETURN super_expression SEMICOLON ;
+    # 322:1: method_call : ID POINT method_call_2 LP ( call_params )? RP ;
     #
-    def r_return
+    def method_call
       # -> uncomment the next line to manually enable rule tracing
       # trace_in( __method__, 42 )
 
 
+      __ID45__ = nil
+
+
       begin
-      # at line 322:4: RETURN super_expression SEMICOLON
-      match( RETURN, TOKENS_FOLLOWING_RETURN_IN_r_return_1880 )
+      # at line 323:5: ID POINT method_call_2 LP ( call_params )? RP
+      __ID45__ = match( ID, TOKENS_FOLLOWING_ID_IN_method_call_1862 )
+
+      # --> action
+      $varType = $program.dirFunc.functions["global"].dirVars.variables[__ID45__.text].type
+      # <-- action
+
+      match( POINT, TOKENS_FOLLOWING_POINT_IN_method_call_1867 )
+      @state.following.push( TOKENS_FOLLOWING_method_call_2_IN_method_call_1869 )
+      method_call_2
+      @state.following.pop
+      match( LP, TOKENS_FOLLOWING_LP_IN_method_call_1871 )
+      # at line 323:117: ( call_params )?
+      alt_42 = 2
+      look_42_0 = @input.peek( 1 )
+
+      if ( look_42_0.between?( C_BOOL, C_INT ) || look_42_0 == ID || look_42_0 == LP )
+        alt_42 = 1
+      end
+      case alt_42
+      when 1
+        # at line 323:117: call_params
+        @state.following.push( TOKENS_FOLLOWING_call_params_IN_method_call_1873 )
+        call_params
+        @state.following.pop
+
+      end
+
+      # --> action
+      $cuads.go_sub("#{$varType}.#{$varId}")
+      # <-- action
+
+      match( RP, TOKENS_FOLLOWING_RP_IN_method_call_1877 )
+
+      rescue ANTLR3::Error::RecognitionError => re
+        report_error(re)
+        recover(re)
+
+      ensure
+        # -> uncomment the next line to manually enable rule tracing
+        # trace_out( __method__, 42 )
+
+
+      end
+
+      return 
+    end
+
+
+
+    #
+    # parser rule method_call_2
+    #
+    # (in Foma.g)
+    # 326:1: method_call_2 : ID ;
+    #
+    def method_call_2
+      # -> uncomment the next line to manually enable rule tracing
+      # trace_in( __method__, 43 )
+
+
+      __ID46__ = nil
+
+
+      begin
+      # at line 327:5: ID
+      __ID46__ = match( ID, TOKENS_FOLLOWING_ID_IN_method_call_2_1890 )
+
+      # --> action
+      $varId = __ID46__.text
+      # <-- action
+
+
+      # --> action
+      $cuads.era("#{$varType}.#{$varId}")
+      # <-- action
+
+
+      rescue ANTLR3::Error::RecognitionError => re
+        report_error(re)
+        recover(re)
+
+      ensure
+        # -> uncomment the next line to manually enable rule tracing
+        # trace_out( __method__, 43 )
+
+
+      end
+
+      return 
+    end
+
+
+
+    #
+    # parser rule r_return
+    #
+    # (in Foma.g)
+    # 330:1: r_return : RETURN super_expression SEMICOLON ;
+    #
+    def r_return
+      # -> uncomment the next line to manually enable rule tracing
+      # trace_in( __method__, 44 )
+
+
+      begin
+      # at line 331:4: RETURN super_expression SEMICOLON
+      match( RETURN, TOKENS_FOLLOWING_RETURN_IN_r_return_1906 )
 
       # --> action
       $cuads.add_falseBottom
       # <-- action
 
-      @state.following.push( TOKENS_FOLLOWING_super_expression_IN_r_return_1884 )
+      @state.following.push( TOKENS_FOLLOWING_super_expression_IN_r_return_1910 )
       super_expression
       @state.following.pop
 
@@ -3340,7 +3390,7 @@ module Foma
       $cuads.do_return($scope)
       # <-- action
 
-      match( SEMICOLON, TOKENS_FOLLOWING_SEMICOLON_IN_r_return_1891 )
+      match( SEMICOLON, TOKENS_FOLLOWING_SEMICOLON_IN_r_return_1917 )
 
       rescue ANTLR3::Error::RecognitionError => re
         report_error(re)
@@ -3348,7 +3398,7 @@ module Foma
 
       ensure
         # -> uncomment the next line to manually enable rule tracing
-        # trace_out( __method__, 42 )
+        # trace_out( __method__, 44 )
 
 
       end
@@ -3473,84 +3523,86 @@ module Foma
     TOKENS_FOLLOWING_func_call_IN_factor_1367 = Set[ 1 ]
     TOKENS_FOLLOWING_method_call_IN_factor_1371 = Set[ 1 ]
     TOKENS_FOLLOWING_var_access_IN_var_cte_1386 = Set[ 1 ]
-    TOKENS_FOLLOWING_C_INT_IN_var_cte_1394 = Set[ 1 ]
-    TOKENS_FOLLOWING_C_FLOAT_IN_var_cte_1404 = Set[ 1 ]
-    TOKENS_FOLLOWING_C_CHAR_IN_var_cte_1415 = Set[ 1 ]
-    TOKENS_FOLLOWING_C_BOOL_IN_var_cte_1426 = Set[ 1 ]
-    TOKENS_FOLLOWING_ID_IN_var_access_1445 = Set[ 1, 29 ]
-    TOKENS_FOLLOWING_LB_IN_var_access_1448 = Set[ 12, 13, 14, 15, 24, 32 ]
-    TOKENS_FOLLOWING_exp_IN_var_access_1453 = Set[ 44 ]
-    TOKENS_FOLLOWING_RB_IN_var_access_1458 = Set[ 1, 29 ]
-    TOKENS_FOLLOWING_LB_IN_var_access_1461 = Set[ 12, 13, 14, 15, 24, 32 ]
-    TOKENS_FOLLOWING_exp_IN_var_access_1466 = Set[ 44 ]
-    TOKENS_FOLLOWING_RB_IN_var_access_1472 = Set[ 1 ]
-    TOKENS_FOLLOWING_assign_IN_estatutes_1490 = Set[ 49 ]
-    TOKENS_FOLLOWING_SEMICOLON_IN_estatutes_1492 = Set[ 1 ]
-    TOKENS_FOLLOWING_condition_IN_estatutes_1496 = Set[ 1 ]
-    TOKENS_FOLLOWING_while_loop_IN_estatutes_1500 = Set[ 1 ]
-    TOKENS_FOLLOWING_for_loop_IN_estatutes_1504 = Set[ 1 ]
-    TOKENS_FOLLOWING_print_IN_estatutes_1508 = Set[ 1 ]
-    TOKENS_FOLLOWING_input_IN_estatutes_1512 = Set[ 1 ]
-    TOKENS_FOLLOWING_func_call_IN_estatutes_1516 = Set[ 49 ]
-    TOKENS_FOLLOWING_SEMICOLON_IN_estatutes_1518 = Set[ 1 ]
-    TOKENS_FOLLOWING_method_call_IN_estatutes_1522 = Set[ 49 ]
-    TOKENS_FOLLOWING_SEMICOLON_IN_estatutes_1524 = Set[ 1 ]
-    TOKENS_FOLLOWING_r_return_IN_estatutes_1529 = Set[ 1 ]
-    TOKENS_FOLLOWING_var_access_IN_assign_1544 = Set[ 6 ]
-    TOKENS_FOLLOWING_ASSIGN_IN_assign_1548 = Set[ 12, 13, 14, 15, 24, 32 ]
-    TOKENS_FOLLOWING_super_expression_IN_assign_1554 = Set[ 1 ]
-    TOKENS_FOLLOWING_IF_IN_condition_1571 = Set[ 32 ]
-    TOKENS_FOLLOWING_LP_IN_condition_1573 = Set[ 12, 13, 14, 15, 24, 32 ]
-    TOKENS_FOLLOWING_super_expression_IN_condition_1577 = Set[ 47 ]
-    TOKENS_FOLLOWING_RP_IN_condition_1582 = Set[ 50 ]
-    TOKENS_FOLLOWING_block_IN_condition_1584 = Set[ 1, 17 ]
-    TOKENS_FOLLOWING_ELSE_IN_condition_1587 = Set[ 50 ]
-    TOKENS_FOLLOWING_block_IN_condition_1592 = Set[ 1 ]
-    TOKENS_FOLLOWING_WHILE_IN_while_loop_1609 = Set[ 32 ]
-    TOKENS_FOLLOWING_LP_IN_while_loop_1611 = Set[ 12, 13, 14, 15, 24, 32 ]
-    TOKENS_FOLLOWING_super_expression_IN_while_loop_1616 = Set[ 47 ]
-    TOKENS_FOLLOWING_RP_IN_while_loop_1621 = Set[ 50 ]
-    TOKENS_FOLLOWING_block_IN_while_loop_1623 = Set[ 1 ]
-    TOKENS_FOLLOWING_FOR_IN_for_loop_1638 = Set[ 32 ]
-    TOKENS_FOLLOWING_LP_IN_for_loop_1640 = Set[ 24, 49 ]
-    TOKENS_FOLLOWING_assign_IN_for_loop_1642 = Set[ 49 ]
-    TOKENS_FOLLOWING_SEMICOLON_IN_for_loop_1645 = Set[ 12, 13, 14, 15, 24, 32 ]
-    TOKENS_FOLLOWING_super_expression_IN_for_loop_1650 = Set[ 49 ]
-    TOKENS_FOLLOWING_SEMICOLON_IN_for_loop_1656 = Set[ 24, 47 ]
-    TOKENS_FOLLOWING_assign_IN_for_loop_1659 = Set[ 47 ]
-    TOKENS_FOLLOWING_RP_IN_for_loop_1664 = Set[ 50 ]
-    TOKENS_FOLLOWING_block_IN_for_loop_1666 = Set[ 1 ]
-    TOKENS_FOLLOWING_PRINT_IN_print_1682 = Set[ 32 ]
-    TOKENS_FOLLOWING_LP_IN_print_1684 = Set[ 12, 13, 14, 15, 24, 32 ]
-    TOKENS_FOLLOWING_super_expression_IN_print_1687 = Set[ 11, 47 ]
-    TOKENS_FOLLOWING_print_2_IN_print_1691 = Set[ 11, 47 ]
-    TOKENS_FOLLOWING_RP_IN_print_1696 = Set[ 49 ]
-    TOKENS_FOLLOWING_SEMICOLON_IN_print_1698 = Set[ 1 ]
-    TOKENS_FOLLOWING_COMMA_IN_print_2_1712 = Set[ 12, 13, 14, 15, 24, 32 ]
-    TOKENS_FOLLOWING_super_expression_IN_print_2_1714 = Set[ 1 ]
-    TOKENS_FOLLOWING_INPUT_IN_input_1730 = Set[ 32 ]
-    TOKENS_FOLLOWING_LP_IN_input_1732 = Set[ 24 ]
-    TOKENS_FOLLOWING_ID_IN_input_1734 = Set[ 47 ]
-    TOKENS_FOLLOWING_RP_IN_input_1740 = Set[ 49 ]
-    TOKENS_FOLLOWING_SEMICOLON_IN_input_1742 = Set[ 1 ]
-    TOKENS_FOLLOWING_ID_IN_func_call_1755 = Set[ 32 ]
-    TOKENS_FOLLOWING_LP_IN_func_call_1759 = Set[ 12, 13, 14, 15, 24, 32, 47 ]
-    TOKENS_FOLLOWING_call_params_IN_func_call_1763 = Set[ 47 ]
-    TOKENS_FOLLOWING_RP_IN_func_call_1771 = Set[ 1 ]
-    TOKENS_FOLLOWING_super_expression_IN_call_params_1788 = Set[ 1, 11 ]
-    TOKENS_FOLLOWING_call_params2_IN_call_params_1795 = Set[ 1, 11 ]
-    TOKENS_FOLLOWING_COMMA_IN_call_params2_1811 = Set[ 12, 13, 14, 15, 24, 32 ]
-    TOKENS_FOLLOWING_super_expression_IN_call_params2_1815 = Set[ 1 ]
-    TOKENS_FOLLOWING_ID_IN_method_call_1836 = Set[ 41 ]
-    TOKENS_FOLLOWING_POINT_IN_method_call_1841 = Set[ 24 ]
-    TOKENS_FOLLOWING_method_call_2_IN_method_call_1843 = Set[ 32 ]
-    TOKENS_FOLLOWING_LP_IN_method_call_1845 = Set[ 12, 13, 14, 15, 24, 32, 47 ]
-    TOKENS_FOLLOWING_call_params_IN_method_call_1847 = Set[ 47 ]
-    TOKENS_FOLLOWING_RP_IN_method_call_1851 = Set[ 1 ]
-    TOKENS_FOLLOWING_ID_IN_method_call_2_1864 = Set[ 1 ]
-    TOKENS_FOLLOWING_RETURN_IN_r_return_1880 = Set[ 12, 13, 14, 15, 24, 32 ]
-    TOKENS_FOLLOWING_super_expression_IN_r_return_1884 = Set[ 49 ]
-    TOKENS_FOLLOWING_SEMICOLON_IN_r_return_1891 = Set[ 1 ]
+    TOKENS_FOLLOWING_C_INT_IN_var_cte_1392 = Set[ 1 ]
+    TOKENS_FOLLOWING_C_FLOAT_IN_var_cte_1402 = Set[ 1 ]
+    TOKENS_FOLLOWING_C_CHAR_IN_var_cte_1413 = Set[ 1 ]
+    TOKENS_FOLLOWING_C_BOOL_IN_var_cte_1424 = Set[ 1 ]
+    TOKENS_FOLLOWING_ID_IN_var_access_1443 = Set[ 1, 29 ]
+    TOKENS_FOLLOWING_arr_access_IN_var_access_1448 = Set[ 1, 29 ]
+    TOKENS_FOLLOWING_mat_access_IN_var_access_1452 = Set[ 1 ]
+    TOKENS_FOLLOWING_LB_IN_arr_access_1470 = Set[ 12, 13, 14, 15, 24, 32 ]
+    TOKENS_FOLLOWING_super_expression_IN_arr_access_1475 = Set[ 44 ]
+    TOKENS_FOLLOWING_RB_IN_arr_access_1480 = Set[ 1 ]
+    TOKENS_FOLLOWING_LB_IN_mat_access_1492 = Set[ 12, 13, 14, 15, 24, 32 ]
+    TOKENS_FOLLOWING_super_expression_IN_mat_access_1497 = Set[ 44 ]
+    TOKENS_FOLLOWING_RB_IN_mat_access_1502 = Set[ 1 ]
+    TOKENS_FOLLOWING_assign_IN_estatutes_1517 = Set[ 49 ]
+    TOKENS_FOLLOWING_SEMICOLON_IN_estatutes_1519 = Set[ 1 ]
+    TOKENS_FOLLOWING_condition_IN_estatutes_1523 = Set[ 1 ]
+    TOKENS_FOLLOWING_while_loop_IN_estatutes_1527 = Set[ 1 ]
+    TOKENS_FOLLOWING_for_loop_IN_estatutes_1531 = Set[ 1 ]
+    TOKENS_FOLLOWING_print_IN_estatutes_1535 = Set[ 1 ]
+    TOKENS_FOLLOWING_input_IN_estatutes_1539 = Set[ 1 ]
+    TOKENS_FOLLOWING_func_call_IN_estatutes_1543 = Set[ 49 ]
+    TOKENS_FOLLOWING_SEMICOLON_IN_estatutes_1545 = Set[ 1 ]
+    TOKENS_FOLLOWING_method_call_IN_estatutes_1549 = Set[ 49 ]
+    TOKENS_FOLLOWING_SEMICOLON_IN_estatutes_1551 = Set[ 1 ]
+    TOKENS_FOLLOWING_r_return_IN_estatutes_1556 = Set[ 1 ]
+    TOKENS_FOLLOWING_var_access_IN_assign_1571 = Set[ 6 ]
+    TOKENS_FOLLOWING_ASSIGN_IN_assign_1574 = Set[ 12, 13, 14, 15, 24, 32 ]
+    TOKENS_FOLLOWING_super_expression_IN_assign_1580 = Set[ 1 ]
+    TOKENS_FOLLOWING_IF_IN_condition_1597 = Set[ 32 ]
+    TOKENS_FOLLOWING_LP_IN_condition_1599 = Set[ 12, 13, 14, 15, 24, 32 ]
+    TOKENS_FOLLOWING_super_expression_IN_condition_1603 = Set[ 47 ]
+    TOKENS_FOLLOWING_RP_IN_condition_1608 = Set[ 50 ]
+    TOKENS_FOLLOWING_block_IN_condition_1610 = Set[ 1, 17 ]
+    TOKENS_FOLLOWING_ELSE_IN_condition_1613 = Set[ 50 ]
+    TOKENS_FOLLOWING_block_IN_condition_1618 = Set[ 1 ]
+    TOKENS_FOLLOWING_WHILE_IN_while_loop_1635 = Set[ 32 ]
+    TOKENS_FOLLOWING_LP_IN_while_loop_1637 = Set[ 12, 13, 14, 15, 24, 32 ]
+    TOKENS_FOLLOWING_super_expression_IN_while_loop_1642 = Set[ 47 ]
+    TOKENS_FOLLOWING_RP_IN_while_loop_1647 = Set[ 50 ]
+    TOKENS_FOLLOWING_block_IN_while_loop_1649 = Set[ 1 ]
+    TOKENS_FOLLOWING_FOR_IN_for_loop_1664 = Set[ 32 ]
+    TOKENS_FOLLOWING_LP_IN_for_loop_1666 = Set[ 24, 49 ]
+    TOKENS_FOLLOWING_assign_IN_for_loop_1668 = Set[ 49 ]
+    TOKENS_FOLLOWING_SEMICOLON_IN_for_loop_1671 = Set[ 12, 13, 14, 15, 24, 32 ]
+    TOKENS_FOLLOWING_super_expression_IN_for_loop_1676 = Set[ 49 ]
+    TOKENS_FOLLOWING_SEMICOLON_IN_for_loop_1682 = Set[ 24, 47 ]
+    TOKENS_FOLLOWING_assign_IN_for_loop_1685 = Set[ 47 ]
+    TOKENS_FOLLOWING_RP_IN_for_loop_1690 = Set[ 50 ]
+    TOKENS_FOLLOWING_block_IN_for_loop_1692 = Set[ 1 ]
+    TOKENS_FOLLOWING_PRINT_IN_print_1708 = Set[ 32 ]
+    TOKENS_FOLLOWING_LP_IN_print_1710 = Set[ 12, 13, 14, 15, 24, 32 ]
+    TOKENS_FOLLOWING_super_expression_IN_print_1713 = Set[ 11, 47 ]
+    TOKENS_FOLLOWING_print_2_IN_print_1717 = Set[ 11, 47 ]
+    TOKENS_FOLLOWING_RP_IN_print_1722 = Set[ 49 ]
+    TOKENS_FOLLOWING_SEMICOLON_IN_print_1724 = Set[ 1 ]
+    TOKENS_FOLLOWING_COMMA_IN_print_2_1738 = Set[ 12, 13, 14, 15, 24, 32 ]
+    TOKENS_FOLLOWING_super_expression_IN_print_2_1740 = Set[ 1 ]
+    TOKENS_FOLLOWING_INPUT_IN_input_1756 = Set[ 32 ]
+    TOKENS_FOLLOWING_LP_IN_input_1758 = Set[ 24 ]
+    TOKENS_FOLLOWING_ID_IN_input_1760 = Set[ 47 ]
+    TOKENS_FOLLOWING_RP_IN_input_1766 = Set[ 49 ]
+    TOKENS_FOLLOWING_SEMICOLON_IN_input_1768 = Set[ 1 ]
+    TOKENS_FOLLOWING_ID_IN_func_call_1781 = Set[ 32 ]
+    TOKENS_FOLLOWING_LP_IN_func_call_1785 = Set[ 12, 13, 14, 15, 24, 32, 47 ]
+    TOKENS_FOLLOWING_call_params_IN_func_call_1789 = Set[ 47 ]
+    TOKENS_FOLLOWING_RP_IN_func_call_1797 = Set[ 1 ]
+    TOKENS_FOLLOWING_super_expression_IN_call_params_1814 = Set[ 1, 11 ]
+    TOKENS_FOLLOWING_call_params2_IN_call_params_1821 = Set[ 1, 11 ]
+    TOKENS_FOLLOWING_COMMA_IN_call_params2_1837 = Set[ 12, 13, 14, 15, 24, 32 ]
+    TOKENS_FOLLOWING_super_expression_IN_call_params2_1841 = Set[ 1 ]
+    TOKENS_FOLLOWING_ID_IN_method_call_1862 = Set[ 41 ]
+    TOKENS_FOLLOWING_POINT_IN_method_call_1867 = Set[ 24 ]
+    TOKENS_FOLLOWING_method_call_2_IN_method_call_1869 = Set[ 32 ]
+    TOKENS_FOLLOWING_LP_IN_method_call_1871 = Set[ 12, 13, 14, 15, 24, 32, 47 ]
+    TOKENS_FOLLOWING_call_params_IN_method_call_1873 = Set[ 47 ]
+    TOKENS_FOLLOWING_RP_IN_method_call_1877 = Set[ 1 ]
+    TOKENS_FOLLOWING_ID_IN_method_call_2_1890 = Set[ 1 ]
+    TOKENS_FOLLOWING_RETURN_IN_r_return_1906 = Set[ 12, 13, 14, 15, 24, 32 ]
+    TOKENS_FOLLOWING_super_expression_IN_r_return_1910 = Set[ 49 ]
+    TOKENS_FOLLOWING_SEMICOLON_IN_r_return_1917 = Set[ 1 ]
 
   end # class Parser < ANTLR3::Parser
 

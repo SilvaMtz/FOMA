@@ -1,0 +1,52 @@
+int mat1[3][3];
+int mat2[3][3];
+int result[3][3];
+int i, j, k;
+
+
+program Arreglos
+start
+  mat1[0][0] = 3 ;
+  mat1[0][1] = 7 ;
+  mat1[0][2] = 4 ;
+  mat1[1][0] = 1 ;
+  mat1[1][1] = 9 ;
+  mat1[1][2] = 9 ;
+  mat1[2][0] = 5 ;
+  mat1[2][1] = 4 ;
+  mat1[2][2] = 2 ;
+
+  mat2[0][0] = 4 ;
+  mat2[0][1] = 2 ;
+  mat2[0][2] = 1 ;
+  mat2[1][0] = 8 ;
+  mat2[1][1] = 2 ;
+  mat2[1][2] = 9 ;
+  mat2[2][0] = 10 ;
+  mat2[2][1] = 1 ;
+  mat2[2][2] = 7 ;
+
+
+
+  for (i = 0; i < 3; i = i + 1)
+  start
+    for(j = 0; j < 3; j = j + 1)
+    start
+      result[i][j] = 0;
+      for (k = 0; k < 3; k = k + 1)
+      start
+        result[i][j] = result[i][j] + (mat1[i][k] * mat2[k][j]);
+      end
+    end
+  end
+
+  for (i = 0; i < 3; i = i + 1)
+  start
+    for(j = 0; j < 3; j = j + 1)
+    start
+      print(result[i][j]);
+    end
+  end
+
+
+end

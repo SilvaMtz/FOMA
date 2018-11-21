@@ -9,5 +9,4 @@ if [ -z $foma ]; then
     echo 'export PATH="$HOME/.foma:$PATH"' >> ~/.zshrc
 fi
 
-
-echo 'FINISHED! Now reset the terminal!'
+echo 'FINISHED!'

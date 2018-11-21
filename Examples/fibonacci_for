@@ -1,18 +1,18 @@
-program Fibonacci_While
+int n;
+int actual;
+int anterior;
+int temporal;
+int contador;
+
+program Fibonacci_For
 start
-  int n;
-  int actual;
-  int anterior;
-  int temporal;
-  int contador;
 
   input(n);
   actual = 0;
   anterior = 0;
   temporal = 0;
-  contador = 0;
 
-  while (n > contador)
+  for (contador = 0; contador < n; contador = contador + 1)
   start
     if (actual == 0)
     start
@@ -25,6 +25,7 @@ start
       anterior = temporal;
     end
     print(actual);
-    contador = contador + 1;
   end
+
+
 end

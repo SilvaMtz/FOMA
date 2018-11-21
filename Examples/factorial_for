@@ -1,0 +1,15 @@
+program Factorial_For
+start
+  int n;
+  int resultado;
+
+  input(n);
+  resultado = 1;
+
+  for( ; n>0; n=n-1)
+  start
+    resultado = resultado * n;
+  end
+
+  print(resultado);
+end

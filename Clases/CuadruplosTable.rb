@@ -297,6 +297,11 @@ class CuadruplosTable
     for i in upp_lim ... @num do
       @cuads[i - (upp_lim - low_lim)] = @cuads[i]
       @cuads[i - (upp_lim - low_lim)].num = i - (upp_lim - low_lim)
+
+      case @cuads[i - (upp_lim - low_lim)].operador
+      when "goto", "goto_f"
+        @cuads[i - (upp_lim - low_lim)].resultado =  @cuads[i - (upp_lim - low_lim)].resultado - (upp_lim - low_lim)
+      end
     end
 
     for i in (@num - (upp_lim - low_lim)) ... @num do

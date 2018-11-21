@@ -1,0 +1,28 @@
+
+int n;
+int resultado;
+
+function void factorial ()
+start
+
+  resultado = resultado * n;
+  n = n - 1;
+
+  if (n > 0)
+  start
+    factorial()
+  end
+end
+
+
+
+program Factorial_Recursivo_Global
+start
+
+  input(n);
+  resultado = 1;
+
+  factorial();
+  
+  print(resultado);
+end

@@ -1,0 +1,41 @@
+int n;
+int actual;
+int anterior;
+int temporal;
+int contador;
+
+function void fibonacci ()
+start
+  if (actual == 0)
+  start
+    actual = 1;
+  end
+  else
+  start
+    temporal = actual;
+    actual = actual + anterior;
+    anterior = temporal;
+  end
+  print(actual);
+  contador = contador + 1;
+
+  if(contador < n)
+  start
+    fibonacci();
+  end
+
+end
+
+program Fibonacci_Recursivo_Global
+start
+
+  input(n);
+  actual = 0;
+  anterior = 0;
+  temporal = 0;
+  contador = 0;
+
+  fibonacci();
+
+
+end

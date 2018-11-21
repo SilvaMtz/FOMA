@@ -1,0 +1,30 @@
+#! /usr/bin/env bash
+
+start_foma=$1
+foma_file=$2
+
+run="ruby $PWD/Main.rb $PWD/Examples/$foma_file"
+
+run_file() {
+  echo "Compiling $foma_file"
+  $run
+}
+
+die() {
+  echo "$1"
+  exit
+}
+
+if [ "$start_foma" == "run" ]; then
+  if [ `gem list antlr3 -i` ]; then
+    if [ -e "$PWD/Examples/$foma_file" ]; then
+      run_file
+      die
+    else
+      die 'File does not exist.'
+    fi
+  else
+    echo "Missing dependencies."
+    die
+  fi
+fi

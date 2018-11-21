@@ -3,14 +3,22 @@ require_relative 'Memory'
 
 class Program
 
-  attr_accessor :dirFunc, :dirVars, :dirAttrs, :dirClass, :memory
+  attr_accessor :dirFunc, :dirVars, :dirAttrs, :dirClass, :memory, :dirConstantes
 
   def initialize()
-    @dirFunc = FunctionTable.new()
+    @dirFunc = FunctionTable.new
     @dirVars = VarTable.new()
     @dirAttrs = VarTable.new()
     @dirClass = ClassTable.new()
     @memory = Memory.new()
+    @dirConstantes = {}
+  end
+
+  def add_const (const, type)
+
+    if !@dirConstantes[const]
+      @dirConstantes[const] = @memory.get_const(type)
+    end
   end
 
   def add_attrs ()
@@ -39,9 +47,7 @@ class Program
       end
     end
 
-    def testFunc(id)
-      puts @dirFunc.functions["global"].dirVars.variables[id].type
-    end
+
 
   end
 

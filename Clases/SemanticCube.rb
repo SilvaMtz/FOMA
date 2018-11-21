@@ -1,5 +1,5 @@
 class SemanticCube
-  attr_accessor :semantic_cube, :convert, :invert
+  attr_accessor :semantic_cube
 
 
   def initialize()
@@ -14,8 +14,8 @@ class SemanticCube
       ["int", "int", "<"]=>"bool",
       ["int", "int", "<="]=>"bool",
       ["int", "int", "<>"]=>"bool",
-      ["int", "int", "and"]=>"bool",
-      ["int", "int", "or"]=>"bool",
+      # ["int", "int", "and"]=>"bool",
+      # ["int", "int", "or"]=>"bool",
       ["int", "int", "="]=>"int",
       ["float", "float", "=="]=>"bool",
       ["float", "float", ">"]=>"bool",
@@ -23,14 +23,14 @@ class SemanticCube
       ["float", "float", "<"]=>"bool",
       ["float", "float", "<="]=>"bool",
       ["float", "float", "<>"]=>"bool",
-      ["float", "float", "and"]=>"bool",
-      ["float", "float", "or"]=>"bool",
+      # ["float", "float", "and"]=>"bool",
+      # ["float", "float", "or"]=>"bool",
       ["float", "float", "="]=>"float",
       ["bool", "bool", "=="]=>"bool",
-      ["bool", "bool", ">"]=>"bool",
-      ["bool", "bool", ">="]=>"bool",
-      ["bool", "bool", "<"]=>"bool",
-      ["bool", "bool", "<="]=>"bool",
+      # ["bool", "bool", ">"]=>"bool",
+      # ["bool", "bool", ">="]=>"bool",
+      # ["bool", "bool", "<"]=>"bool",
+      # ["bool", "bool", "<="]=>"bool",
       ["bool", "bool", "<>"]=>"bool",
       ["bool", "bool", "and"]=>"bool",
       ["bool", "bool", "or"]=>"bool",
@@ -72,5 +72,11 @@ class SemanticCube
       ["float", "int", "/"]=>"float",
       ["char", "char", "+"]=>"char"
     }
+  end
+
+  def get_type(operIzqType, operDerType, operType)
+    # puts "#{operIzqType} #{operDerType} #{operType}"
+
+    return semantic_cube[[operIzqType, operDerType, operType]]
   end
 end

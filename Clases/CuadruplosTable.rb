@@ -1,4 +1,5 @@
 require_relative 'Cuadruplos'
+require_relative 'SemanticCube'
 
 class CuadruplosTable
 
@@ -8,7 +9,9 @@ class CuadruplosTable
     @cuads = []
     @num = 0
     @program = program
+    @semCube = SemanticCube.new()
 
+    @mem = @program.memory
     @memTemp = 10_000
 
     @pOperadores = []
@@ -20,14 +23,24 @@ class CuadruplosTable
     # primerCuad()
   end
 
-  # def primerCuad
-  #   add_cuad("goto", "---","---", "---")
-  # end
+
+  def goto_main ()
+    add_cuad("goto", "---", "---", "---")
+  end
+
+  def fill_main()
+    @cuads[0].resultado = @num
+  end
+
+  def end_prog()
+    add_cuad("endprogram", "---", "---", "---")
+  end
 
   def add_cuad(operador, operIzq, operDer, resultado)
 
     @cuads.push(Cuadruplos.new(@num, operador, operIzq, operDer, resultado))
     @num += 1
+
   end
 
   def drop_opp
@@ -49,13 +62,39 @@ class CuadruplosTable
       else
         operDer = @pOperandos.pop
         operIzq = @pOperandos.pop
-        add_cuad(operAnt, operIzq, operDer, @memTemp)
-        @pOperandos.push(@memTemp)
-        @memTemp += 1
+
+        resType = calc_res_type(operAnt, operIzq,  operDer)
+        memT = @mem.get_temp(resType)
+
+        add_cuad(operAnt, operIzq, operDer, memT)
+        @pOperandos.push(memT)
 
       end
     end
 
+  end
+
+  def calc_res_type(operador, operIzq,  operDer)
+
+    operIzqType = get_type(operIzq)
+    operDerType = get_type(operDer)
+
+    return @semCube.get_type(operIzqType, operDerType, operador)
+  end
+
+  def get_type (memNum)
+    case (memNum%10000)
+    when 1000...2000
+      return "int"
+    when 2000...3000
+      return "float"
+    when 3000...4000
+      return "char"
+    when 4000...5000
+      return "bool"
+    else
+     return "int"
+    end
   end
 
   def add_assign ()
@@ -75,10 +114,12 @@ class CuadruplosTable
         operDer = @pOperandos.pop
         operIzq = @pOperandos.pop
 
-        add_cuad(operAnt, operIzq, operDer, @memTemp)
 
-        @pOperandos.push("#{@memTemp}")
-        @memTemp += 1
+        resType = calc_res_type(operAnt, operIzq,  operDer)
+        memT = @mem.get_temp(resType)
+
+        add_cuad(operAnt, operIzq, operDer, memT)
+        @pOperandos.push(memT)
 
         add_SE(operador)
       else
@@ -100,9 +141,12 @@ class CuadruplosTable
       when "*", "/", "%", "+", "-", ">", ">=", "<", "<=", "==", "<>"
         operDer = @pOperandos.pop
         operIzq = @pOperandos.pop
-        add_cuad(operAnt, operIzq, operDer, @memTemp)
-        @pOperandos.push(@memTemp)
-        @memTemp += 1
+
+        resType = calc_res_type(operAnt, operIzq,  operDer)
+        memT = @mem.get_temp(resType)
+
+        add_cuad(operAnt, operIzq, operDer, memT)
+        @pOperandos.push(memT)
 
         add_E(operador)
       else
@@ -123,9 +167,12 @@ class CuadruplosTable
       when "*", "/", "%", "+", "-"
         operDer = @pOperandos.pop
         operIzq = @pOperandos.pop
-        add_cuad(operAnt, operIzq, operDer, @memTemp)
-        @pOperandos.push(@memTemp)
-        @memTemp += 1
+
+        resType = calc_res_type(operAnt, operIzq,  operDer)
+        memT = @mem.get_temp(resType)
+
+        add_cuad(operAnt, operIzq, operDer, memT)
+        @pOperandos.push(memT)
 
         add_EXP(operador)
       else
@@ -146,9 +193,12 @@ class CuadruplosTable
       when "*", "/", "%"
         operDer = @pOperandos.pop
         operIzq = @pOperandos.pop
-        add_cuad(operAnt, operIzq, operDer, @memTemp)
-        @pOperandos.push(@memTemp)
-        @memTemp += 1
+
+        resType = calc_res_type(operAnt, operIzq,  operDer)
+        memT = @mem.get_temp(resType)
+
+        add_cuad(operAnt, operIzq, operDer, memT)
+        @pOperandos.push(memT)
 
         @pOperadores.push(operador)
       else
@@ -168,17 +218,31 @@ class CuadruplosTable
     while operAnt != "("
       operDer = @pOperandos.pop
       operIzq = @pOperandos.pop
-      add_cuad(operAnt, operIzq, operDer, @memTemp)
-      @pOperandos.push(@memTemp)
-      @memTemp += 1
+
+      resType = calc_res_type(operAnt, operIzq,  operDer)
+      memT = @mem.get_temp(resType)
+
+      add_cuad(operAnt, operIzq, operDer, memT)
+      @pOperandos.push(memT)
 
       operAnt = @pOperadores.pop
     end
   end
 
-  def add_operando (operando)
-    @pOperandos.push(operando)
+  def add_operando (operando, scope)
 
+    if @program.dirFunc.functions[scope].dirVars.exists(operando)
+      @pOperandos.push(@program.dirFunc.functions[scope].dirVars.variables[operando].memory)
+    elsif @program.dirFunc.exists("global") and @program.dirFunc.functions["global"].dirVars.exists(operando)
+      @pOperandos.push(@program.dirFunc.functions["global"].dirVars.variables[operando].memory)
+    else
+      @pOperandos.push(operando)
+    end
+
+  end
+
+  def add_oper_const(operando)
+    @pOperandos.push(@program.dirConstantes[operando])
   end
 
   def goto_falso ()

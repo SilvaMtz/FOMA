@@ -5,7 +5,7 @@
 # Generated using ANTLR version: 3.5
 # Ruby runtime library version: 1.10.0
 # Input grammar file: Foma.g
-# Generated at: 2018-11-19 19:25:04
+# Generated at: 2018-11-20 19:26:42
 #
 
 # ~~~> start load path setup
@@ -128,7 +128,7 @@ module Foma
 
 
       # - - - - main rule block - - - -
-      # at line 33:10: 'int'
+      # at line 35:10: 'int'
       match( "int" )
 
 
@@ -156,7 +156,7 @@ module Foma
 
 
       # - - - - main rule block - - - -
-      # at line 34:8: 'float'
+      # at line 36:8: 'float'
       match( "float" )
 
 
@@ -184,7 +184,7 @@ module Foma
 
 
       # - - - - main rule block - - - -
-      # at line 35:7: 'char'
+      # at line 37:7: 'char'
       match( "char" )
 
 
@@ -212,7 +212,7 @@ module Foma
 
 
       # - - - - main rule block - - - -
-      # at line 36:7: 'bool'
+      # at line 38:7: 'bool'
       match( "bool" )
 
 
@@ -240,7 +240,7 @@ module Foma
 
 
       # - - - - main rule block - - - -
-      # at line 37:7: 'void'
+      # at line 39:7: 'void'
       match( "void" )
 
 
@@ -268,7 +268,7 @@ module Foma
 
 
       # - - - - main rule block - - - -
-      # at line 38:7: 'null'
+      # at line 40:7: 'null'
       match( "null" )
 
 
@@ -296,7 +296,7 @@ module Foma
 
 
       # - - - - main rule block - - - -
-      # at line 41:5: 'if'
+      # at line 43:5: 'if'
       match( "if" )
 
 
@@ -324,7 +324,7 @@ module Foma
 
 
       # - - - - main rule block - - - -
-      # at line 42:7: 'else'
+      # at line 44:7: 'else'
       match( "else" )
 
 
@@ -352,7 +352,7 @@ module Foma
 
 
       # - - - - main rule block - - - -
-      # at line 45:6: 'and'
+      # at line 47:6: 'and'
       match( "and" )
 
 
@@ -380,7 +380,7 @@ module Foma
 
 
       # - - - - main rule block - - - -
-      # at line 46:5: 'or'
+      # at line 48:5: 'or'
       match( "or" )
 
 
@@ -408,7 +408,7 @@ module Foma
 
 
       # - - - - main rule block - - - -
-      # at line 49:8: 'while'
+      # at line 51:8: 'while'
       match( "while" )
 
 
@@ -436,7 +436,7 @@ module Foma
 
 
       # - - - - main rule block - - - -
-      # at line 50:6: 'for'
+      # at line 52:6: 'for'
       match( "for" )
 
 
@@ -464,7 +464,7 @@ module Foma
 
 
       # - - - - main rule block - - - -
-      # at line 53:8: 'input'
+      # at line 55:8: 'input'
       match( "input" )
 
 
@@ -492,7 +492,7 @@ module Foma
 
 
       # - - - - main rule block - - - -
-      # at line 54:8: 'print'
+      # at line 56:8: 'print'
       match( "print" )
 
 
@@ -520,7 +520,7 @@ module Foma
 
 
       # - - - - main rule block - - - -
-      # at line 57:10: 'program'
+      # at line 59:10: 'program'
       match( "program" )
 
 
@@ -548,7 +548,7 @@ module Foma
 
 
       # - - - - main rule block - - - -
-      # at line 58:11: 'function'
+      # at line 60:11: 'function'
       match( "function" )
 
 
@@ -576,7 +576,7 @@ module Foma
 
 
       # - - - - main rule block - - - -
-      # at line 59:9: 'return'
+      # at line 61:9: 'return'
       match( "return" )
 
 
@@ -604,7 +604,7 @@ module Foma
 
 
       # - - - - main rule block - - - -
-      # at line 62:8: 'class'
+      # at line 64:8: 'class'
       match( "class" )
 
 
@@ -632,7 +632,7 @@ module Foma
 
 
       # - - - - main rule block - - - -
-      # at line 63:8: 'inherits'
+      # at line 65:8: 'inherits'
       match( "inherits" )
 
 
@@ -660,7 +660,7 @@ module Foma
 
 
       # - - - - main rule block - - - -
-      # at line 64:8: 'start'
+      # at line 66:8: 'start'
       match( "start" )
 
 
@@ -688,7 +688,7 @@ module Foma
 
 
       # - - - - main rule block - - - -
-      # at line 65:8: 'end'
+      # at line 67:8: 'end'
       match( "end" )
 
 
@@ -716,7 +716,7 @@ module Foma
 
 
       # - - - - main rule block - - - -
-      # at line 66:6: 'new'
+      # at line 68:6: 'new'
       match( "new" )
 
 
@@ -744,7 +744,7 @@ module Foma
 
 
       # - - - - main rule block - - - -
-      # at line 74:9: '='
+      # at line 76:9: '='
       match( 0x3d )
 
 
@@ -771,7 +771,7 @@ module Foma
 
 
       # - - - - main rule block - - - -
-      # at line 77:5: '>'
+      # at line 79:5: '>'
       match( 0x3e )
 
 
@@ -798,7 +798,7 @@ module Foma
 
 
       # - - - - main rule block - - - -
-      # at line 78:6: '>='
+      # at line 80:6: '>='
       match( ">=" )
 
 
@@ -826,7 +826,7 @@ module Foma
 
 
       # - - - - main rule block - - - -
-      # at line 79:5: '<'
+      # at line 81:5: '<'
       match( 0x3c )
 
 
@@ -853,7 +853,7 @@ module Foma
 
 
       # - - - - main rule block - - - -
-      # at line 80:6: '<='
+      # at line 82:6: '<='
       match( "<=" )
 
 
@@ -881,7 +881,7 @@ module Foma
 
 
       # - - - - main rule block - - - -
-      # at line 81:5: '=='
+      # at line 83:5: '=='
       match( "==" )
 
 
@@ -909,7 +909,7 @@ module Foma
 
 
       # - - - - main rule block - - - -
-      # at line 82:5: '<>'
+      # at line 84:5: '<>'
       match( "<>" )
 
 
@@ -937,7 +937,7 @@ module Foma
 
 
       # - - - - main rule block - - - -
-      # at line 85:6: '+'
+      # at line 87:6: '+'
       match( 0x2b )
 
 
@@ -964,7 +964,7 @@ module Foma
 
 
       # - - - - main rule block - - - -
-      # at line 86:6: '-'
+      # at line 88:6: '-'
       match( 0x2d )
 
 
@@ -991,7 +991,7 @@ module Foma
 
 
       # - - - - main rule block - - - -
-      # at line 89:7: '*'
+      # at line 91:7: '*'
       match( 0x2a )
 
 
@@ -1018,7 +1018,7 @@ module Foma
 
 
       # - - - - main rule block - - - -
-      # at line 90:6: '/'
+      # at line 92:6: '/'
       match( 0x2f )
 
 
@@ -1045,7 +1045,7 @@ module Foma
 
 
       # - - - - main rule block - - - -
-      # at line 91:6: '%'
+      # at line 93:6: '%'
       match( 0x25 )
 
 
@@ -1072,8 +1072,8 @@ module Foma
 
 
       # - - - - main rule block - - - -
-      # at line 99:8: ( '0' .. '9' )+
-      # at file 99:8: ( '0' .. '9' )+
+      # at line 101:8: ( '0' .. '9' )+
+      # at file 101:8: ( '0' .. '9' )+
       match_count_1 = 0
       while true
         alt_1 = 2
@@ -1133,8 +1133,8 @@ module Foma
 
 
       # - - - - main rule block - - - -
-      # at line 100:10: ( '0' .. '9' )+ '.' ( '0' .. '9' )+
-      # at file 100:10: ( '0' .. '9' )+
+      # at line 102:10: ( '0' .. '9' )+ '.' ( '0' .. '9' )+
+      # at file 102:10: ( '0' .. '9' )+
       match_count_2 = 0
       while true
         alt_2 = 2
@@ -1170,7 +1170,7 @@ module Foma
 
 
       match( 0x2e )
-      # at file 100:28: ( '0' .. '9' )+
+      # at file 102:28: ( '0' .. '9' )+
       match_count_3 = 0
       while true
         alt_3 = 2
@@ -1230,8 +1230,8 @@ module Foma
 
 
       # - - - - main rule block - - - -
-      # at line 101:9: ( 'true' | 'false' )
-      # at line 101:9: ( 'true' | 'false' )
+      # at line 103:9: ( 'true' | 'false' )
+      # at line 103:9: ( 'true' | 'false' )
       alt_4 = 2
       look_4_0 = @input.peek( 1 )
 
@@ -1245,12 +1245,12 @@ module Foma
       end
       case alt_4
       when 1
-        # at line 101:11: 'true'
+        # at line 103:11: 'true'
         match( "true" )
 
 
       when 2
-        # at line 101:20: 'false'
+        # at line 103:20: 'false'
         match( "false" )
 
 
@@ -1280,7 +1280,7 @@ module Foma
 
 
       # - - - - main rule block - - - -
-      # at line 102:7: ( '\\'' (~ ( '\\'' | '\\\\' ) | '\\\\' . )* '\\'' | '\"' (~ ( '\"' | '\\\\' ) | '\\\\' . )* '\"' )
+      # at line 104:7: ( '\\'' (~ ( '\\'' | '\\\\' ) | '\\\\' . )* '\\'' | '\"' (~ ( '\"' | '\\\\' ) | '\\\\' . )* '\"' )
       alt_7 = 2
       look_7_0 = @input.peek( 1 )
 
@@ -1294,9 +1294,9 @@ module Foma
       end
       case alt_7
       when 1
-        # at line 102:9: '\\'' (~ ( '\\'' | '\\\\' ) | '\\\\' . )* '\\''
+        # at line 104:9: '\\'' (~ ( '\\'' | '\\\\' ) | '\\\\' . )* '\\''
         match( 0x27 )
-        # at line 102:14: (~ ( '\\'' | '\\\\' ) | '\\\\' . )*
+        # at line 104:14: (~ ( '\\'' | '\\\\' ) | '\\\\' . )*
         while true # decision 5
           alt_5 = 3
           look_5_0 = @input.peek( 1 )
@@ -1309,7 +1309,7 @@ module Foma
           end
           case alt_5
           when 1
-            # at line 102:16: ~ ( '\\'' | '\\\\' )
+            # at line 104:16: ~ ( '\\'' | '\\\\' )
             if @input.peek( 1 ).between?( 0x0, 0x26 ) || @input.peek( 1 ).between?( 0x28, 0x5b ) || @input.peek( 1 ).between?( 0x5d, 0xff )
               @input.consume
             else
@@ -1322,7 +1322,7 @@ module Foma
 
 
           when 2
-            # at line 102:35: '\\\\' .
+            # at line 104:35: '\\\\' .
             match( 0x5c )
             match_any
 
@@ -1334,9 +1334,9 @@ module Foma
         match( 0x27 )
 
       when 2
-        # at line 102:52: '\"' (~ ( '\"' | '\\\\' ) | '\\\\' . )* '\"'
+        # at line 104:52: '\"' (~ ( '\"' | '\\\\' ) | '\\\\' . )* '\"'
         match( 0x22 )
-        # at line 102:57: (~ ( '\"' | '\\\\' ) | '\\\\' . )*
+        # at line 104:57: (~ ( '\"' | '\\\\' ) | '\\\\' . )*
         while true # decision 6
           alt_6 = 3
           look_6_0 = @input.peek( 1 )
@@ -1349,7 +1349,7 @@ module Foma
           end
           case alt_6
           when 1
-            # at line 102:59: ~ ( '\"' | '\\\\' )
+            # at line 104:59: ~ ( '\"' | '\\\\' )
             if @input.peek( 1 ).between?( 0x0, 0x21 ) || @input.peek( 1 ).between?( 0x23, 0x5b ) || @input.peek( 1 ).between?( 0x5d, 0xff )
               @input.consume
             else
@@ -1362,7 +1362,7 @@ module Foma
 
 
           when 2
-            # at line 102:78: '\\\\' .
+            # at line 104:78: '\\\\' .
             match( 0x5c )
             match_any
 
@@ -1398,7 +1398,7 @@ module Foma
 
 
       # - - - - main rule block - - - -
-      # at line 105:5: ( 'a' .. 'z' | 'A' .. 'Z' ) ( ( 'a' .. 'z' | 'A' .. 'Z' ) | '_' | ( '0' .. '9' ) )*
+      # at line 107:5: ( 'a' .. 'z' | 'A' .. 'Z' ) ( ( 'a' .. 'z' | 'A' .. 'Z' ) | '_' | ( '0' .. '9' ) )*
       if @input.peek( 1 ).between?( 0x41, 0x5a ) || @input.peek( 1 ).between?( 0x61, 0x7a )
         @input.consume
       else
@@ -1409,7 +1409,7 @@ module Foma
       end
 
 
-      # at line 105:33: ( ( 'a' .. 'z' | 'A' .. 'Z' ) | '_' | ( '0' .. '9' ) )*
+      # at line 107:33: ( ( 'a' .. 'z' | 'A' .. 'Z' ) | '_' | ( '0' .. '9' ) )*
       while true # decision 8
         alt_8 = 2
         look_8_0 = @input.peek( 1 )
@@ -1462,7 +1462,7 @@ module Foma
 
 
       # - - - - main rule block - - - -
-      # at line 112:8: ':'
+      # at line 114:8: ':'
       match( 0x3a )
 
 
@@ -1489,7 +1489,7 @@ module Foma
 
 
       # - - - - main rule block - - - -
-      # at line 113:12: ';'
+      # at line 115:12: ';'
       match( 0x3b )
 
 
@@ -1516,7 +1516,7 @@ module Foma
 
 
       # - - - - main rule block - - - -
-      # at line 114:8: ','
+      # at line 116:8: ','
       match( 0x2c )
 
 
@@ -1543,7 +1543,7 @@ module Foma
 
 
       # - - - - main rule block - - - -
-      # at line 115:8: '.'
+      # at line 117:8: '.'
       match( 0x2e )
 
 
@@ -1570,7 +1570,7 @@ module Foma
 
 
       # - - - - main rule block - - - -
-      # at line 118:5: ')'
+      # at line 120:5: ')'
       match( 0x29 )
 
 
@@ -1597,7 +1597,7 @@ module Foma
 
 
       # - - - - main rule block - - - -
-      # at line 119:5: '('
+      # at line 121:5: '('
       match( 0x28 )
 
 
@@ -1624,7 +1624,7 @@ module Foma
 
 
       # - - - - main rule block - - - -
-      # at line 120:5: '['
+      # at line 122:5: '['
       match( 0x5b )
 
 
@@ -1651,7 +1651,7 @@ module Foma
 
 
       # - - - - main rule block - - - -
-      # at line 121:5: ']'
+      # at line 123:5: ']'
       match( 0x5d )
 
 
@@ -1678,7 +1678,7 @@ module Foma
 
 
       # - - - - main rule block - - - -
-      # at line 124:9: '}'
+      # at line 126:9: '}'
       match( 0x7d )
 
 
@@ -1705,7 +1705,7 @@ module Foma
 
 
       # - - - - main rule block - - - -
-      # at line 125:9: '{'
+      # at line 127:9: '{'
       match( 0x7b )
 
 
@@ -1732,8 +1732,8 @@ module Foma
 
 
       # - - - - main rule block - - - -
-      # at line 134:13: ( '\\t' | '\\f' | ' ' | '\\u00A0' )+
-      # at file 134:13: ( '\\t' | '\\f' | ' ' | '\\u00A0' )+
+      # at line 136:13: ( '\\t' | '\\f' | ' ' | '\\u00A0' )+
+      # at file 136:13: ( '\\t' | '\\f' | ' ' | '\\u00A0' )+
       match_count_9 = 0
       while true
         alt_9 = 2
@@ -1798,8 +1798,8 @@ module Foma
 
 
       # - - - - main rule block - - - -
-      # at line 135:10: ( '\\n' | '\\r' )+
-      # at file 135:10: ( '\\n' | '\\r' )+
+      # at line 137:10: ( '\\n' | '\\r' )+
+      # at file 137:10: ( '\\n' | '\\r' )+
       match_count_10 = 0
       while true
         alt_10 = 2

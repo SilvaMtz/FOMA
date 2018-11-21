@@ -7,11 +7,13 @@ options { language = Ruby; }
 @header {
   require "Clases/Program"
   require "Clases/CuadruplosTable"
+  require "Clases/VM"
 }
 
 @members {
   \$program = Program.new()
   \$cuads = CuadruplosTable.new(\$program )
+  \$vm = VM.new(\$cuads, \$program)
   \$params = 0
   \$classId
   \$scope
@@ -141,10 +143,11 @@ NEWLINE: ( '\n' | '\r' )+ { $channel = HIDDEN };
 
 
 commence
-  :  (r_class)*
+  :  {\$cuads.goto_main}(r_class)*
     {\$scope = "global"} (variables)* {\$program.add_func("global", "void", 0, "NA")}
     (function)*
-    program  {\$cuads.display} {puts "EXITS"}
+    program {\$cuads.end_prog}
+     {\$cuads.display} {puts "EXITS"} {\$vm.run}
   ;
   finally { exit }
 
@@ -162,7 +165,7 @@ function
   ;
 
 method
-  : type_f ID {\$scope = $ID.text} parameters START {\$numTemp = \$cuads.num} (attributes)*  {\$program.add_func("#{\$classId}.#{$ID.text}", $type_f.text, \$params, \$numTemp)}{\$params = 0}  (estatutes_f)*  R_END {\$cuads.end_proc}
+  : type_f ID {\$scope = "#{\$classId}.#{$ID.text}"} parameters START {\$numTemp = \$cuads.num} (attributes)*  {\$program.add_func("#{\$classId}.#{$ID.text}", $type_f.text, \$params, \$numTemp)}{\$params = 0}  (estatutes_f)*  R_END {\$cuads.end_proc}
   ;
 
 constructor
@@ -170,7 +173,7 @@ constructor
   ;
 
 program
-  : PROGRAM ID START {\$numTemp = \$cuads.num} (attributes)* {\$program.add_func($ID.text, "void", 0, \$numTemp)} (estatutes)* R_END
+  : PROGRAM ID {\$scope = $ID.text} START {\$numTemp = \$cuads.num} {\$cuads.fill_main}(attributes)* {\$program.add_func($ID.text, "void", 0, \$numTemp)} (estatutes)* R_END
   ;
 
 variables
@@ -246,11 +249,15 @@ term
   ;
 
 factor
-  : (LP super_expression RP | var_cte {\$cuads.add_operando($var_cte.text)}  | func_call | method_call)
+  : (LP {\$cuads.add_falseBottom} super_expression {\$cuads.rem_falseBottom} RP | var_cte   | func_call | method_call)
   ;
 
 var_cte
-  : (var_access | C_INT | C_FLOAT | C_CHAR | C_BOOL)
+  : (var_access {\$cuads.add_operando($var_access.text, \$scope)}
+  | C_INT {\$program.add_const($C_INT.text, "int")} {\$cuads.add_oper_const($C_INT.text)}
+  | C_FLOAT {\$program.add_const($C_FLOAT.text, "float")}  {\$cuads.add_oper_const($C_FLOAT.text)}
+  | C_CHAR {\$program.add_const($C_CHAR.text, "char")}  {\$cuads.add_oper_const($C_CHAR.text)}
+  | C_BOOL {\$program.add_const($C_BOOL.text, "bool")}  {\$cuads.add_oper_const($C_BOOL.text)})
   ;
 
 var_access
@@ -266,7 +273,7 @@ estatutes_f
   ;
 
 assign
-  : var_access {\$cuads.add_operando($var_access.text)} ASSIGN {\$cuads.add_assign()} super_expression {\$cuads.emptyStack}
+  : var_access {\$cuads.add_operando($var_access.text, \$scope)} ASSIGN {\$cuads.add_assign()} super_expression {\$cuads.emptyStack}
   ;
 
 condition
@@ -290,7 +297,7 @@ print_2
   ;
 
 input
-  : INPUT LP ID {\$cuads.add_operando($ID.text)} {\$cuads.do_input} RP SEMICOLON
+  : INPUT LP ID {\$cuads.add_operando($ID.text, \$scope)} {\$cuads.do_input} RP SEMICOLON
   ;
 
 func_call

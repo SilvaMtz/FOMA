@@ -1,0 +1,17 @@
+program Factorial_While
+start
+  int n;
+  int resultado;
+  int contador;
+
+  input(n);
+  resultado = 1;
+
+  while (n > 0)
+  start
+    resultado = resultado * n;
+    n = n - 1;
+    print(resultado);
+  end
+  print(resultado);
+end

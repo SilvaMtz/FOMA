@@ -7,22 +7,28 @@ class Memory
     @globalFloat = 2_000
     @globalChar = 3_000
     @globalBool = 4_000
-    @localInt = 5_000
-    @localFloat = 6_000
-    @localChar = 7_000
-    @localBool = 8_000
-    @temps  = 10_000
+
+    @localInt = 11_000
+    @localFloat = 12_000
+    @localChar = 13_000
+    @localBool = 14_000
+
+    @tempInt = 21_000
+    @temoFloat = 22_000
+    @tempChar = 23_000
+    @tempBool = 24_000
+
+    @constInt = 31_000
+    @constFloat = 32_000
+    @constChar = 33_000
+    @constBool = 34_000
   end
 
   def reset
-    @globalInt = 1_000
-    @globalFloat = 2_000
-    @globalChar = 3_000
-    @globalBool = 4_000
-    @localInt = 5_000
-    @localFloat = 6_000
-    @localChar = 7_000
-    @localBool = 8_000
+    @localInt = 11_000
+    @localFloat = 12_000
+    @localChar = 13_000
+    @localBool = 14_000
   end
 
   def get_mem (type, scope)
@@ -61,9 +67,38 @@ class Memory
     end
   end
 
-  def get_temp
-    @temps += 1
-    return @temps - 1
+  def get_temp (type)
+    case type
+    when "int"
+      @tempInt += 1
+      return @tempInt - 1
+    when "float"
+      @tempFloat += 1
+      return @tempFloat - 1
+    when "char"
+      @tempChar += 1
+      return @tempChar - 1
+    when "bool"
+      @tempBool += 1
+      return @tempBool - 1
+    end
+  end
+
+  def get_const(type)
+    case type
+    when "int"
+      @constInt += 1
+      return @constInt - 1
+    when "float"
+      @constFloat += 1
+      return @constFloat - 1
+    when "char"
+      @constChar += 1
+      return @constChar - 1
+    when "bool"
+      @constBool += 1
+      return @constBool - 1
+    end
   end
 
 end

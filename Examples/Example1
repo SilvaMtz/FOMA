@@ -26,7 +26,6 @@ start
 	start
 		int algo;
 
-		return algo;
 	end
 
 

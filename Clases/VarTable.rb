@@ -17,7 +17,7 @@ class VarTable
   end
 
   def get_var(id)
-    @variables.key?(id)
+    @variables.key(id)
   end
 
   def display()

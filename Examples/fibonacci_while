@@ -1,0 +1,30 @@
+program Fibonacci_While
+start
+  int n;
+  int actual;
+  int anterior:
+  int temporal;
+  int contador;
+
+  input(n);
+  actual = 0;
+  anterior = 0;
+  temporal = 0;
+  contador = 0;
+
+  while (n > contador)
+  start
+    if (actual == 0)
+    start
+      actual = 1;
+    end
+    else
+    start
+      temporal = actual;
+      actual = actual + anterior;
+      anterior = temporal;
+    end
+    print(actual);
+    contador = contador + 1;
+  end
+end

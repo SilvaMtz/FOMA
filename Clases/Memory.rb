@@ -31,21 +31,23 @@ class Memory
     @localBool = 14_000
   end
 
-  def get_mem (type, scope)
+  def get_mem (type, scope, size)
+
     if (scope == "global")
       case type
       when "int"
-        @globalInt += 1
-        return @globalInt - 1
+      
+        @globalInt += size.to_i
+        return @globalInt - size.to_i
       when "float"
-        @globalFloat += 1
-        return @globalFloat - 1
+        @globalFloat += size.to_i
+        return @globalFloat - size.to_i
       when "char"
-        @globalChar += 1
-        return @globalChar - 1
+        @globalChar += size.to_i
+        return @globalChar - size.to_i
       when "bool"
-        @globalBool += 1
-        return @globalBool - 1
+        @globalBool += size.to_i
+        return @globalBool - size.to_i
       end
     elsif (scope == "class")
       return "---"

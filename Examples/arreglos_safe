@@ -1,0 +1,18 @@
+int a[10][5];
+
+int x;
+
+program Arreglos
+start
+  int j;
+  int k;
+
+  j = 10;
+  k = 5;
+  a[9][2] = 50;
+  a[j-k][1] = a[9][2];
+
+  print(a[j-k][1]);
+
+
+end

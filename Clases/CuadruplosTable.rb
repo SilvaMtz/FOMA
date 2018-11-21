@@ -238,8 +238,95 @@ class CuadruplosTable
     else
       @pOperandos.push(operando)
     end
+  end
+
+  def add_arr(operando)
+
+    if (@program.dirFunc.functions["global"].dirVars.variables[operando].dim2.to_i == 0)
+      if @program.dirFunc.functions["global"].dirVars.exists(operando)
+
+        lim_inf = 0;
+        @program.add_const(lim_inf.to_int, "int")
+        add_oper_const(lim_inf)
+        lim_inf = @pOperandos.pop
+        lim_sup = @program.dirFunc.functions["global"].dirVars.variables[operando].dim1
+        add_oper_const(lim_sup)
+        lim_sup = @pOperandos.pop
+        @program.add_const(lim_sup.to_int, "int")
+
+        operIzq = @pOperandos.pop
+        dirBase = @pOperandos.pop
+
+        type = @program.dirFunc.functions["global"].dirVars.variables[operando].type
+
+        add_cuad("range", operIzq, lim_inf, lim_sup)
+
+        memT = @mem.get_temp(type)
+        @pOperandos.push("(#{memT})")
+
+        @program.add_const(dirBase.to_int, "int")
+        add_oper_const(dirBase)
+        dirBase = @pOperandos.pop
+
+        add_cuad("calc", operIzq, dirBase, "(#{memT})")
+      end
+    end
+
+
 
   end
+
+  def add_mat(operando)
+    puts "matt"
+
+    if @program.dirFunc.functions["global"].dirVars.exists(operando)
+
+      lim_inf = 0;
+      @program.add_const(lim_inf.to_int, "int")
+      add_oper_const(lim_inf)
+      lim_inf = @pOperandos.pop
+
+
+      lim_sup = @program.dirFunc.functions["global"].dirVars.variables[operando].dim1
+      add_oper_const(lim_sup)
+      lim_sup = @pOperandos.pop
+      @program.add_const(lim_sup.to_int, "int")
+
+      lim_sup2 = @program.dirFunc.functions["global"].dirVars.variables[operando].dim2
+      add_oper_const(lim_sup2)
+      lim_sup2 = @pOperandos.pop
+      @program.add_const(lim_sup2.to_int, "int")
+
+      puts @pOperandos.to_s
+      operIzq2 = @pOperandos.pop
+      operIzq = @pOperandos.pop
+      dirBase = @pOperandos.pop
+
+      type = @program.dirFunc.functions["global"].dirVars.variables[operando].type
+
+      ## RANGE DEL PRIMERO
+      add_cuad("range", operIzq, lim_inf, lim_sup)
+
+      memT = @mem.get_temp(type)
+      memT2 = @mem.get_temp(type)
+      @pOperandos.push("(#{memT})")
+
+      @program.add_const(dirBase.to_int, "int")
+      add_oper_const(dirBase)
+      dirBase = @pOperandos.pop
+
+      add_cuad("calc2", operIzq, lim_sup2, "(#{memT})")
+      add_cuad("calc",  "(#{memT})", dirBase, "(#{memT})")
+
+      add_cuad("range", operIzq2, lim_inf, lim_sup2)
+      add_cuad("calc", operIzq2,  "(#{memT})", "(#{memT2})")
+
+
+    end
+
+
+  end
+
 
   def add_oper_const(operando)
     @pOperandos.push(@program.dirConstantes[operando])
@@ -353,9 +440,6 @@ class CuadruplosTable
   end
 
   def return_type(id)
-
-    puts "#{id}"
-    puts @program.dirFunc.functions[id].type
 
     if @program.dirFunc.functions[id].type != "void"
       memT = @mem.get_temp(@program.dirFunc.functions[id].type)

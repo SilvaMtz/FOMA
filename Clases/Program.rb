@@ -27,7 +27,8 @@ class Program
     @dirVars = VarTable.new()
   end
 
-  def add_var(id, type, scope)
+  def add_var(id, type, scope, size, dim1, dim2)
+
 
     case type
     when "int", "float", "char", "bool"
@@ -38,38 +39,33 @@ class Program
           puts "ERROR: Existen declaraciones hibirdas para #{id}"
         else
 
-          @dirVars.add_var(id, type, @memory.get_mem(type, scope))
+          memo = @memory.get_mem(type, scope, size)
+          @dirVars.add_var(id, type, memo, size, dim1, dim2)
+
         end
       end
     else
-      @dirVars.add_var("#{id}", type, "N/A")
+      @dirVars.add_var("#{id}", type, "N/A", 1, 0, 0)
       @dirClass.classes[type].dirAttrs.variables.each do |key, elem|
-        @dirVars.add_var("#{id}.#{key}", type, @memory.get_mem(elem.type, scope))
+        @dirVars.add_var("#{id}.#{key}", type, @memory.get_mem(elem.type, scope, 1), 1, 0, 0)
       end
     end
 
   end
 
   def add_param_mem(id)
-    
+
     @paramsMemory.push( @dirVars.variables[id].memory)
   end
 
   def add_dim(id, type, dim1, dim2)
 
-    for i in 0...dim1.to_i do
-      idRes = id + "[#{i}]"
-      for j in 0 ... dim2.to_i do
-        idRes =  id + "[#{i}][#{j}]"
-        add_var(idRes, type, "global")
-      end
-      if dim2 == 0
-        add_var(idRes, type, "global")
-
-      end
+    if dim2.to_i > 0
+      add_var(id, type, "global",dim1.to_i * dim2.to_i, dim1, dim2)
+    else
+      
+      add_var(id, type, "global", dim1, dim1, dim2)
     end
-
-    # @dirVars.add_var(id, type)
   end
 
   def add_func(id, type, params, cuadInicial)

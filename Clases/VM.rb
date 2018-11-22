@@ -1530,17 +1530,20 @@ class VM
         @runningMem = @activeRecord.pop
 
       when "return"
+    
 
         resMemoryNumber = @cuadruplos.cuads[@cuadActual].resultado
 
-        resMemoryNumber = resMemoryNumber[1..-2].to_i
-        case resMemoryNumber.to_i
-        when 1_000...5_000
-          resMemoryNumber = @globalMem[resMemoryNumber.to_i]
-        when 11_000...15_000, 21_000...25_000
-          resMemoryNumber = @runningMem[resMemoryNumber.to_i]
-        end
+        if resMemoryNumber[0] == '('
 
+          resMemoryNumber = resMemoryNumber[1..-2].to_i
+          case resMemoryNumber.to_i
+          when 1_000...5_000
+            resMemoryNumber = @globalMem[resMemoryNumber.to_i]
+          when 11_000...15_000, 21_000...25_000
+            resMemoryNumber = @runningMem[resMemoryNumber.to_i]
+          end
+        end
         case resMemoryNumber.to_i
         when 1_000...5_000
           resValue = @globalMem[resMemoryNumber.to_i]

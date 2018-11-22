@@ -24,7 +24,7 @@ start
       actual = actual + anterior;
       anterior = temporal;
     end
-    print(actual);
+    print (actual);
     contador = contador + 1;
   end
 end

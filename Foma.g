@@ -11,9 +11,11 @@ options { language = Ruby; }
 }
 
 @members {
+
   \$program = Program.new()
   \$cuads = CuadruplosTable.new(\$program )
   \$vm = VM.new(\$cuads, \$program)
+
   \$params = 0
   \$classId
   \$scope
@@ -22,6 +24,7 @@ options { language = Ruby; }
   \$varType
   \$dimTemp
   \$numTemp
+  \$aux
 }
 
 // ******************************************************************************
@@ -66,7 +69,9 @@ CLASS: 'class';
 INHER: 'inherits';
 START: 'start';
 R_END: 'end';
-NEW: 'new';
+
+R_THIS: 'this';
+R_NEW: 'new';
 
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -144,7 +149,9 @@ NEWLINE: ( '\n' | '\r' )+ { $channel = HIDDEN };
 
 
 commence
-  :  {\$cuads.goto_main}(r_class)*
+  :
+    {\$cuads.goto_main}
+    (r_class)*
     {\$scope = "global"} (variables)* {\$program.add_func("global", "void", 0, "NA")}
     (function)*
     program {\$cuads.end_prog}
@@ -154,153 +161,372 @@ commence
 
 
 r_class
-  : CLASS {\$scope = "class"} ID {\$classId = $ID.text}  inherits? START  ( attributes )* {\$program.add_attrs()}  constructor  ( method )* {\$program.add_class(\$classId)}  R_END
+  :
+    CLASS {\$scope = "global"}
+    ID {\$classId = $ID.text}
+    inherits?
+    START
+    (attributes)*
+    {\$program.add_attrs()}
+    constructor?
+    (method)*
+    {\$program.add_class(\$classId)}
+    R_END
   ;
 
 inherits
-  :( INHER ID )
+  :
+    INHER
+    ID
   ;
 
 function
-  : FUNCTION type_f ID {\$scope = $ID.text}  parameters START {\$numTemp = \$cuads.num}  (attributes)* {\$program.add_func($ID.text, $type_f.text, \$params, \$numTemp)}{\$params = 0}(estatutes)* R_END {\$cuads.end_proc}
+  :
+    FUNCTION
+    type_f
+    ID {\$scope = $ID.text}
+    parameters
+    START
+    {\$numTemp = \$cuads.num}
+    (attributes)*
+    {\$program.add_func($ID.text, $type_f.text, \$params, \$numTemp)}
+    {\$params = 0}
+    {puts "before"}
+    (estatutes )* {puts "after"}
+    R_END {\$cuads.end_proc}
   ;
 
 method
-  : type_f ID {\$scope = "#{\$classId}.#{$ID.text}"} parameters START {\$numTemp = \$cuads.num} (attributes)*  {\$program.add_func("#{\$classId}.#{$ID.text}", $type_f.text, \$params, \$numTemp)}{\$params = 0}  (estatutes)*  R_END {\$cuads.end_proc}
+  :
+    type_f
+    ID
+    {\$scope = "#{\$classId}.#{$ID.text}"}
+    parameters
+    START
+    {\$numTemp = \$cuads.num}
+    (attributes)*
+    {\$program.add_func("#{\$classId}.#{$ID.text}", $type_f.text, \$params, \$numTemp)}
+    {\$params = 0}
+    (estatutes)*
+    R_END {\$cuads.end_proc}
   ;
 
 constructor
-  :  ID {\$scope = $ID.text} parameters  START {\$numTemp = \$cuads.num} (attributes)* (estatutes)* {\$program.add_func("#{\$classId}.#{$ID.text}", "CONST", \$params, \$numTemp)}{\$params = 0} R_END {\$cuads.end_proc}
+  :
+    ID
+    {\$scope = "#{\$classId}.#{$ID.text}"}
+    parameters
+    START
+    {\$numTemp = \$cuads.num}
+    (attributes)*
+    {\$program.add_func("#{\$classId}.#{$ID.text}", "CONST", \$params, \$numTemp)}
+    {\$params = 0}
+    (estatutes)*
+    R_END {\$cuads.end_proc}
   ;
 
 program
-  : PROGRAM ID {\$scope = $ID.text} START {\$numTemp = \$cuads.num} {\$cuads.fill_main}(attributes)* {\$program.add_func($ID.text, "void", 0, \$numTemp)} (estatutes)* R_END
+  :
+    PROGRAM
+    ID
+    {\$scope = $ID.text}
+    START
+    {\$numTemp = \$cuads.num}
+    {\$cuads.fill_main}
+    (attributes)*
+    {\$program.add_func($ID.text, "void", 0, \$numTemp)}
+    (estatutes)*
+    R_END
   ;
 
 variables
-  : (dec_var | dec_arr | dec_mat)
+  :
+    ( dec_var
+    | dec_arr
+    | dec_mat )
   ;
 
 dec_var
-  : type_c {\$varType = $type_c.text} ID {\$program.add_var($ID.text, \$varType, \$scope, 1, 0, 0)} dec_var_2* SEMICOLON
+  :
+    type_c
+    {\$varType = $type_c.text}
+    ID
+    {\$program.add_var($ID.text, \$varType, \$scope, 1, 0, 0)}
+    dec_var_2*
+    SEMICOLON
   ;
 
 dec_var_2
-  : COMMA ID {\$program.add_var($ID.text, \$varType, \$scope, 1, 0, 0)}
+  :
+    COMMA
+    ID
+    {\$program.add_var($ID.text, \$varType, \$scope, 1, 0, 0)}
   ;
 
 dec_arr
-  : type_s ID LB C_INT RB SEMICOLON {\$program.add_dim($ID.text, $type_s.text, $C_INT.text, 0)}
+  :
+    type_s
+    ID
+    LB
+    C_INT
+    RB
+    SEMICOLON
+    {\$program.add_dim($ID.text, $type_s.text, $C_INT.text, 0)}
   ;
 
 dec_mat
-  : type_s ID LB C_INT RB  dim_2 SEMICOLON {\$program.add_dim($ID.text, $type_s.text, $C_INT.text, \$dimTemp)}
+  :
+    type_s
+    ID
+    LB
+    C_INT
+    RB
+    dim_2
+    SEMICOLON
+    {\$program.add_dim($ID.text, $type_s.text, $C_INT.text, \$dimTemp)}
   ;
 
 dim_2
-  : LB C_INT RB {\$dimTemp = $C_INT.text}
+  :
+    LB
+    C_INT
+    RB
+    {\$dimTemp = $C_INT.text}
   ;
 
 attributes
-  : type_s {\$varType = $type_s.text} ID {\$program.add_var($ID.text, \$varType, \$scope, 1, 0, 0)} attributes_2*  SEMICOLON
+  :
+    type_s
+    {\$varType = $type_s.text}
+    ID
+    {\$program.add_var($ID.text, \$varType, \$scope, 1, 0, 0)}
+    attributes_2*
+    SEMICOLON
   ;
 
 attributes_2
-  : COMMA ID {\$program.add_var($ID.text, \$varType, \$scope, 1, 0, 0)}
+  :
+    COMMA
+    ID
+    {\$program.add_var($ID.text, \$varType, \$scope, 1, 0, 0)}
   ;
 
 parameters
-  : LP (type_s ID {\$program.add_var($ID.text, $type_s.text, \$scope, 1, 0, 0)}{\$program.add_param_mem($ID.text)}{\$params += 1}( parameters_2 )*)? RP
+  :
+    LP
+    ( type_s
+      ID
+      {\$program.add_var($ID.text, $type_s.text, \$scope, 1, 0, 0)}
+      {\$program.add_param_mem($ID.text)}
+      {\$params += 1}
+      ( parameters_2 )*)?
+    RP
   ;
 
 parameters_2
-  :  COMMA type_s ID {\$program.add_var($ID.text, $type_s.text, \$scope, 1, 0, 0)}{\$program.add_param_mem($ID.text)}{\$params += 1}
+  :
+    COMMA
+    type_s
+    ID
+    {\$program.add_var($ID.text, $type_s.text, \$scope, 1, 0, 0)}
+    {\$program.add_param_mem($ID.text)}{\$params += 1}
   ;
 
 type_s
-  : (INTEGER | FLOAT | CHAR | BOOL)
+  :
+    ( INTEGER
+    | FLOAT
+    | CHAR
+    | BOOL )
   ;
 
 type_c
-  : (type_s | ID)
+  :
+    ( type_s
+    | ID  )
   ;
 
 type_f
-  : (type_s | VOID)
+  :
+    ( type_s
+    | VOID )
   ;
 
 block
-  : START estatutes* R_END
+  :
+    START
+    estatutes*
+    R_END
   ;
 
 
 super_expression
-  : expression ((AND {\$cuads.add_SE($AND.text)}| OR {\$cuads.add_SE($OR.text)}) expression)*
+  :
+    expression
+    (( AND {\$cuads.add_SE($AND.text)}
+      | OR {\$cuads.add_SE($OR.text)})
+    expression)*
   ;
 
 expression
-  : exp ((LT {\$cuads.add_E($LT.text)} | LEQ {\$cuads.add_E($LEQ.text)} | GT {\$cuads.add_E($GT.text)} | GEQ {\$cuads.add_E($GEQ.text)} | EQ {\$cuads.add_E($EQ.text)} | NE {\$cuads.add_E($NE.text)} ) exp)*
+  :
+    exp
+    ((  LT {\$cuads.add_E($LT.text)}
+      | LEQ {\$cuads.add_E($LEQ.text)}
+      | GT {\$cuads.add_E($GT.text)}
+      | GEQ {\$cuads.add_E($GEQ.text)}
+      | EQ {\$cuads.add_E($EQ.text)}
+      | NE {\$cuads.add_E($NE.text)})
+    exp)*
   ;
 
 exp
-  : term ((ADD {\$cuads.add_EXP($ADD.text)} | SUB {\$cuads.add_EXP($SUB.text)}) term)*
+  :
+    term
+    ((ADD {\$cuads.add_EXP($ADD.text)}
+    | SUB {\$cuads.add_EXP($SUB.text)})
+    term)*
   ;
 
 term
-  : factor ( ( MULT {\$cuads.add_T($MULT.text)} | DIV {\$cuads.add_T($DIV.text)}| MOD {\$cuads.add_T($MOD.text)} ) factor )*
+  :
+    factor
+    (( MULT {\$cuads.add_T($MULT.text)}
+      | DIV {\$cuads.add_T($DIV.text)}
+      | MOD {\$cuads.add_T($MOD.text)} )
+    factor )*
   ;
 
 factor
-  : (LP {\$cuads.add_falseBottom} super_expression {\$cuads.rem_falseBottom} RP | var_cte   | func_call | method_call)
+  : ( LP {\$cuads.add_falseBottom}
+        super_expression
+      RP {\$cuads.rem_falseBottom}
+      | var_cte
+      | func_call
+      | method_call )
   ;
 
 var_cte
-  : (var_access
-  | C_INT {\$program.add_const($C_INT.text, "int")} {\$cuads.add_oper_const($C_INT.text)}
-  | C_FLOAT {\$program.add_const($C_FLOAT.text, "float")}  {\$cuads.add_oper_const($C_FLOAT.text)}
-  | C_CHAR {\$program.add_const($C_CHAR.text, "char")}  {\$cuads.add_oper_const($C_CHAR.text)}
-  | C_BOOL {\$program.add_const($C_BOOL.text, "bool")}  {\$cuads.add_oper_const($C_BOOL.text)})
+  :
+    (var_access
+    | C_INT {\$program.add_const($C_INT.text, "int")} {\$cuads.add_oper_const($C_INT.text, "int")}
+    | C_FLOAT {\$program.add_const($C_FLOAT.text, "float")}  {\$cuads.add_oper_const($C_FLOAT.text, "float")}
+    | C_CHAR {\$program.add_const($C_CHAR.text, "char")}  {\$cuads.add_oper_const($C_CHAR.text, "char")}
+    | C_BOOL {\$program.add_const($C_BOOL.text, "bool")}  {\$cuads.add_oper_const($C_BOOL.text, "bool")})
   ;
 
 var_access
-  : ID {\$cuads.add_operando($ID.text, \$scope)} (arr_access {\$cuads.add_arr($ID.text)}(mat_access {\$cuads.add_mat($ID.text)})?)?
+  :
+     (R_THIS {\$cuads.indirect = true})? ID {\$aux = ""}
+    (obj_access | dim_access)?
+
+     {\$cuads.add_operando("#{$ID.text}#{\$aux}" , \$scope)}
   ;
 
-arr_access
-  :LB {\$cuads.add_falseBottom}  super_expression  {\$cuads.rem_falseBottom} RB
+dim_access
+  :
+    LB {\$cuads.add_falseBottom}
+      super_expression
+    RB {\$cuads.rem_falseBottom}
+
+    (LB {\$cuads.add_falseBottom}
+      super_expression
+    RB {\$cuads.rem_falseBottom})?
   ;
 
-mat_access
-  :LB {\$cuads.add_falseBottom}  super_expression  {\$cuads.rem_falseBottom} RB
+obj_access
+  :
+    POINT ID {\$aux = ".#{$ID.text}"}
   ;
 
 
 estatutes
-  : (assign SEMICOLON | condition | while_loop | for_loop | print | input | func_call SEMICOLON | method_call SEMICOLON  | r_return )
+  :
+    ( assign SEMICOLON
+    | condition
+    | while_loop
+    | for_loop
+    | print
+    | input
+    | func_call SEMICOLON
+    | method_call SEMICOLON
+    | r_return )
   ;
 
 assign
-  : var_access  ASSIGN {\$cuads.add_assign()} {\$cuads.add_falseBottom} super_expression {\$cuads.rem_falseBottom} {\$cuads.emptyStack}
+  :
+    var_access
+    ASSIGN
+    {\$cuads.add_falseBottom} super_expression {\$cuads.rem_falseBottom}
+    {\$cuads.do_assign()}
   ;
 
 condition
-  : IF LP {\$cuads.add_falseBottom} super_expression {\$cuads.rem_falseBottom} {\$cuads.goto_falso}RP block (ELSE {\$cuads.goto_else}  block)? {\$cuads.fill_goto}
+  :
+    IF {puts "IF"}
+    LP {\$cuads.add_falseBottom}
+      super_expression
+    RP {\$cuads.rem_falseBottom}
+    {\$cuads.goto_falso}
+    block
+    ( ELSE
+      {\$cuads.goto_else}
+      block)?
+    {\$cuads.fill_goto}
   ;
 
 while_loop
-  : WHILE LP {\$cuads.save_spot}{\$cuads.add_falseBottom} super_expression {\$cuads.rem_falseBottom} {\$cuads.goto_falso}RP block {\$cuads.goto_loop}
+  :
+    WHILE
+    LP {\$cuads.add_falseBottom}
+    {\$cuads.save_spot}
+    super_expression
+    RP {\$cuads.rem_falseBottom}
+    {\$cuads.goto_falso}
+    block
+    {\$cuads.goto_loop}
   ;
 
 for_loop
-  : FOR LP assign? SEMICOLON {\$cuads.save_spot}{\$cuads.add_falseBottom} super_expression {\$cuads.rem_falseBottom} {\$cuads.goto_falso} SEMICOLON{\$cuads.add_swap} assign? {\$cuads.add_swap} RP block {\$cuads.do_swap}{\$cuads.goto_loop}
+  :
+    FOR
+    LP
+    assign? SEMICOLON {\$cuads.save_spot}
+    {\$cuads.add_falseBottom}
+      super_expression
+    {\$cuads.rem_falseBottom}
+    {\$cuads.goto_falso}
+    SEMICOLON
+    {\$cuads.add_swap}
+    assign?
+    {\$cuads.add_swap}
+    RP
+    block
+    {\$cuads.do_swap}
+    {\$cuads.goto_loop}
   ;
 
 print
-  : PRINT LP (super_expression{\$cuads.emptyStack}{\$cuads.do_print} print_2* ) RP SEMICOLON
+  :
+    PRINT
+    LP
+    (
+    {\$cuads.add_falseBottom}
+      super_expression
+    {\$cuads.rem_falseBottom}
+    {\$cuads.do_print}
+    print_2* )
+    RP
+    SEMICOLON
   ;
 
 print_2
-  :  COMMA super_expression{\$cuads.emptyStack} {\$cuads.do_print}
+  :
+    COMMA
+    LP {\$cuads.add_falseBottom}
+      super_expression
+    RP {\$cuads.rem_falseBottom}
+    {\$cuads.do_print}
   ;
 
 input
@@ -308,7 +534,14 @@ input
   ;
 
 func_call
-  : ID {\$cuads.era($ID.text)} LP {\$params = 0} call_params?  {\$cuads.go_sub($ID.text)} {\$cuads.return_type($ID.text)} RP
+  :
+    ID
+    {\$cuads.era($ID.text)}
+    LP {\$params = 0}
+    call_params?
+    {\$cuads.go_sub($ID.text)}
+    {\$cuads.return_type($ID.text)}
+    RP{\$params = 0}
   ;
 
 call_params
@@ -320,13 +553,26 @@ call_params2
     ;
 
 method_call
-  : ID   {\$varType = \$program.dirFunc.functions["global"].dirVars.variables[$ID.text].type}POINT method_call_2 LP call_params? {\$cuads.go_sub("#{\$varType}.#{\$varId}")}RP
+  :
+    ID {\$varId = $ID.text} {\$varType = \$program.dirFunc.functions["global"].dirVars.variables[$ID.text].type}
+    POINT method_call_2 LP call_params?
+    {\$cuads.go_sub("#{\$varType}.#{\$funcId}")}
+
+    RP{\$params = 0}
   ;
 
 method_call_2
-  : ID  {\$varId = $ID.text}{\$cuads.era("#{\$varType}.#{\$varId}")}
+  :
+    ID
+    {\$funcId = $ID.text}{\$cuads.era("#{\$varType}.#{\$funcId}")}
+    {\$cuads.pass_attrs(\$varId, \$varType)}
   ;
 
 r_return
- : RETURN {\$cuads.add_falseBottom} super_expression {\$cuads.rem_falseBottom}  {\$cuads.do_return(\$scope)} SEMICOLON
+ : RETURN
+ {\$cuads.add_falseBottom}
+ super_expression
+ {\$cuads.rem_falseBottom}
+ {\$cuads.do_return(\$scope)}
+  SEMICOLON
  ;

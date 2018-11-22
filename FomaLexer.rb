@@ -5,7 +5,7 @@
 # Generated using ANTLR version: 3.5
 # Ruby runtime library version: 1.10.0
 # Input grammar file: Foma.g
-# Generated at: 2018-11-21 10:15:24
+# Generated at: 2018-11-22 08:27:49
 #
 
 # ~~~> start load path setup
@@ -72,11 +72,11 @@ module Foma
                    :FUNCTION => 21, :GEQ => 22, :GT => 23, :ID => 24, :IF => 25, 
                    :INHER => 26, :INPUT => 27, :INTEGER => 28, :LB => 29, 
                    :LBRACE => 30, :LEQ => 31, :LP => 32, :LT => 33, :MOD => 34, 
-                   :MULT => 35, :NE => 36, :NEW => 37, :NEWLINE => 38, :NULL => 39, 
-                   :OR => 40, :POINT => 41, :PRINT => 42, :PROGRAM => 43, 
-                   :RB => 44, :RBRACE => 45, :RETURN => 46, :RP => 47, :R_END => 48, 
-                   :SEMICOLON => 49, :START => 50, :SUB => 51, :VOID => 52, 
-                   :WHILE => 53, :WHITESPACE => 54 )
+                   :MULT => 35, :NE => 36, :NEWLINE => 37, :NULL => 38, 
+                   :OR => 39, :POINT => 40, :PRINT => 41, :PROGRAM => 42, 
+                   :RB => 43, :RBRACE => 44, :RETURN => 45, :RP => 46, :R_END => 47, 
+                   :R_NEW => 48, :R_THIS => 49, :SEMICOLON => 50, :START => 51, 
+                   :SUB => 52, :VOID => 53, :WHILE => 54, :WHITESPACE => 55 )
 
   end
 
@@ -94,19 +94,21 @@ module Foma
     RULE_NAMES   = [ "INTEGER", "FLOAT", "CHAR", "BOOL", "VOID", "NULL", 
                      "IF", "ELSE", "AND", "OR", "WHILE", "FOR", "INPUT", 
                      "PRINT", "PROGRAM", "FUNCTION", "RETURN", "CLASS", 
-                     "INHER", "START", "R_END", "NEW", "ASSIGN", "GT", "GEQ", 
-                     "LT", "LEQ", "EQ", "NE", "ADD", "SUB", "MULT", "DIV", 
-                     "MOD", "C_INT", "C_FLOAT", "C_BOOL", "C_CHAR", "ID", 
-                     "COLON", "SEMICOLON", "COMMA", "POINT", "RP", "LP", 
-                     "LB", "RB", "RBRACE", "LBRACE", "WHITESPACE", "NEWLINE" ].freeze
+                     "INHER", "START", "R_END", "R_THIS", "R_NEW", "ASSIGN", 
+                     "GT", "GEQ", "LT", "LEQ", "EQ", "NE", "ADD", "SUB", 
+                     "MULT", "DIV", "MOD", "C_INT", "C_FLOAT", "C_BOOL", 
+                     "C_CHAR", "ID", "COLON", "SEMICOLON", "COMMA", "POINT", 
+                     "RP", "LP", "LB", "RB", "RBRACE", "LBRACE", "WHITESPACE", 
+                     "NEWLINE" ].freeze
     RULE_METHODS = [ :integer!, :float!, :char!, :bool!, :void!, :null!, 
                      :if!, :else!, :and!, :or!, :while!, :for!, :input!, 
                      :print!, :program!, :function!, :return!, :class!, 
-                     :inher!, :start!, :r_end!, :new!, :assign!, :gt!, :geq!, 
-                     :lt!, :leq!, :eq!, :ne!, :add!, :sub!, :mult!, :div!, 
-                     :mod!, :c_int!, :c_float!, :c_bool!, :c_char!, :id!, 
-                     :colon!, :semicolon!, :comma!, :point!, :rp!, :lp!, 
-                     :lb!, :rb!, :rbrace!, :lbrace!, :whitespace!, :newline! ].freeze
+                     :inher!, :start!, :r_end!, :r_this!, :r_new!, :assign!, 
+                     :gt!, :geq!, :lt!, :leq!, :eq!, :ne!, :add!, :sub!, 
+                     :mult!, :div!, :mod!, :c_int!, :c_float!, :c_bool!, 
+                     :c_char!, :id!, :colon!, :semicolon!, :comma!, :point!, 
+                     :rp!, :lp!, :lb!, :rb!, :rbrace!, :lbrace!, :whitespace!, 
+                     :newline! ].freeze
 
     def initialize( input=nil, options = {} )
       super( input, options )
@@ -128,7 +130,7 @@ module Foma
 
 
       # - - - - main rule block - - - -
-      # at line 36:10: 'int'
+      # at line 39:10: 'int'
       match( "int" )
 
 
@@ -156,7 +158,7 @@ module Foma
 
 
       # - - - - main rule block - - - -
-      # at line 37:8: 'float'
+      # at line 40:8: 'float'
       match( "float" )
 
 
@@ -184,7 +186,7 @@ module Foma
 
 
       # - - - - main rule block - - - -
-      # at line 38:7: 'char'
+      # at line 41:7: 'char'
       match( "char" )
 
 
@@ -212,7 +214,7 @@ module Foma
 
 
       # - - - - main rule block - - - -
-      # at line 39:7: 'bool'
+      # at line 42:7: 'bool'
       match( "bool" )
 
 
@@ -240,7 +242,7 @@ module Foma
 
 
       # - - - - main rule block - - - -
-      # at line 40:7: 'void'
+      # at line 43:7: 'void'
       match( "void" )
 
 
@@ -268,7 +270,7 @@ module Foma
 
 
       # - - - - main rule block - - - -
-      # at line 41:7: 'null'
+      # at line 44:7: 'null'
       match( "null" )
 
 
@@ -296,7 +298,7 @@ module Foma
 
 
       # - - - - main rule block - - - -
-      # at line 44:5: 'if'
+      # at line 47:5: 'if'
       match( "if" )
 
 
@@ -324,7 +326,7 @@ module Foma
 
 
       # - - - - main rule block - - - -
-      # at line 45:7: 'else'
+      # at line 48:7: 'else'
       match( "else" )
 
 
@@ -352,7 +354,7 @@ module Foma
 
 
       # - - - - main rule block - - - -
-      # at line 48:6: 'and'
+      # at line 51:6: 'and'
       match( "and" )
 
 
@@ -380,7 +382,7 @@ module Foma
 
 
       # - - - - main rule block - - - -
-      # at line 49:5: 'or'
+      # at line 52:5: 'or'
       match( "or" )
 
 
@@ -408,7 +410,7 @@ module Foma
 
 
       # - - - - main rule block - - - -
-      # at line 52:8: 'while'
+      # at line 55:8: 'while'
       match( "while" )
 
 
@@ -436,7 +438,7 @@ module Foma
 
 
       # - - - - main rule block - - - -
-      # at line 53:6: 'for'
+      # at line 56:6: 'for'
       match( "for" )
 
 
@@ -464,7 +466,7 @@ module Foma
 
 
       # - - - - main rule block - - - -
-      # at line 56:8: 'input'
+      # at line 59:8: 'input'
       match( "input" )
 
 
@@ -492,7 +494,7 @@ module Foma
 
 
       # - - - - main rule block - - - -
-      # at line 57:8: 'print'
+      # at line 60:8: 'print'
       match( "print" )
 
 
@@ -520,7 +522,7 @@ module Foma
 
 
       # - - - - main rule block - - - -
-      # at line 60:10: 'program'
+      # at line 63:10: 'program'
       match( "program" )
 
 
@@ -548,7 +550,7 @@ module Foma
 
 
       # - - - - main rule block - - - -
-      # at line 61:11: 'function'
+      # at line 64:11: 'function'
       match( "function" )
 
 
@@ -576,7 +578,7 @@ module Foma
 
 
       # - - - - main rule block - - - -
-      # at line 62:9: 'return'
+      # at line 65:9: 'return'
       match( "return" )
 
 
@@ -604,7 +606,7 @@ module Foma
 
 
       # - - - - main rule block - - - -
-      # at line 65:8: 'class'
+      # at line 68:8: 'class'
       match( "class" )
 
 
@@ -632,7 +634,7 @@ module Foma
 
 
       # - - - - main rule block - - - -
-      # at line 66:8: 'inherits'
+      # at line 69:8: 'inherits'
       match( "inherits" )
 
 
@@ -660,7 +662,7 @@ module Foma
 
 
       # - - - - main rule block - - - -
-      # at line 67:8: 'start'
+      # at line 70:8: 'start'
       match( "start" )
 
 
@@ -688,7 +690,7 @@ module Foma
 
 
       # - - - - main rule block - - - -
-      # at line 68:8: 'end'
+      # at line 71:8: 'end'
       match( "end" )
 
 
@@ -702,22 +704,22 @@ module Foma
 
     end
 
-    # lexer rule new! (NEW)
+    # lexer rule r_this! (R_THIS)
     # (in Foma.g)
-    def new!
+    def r_this!
       # -> uncomment the next line to manually enable rule tracing
       # trace_in( __method__, 22 )
 
 
 
-      type = NEW
+      type = R_THIS
       channel = ANTLR3::DEFAULT_CHANNEL
     # - - - - label initialization - - - -
 
 
       # - - - - main rule block - - - -
-      # at line 69:6: 'new'
-      match( "new" )
+      # at line 73:9: 'this'
+      match( "this" )
 
 
 
@@ -730,22 +732,23 @@ module Foma
 
     end
 
-    # lexer rule assign! (ASSIGN)
+    # lexer rule r_new! (R_NEW)
     # (in Foma.g)
-    def assign!
+    def r_new!
       # -> uncomment the next line to manually enable rule tracing
       # trace_in( __method__, 23 )
 
 
 
-      type = ASSIGN
+      type = R_NEW
       channel = ANTLR3::DEFAULT_CHANNEL
     # - - - - label initialization - - - -
 
 
       # - - - - main rule block - - - -
-      # at line 77:9: '='
-      match( 0x3d )
+      # at line 74:8: 'new'
+      match( "new" )
+
 
 
       @state.type = type
@@ -757,22 +760,22 @@ module Foma
 
     end
 
-    # lexer rule gt! (GT)
+    # lexer rule assign! (ASSIGN)
     # (in Foma.g)
-    def gt!
+    def assign!
       # -> uncomment the next line to manually enable rule tracing
       # trace_in( __method__, 24 )
 
 
 
-      type = GT
+      type = ASSIGN
       channel = ANTLR3::DEFAULT_CHANNEL
     # - - - - label initialization - - - -
 
 
       # - - - - main rule block - - - -
-      # at line 80:5: '>'
-      match( 0x3e )
+      # at line 82:9: '='
+      match( 0x3d )
 
 
       @state.type = type
@@ -784,23 +787,22 @@ module Foma
 
     end
 
-    # lexer rule geq! (GEQ)
+    # lexer rule gt! (GT)
     # (in Foma.g)
-    def geq!
+    def gt!
       # -> uncomment the next line to manually enable rule tracing
       # trace_in( __method__, 25 )
 
 
 
-      type = GEQ
+      type = GT
       channel = ANTLR3::DEFAULT_CHANNEL
     # - - - - label initialization - - - -
 
 
       # - - - - main rule block - - - -
-      # at line 81:6: '>='
-      match( ">=" )
-
+      # at line 85:5: '>'
+      match( 0x3e )
 
 
       @state.type = type
@@ -812,22 +814,23 @@ module Foma
 
     end
 
-    # lexer rule lt! (LT)
+    # lexer rule geq! (GEQ)
     # (in Foma.g)
-    def lt!
+    def geq!
       # -> uncomment the next line to manually enable rule tracing
       # trace_in( __method__, 26 )
 
 
 
-      type = LT
+      type = GEQ
       channel = ANTLR3::DEFAULT_CHANNEL
     # - - - - label initialization - - - -
 
 
       # - - - - main rule block - - - -
-      # at line 82:5: '<'
-      match( 0x3c )
+      # at line 86:6: '>='
+      match( ">=" )
+
 
 
       @state.type = type
@@ -839,23 +842,22 @@ module Foma
 
     end
 
-    # lexer rule leq! (LEQ)
+    # lexer rule lt! (LT)
     # (in Foma.g)
-    def leq!
+    def lt!
       # -> uncomment the next line to manually enable rule tracing
       # trace_in( __method__, 27 )
 
 
 
-      type = LEQ
+      type = LT
       channel = ANTLR3::DEFAULT_CHANNEL
     # - - - - label initialization - - - -
 
 
       # - - - - main rule block - - - -
-      # at line 83:6: '<='
-      match( "<=" )
-
+      # at line 87:5: '<'
+      match( 0x3c )
 
 
       @state.type = type
@@ -867,22 +869,22 @@ module Foma
 
     end
 
-    # lexer rule eq! (EQ)
+    # lexer rule leq! (LEQ)
     # (in Foma.g)
-    def eq!
+    def leq!
       # -> uncomment the next line to manually enable rule tracing
       # trace_in( __method__, 28 )
 
 
 
-      type = EQ
+      type = LEQ
       channel = ANTLR3::DEFAULT_CHANNEL
     # - - - - label initialization - - - -
 
 
       # - - - - main rule block - - - -
-      # at line 84:5: '=='
-      match( "==" )
+      # at line 88:6: '<='
+      match( "<=" )
 
 
 
@@ -895,22 +897,22 @@ module Foma
 
     end
 
-    # lexer rule ne! (NE)
+    # lexer rule eq! (EQ)
     # (in Foma.g)
-    def ne!
+    def eq!
       # -> uncomment the next line to manually enable rule tracing
       # trace_in( __method__, 29 )
 
 
 
-      type = NE
+      type = EQ
       channel = ANTLR3::DEFAULT_CHANNEL
     # - - - - label initialization - - - -
 
 
       # - - - - main rule block - - - -
-      # at line 85:5: '<>'
-      match( "<>" )
+      # at line 89:5: '=='
+      match( "==" )
 
 
 
@@ -923,22 +925,23 @@ module Foma
 
     end
 
-    # lexer rule add! (ADD)
+    # lexer rule ne! (NE)
     # (in Foma.g)
-    def add!
+    def ne!
       # -> uncomment the next line to manually enable rule tracing
       # trace_in( __method__, 30 )
 
 
 
-      type = ADD
+      type = NE
       channel = ANTLR3::DEFAULT_CHANNEL
     # - - - - label initialization - - - -
 
 
       # - - - - main rule block - - - -
-      # at line 88:6: '+'
-      match( 0x2b )
+      # at line 90:5: '<>'
+      match( "<>" )
+
 
 
       @state.type = type
@@ -950,22 +953,22 @@ module Foma
 
     end
 
-    # lexer rule sub! (SUB)
+    # lexer rule add! (ADD)
     # (in Foma.g)
-    def sub!
+    def add!
       # -> uncomment the next line to manually enable rule tracing
       # trace_in( __method__, 31 )
 
 
 
-      type = SUB
+      type = ADD
       channel = ANTLR3::DEFAULT_CHANNEL
     # - - - - label initialization - - - -
 
 
       # - - - - main rule block - - - -
-      # at line 89:6: '-'
-      match( 0x2d )
+      # at line 93:6: '+'
+      match( 0x2b )
 
 
       @state.type = type
@@ -977,22 +980,22 @@ module Foma
 
     end
 
-    # lexer rule mult! (MULT)
+    # lexer rule sub! (SUB)
     # (in Foma.g)
-    def mult!
+    def sub!
       # -> uncomment the next line to manually enable rule tracing
       # trace_in( __method__, 32 )
 
 
 
-      type = MULT
+      type = SUB
       channel = ANTLR3::DEFAULT_CHANNEL
     # - - - - label initialization - - - -
 
 
       # - - - - main rule block - - - -
-      # at line 92:7: '*'
-      match( 0x2a )
+      # at line 94:6: '-'
+      match( 0x2d )
 
 
       @state.type = type
@@ -1004,22 +1007,22 @@ module Foma
 
     end
 
-    # lexer rule div! (DIV)
+    # lexer rule mult! (MULT)
     # (in Foma.g)
-    def div!
+    def mult!
       # -> uncomment the next line to manually enable rule tracing
       # trace_in( __method__, 33 )
 
 
 
-      type = DIV
+      type = MULT
       channel = ANTLR3::DEFAULT_CHANNEL
     # - - - - label initialization - - - -
 
 
       # - - - - main rule block - - - -
-      # at line 93:6: '/'
-      match( 0x2f )
+      # at line 97:7: '*'
+      match( 0x2a )
 
 
       @state.type = type
@@ -1031,22 +1034,22 @@ module Foma
 
     end
 
-    # lexer rule mod! (MOD)
+    # lexer rule div! (DIV)
     # (in Foma.g)
-    def mod!
+    def div!
       # -> uncomment the next line to manually enable rule tracing
       # trace_in( __method__, 34 )
 
 
 
-      type = MOD
+      type = DIV
       channel = ANTLR3::DEFAULT_CHANNEL
     # - - - - label initialization - - - -
 
 
       # - - - - main rule block - - - -
-      # at line 94:6: '%'
-      match( 0x25 )
+      # at line 98:6: '/'
+      match( 0x2f )
 
 
       @state.type = type
@@ -1058,11 +1061,38 @@ module Foma
 
     end
 
+    # lexer rule mod! (MOD)
+    # (in Foma.g)
+    def mod!
+      # -> uncomment the next line to manually enable rule tracing
+      # trace_in( __method__, 35 )
+
+
+
+      type = MOD
+      channel = ANTLR3::DEFAULT_CHANNEL
+    # - - - - label initialization - - - -
+
+
+      # - - - - main rule block - - - -
+      # at line 99:6: '%'
+      match( 0x25 )
+
+
+      @state.type = type
+      @state.channel = channel
+    ensure
+      # -> uncomment the next line to manually enable rule tracing
+      # trace_out( __method__, 35 )
+
+
+    end
+
     # lexer rule c_int! (C_INT)
     # (in Foma.g)
     def c_int!
       # -> uncomment the next line to manually enable rule tracing
-      # trace_in( __method__, 35 )
+      # trace_in( __method__, 36 )
 
 
 
@@ -1072,8 +1102,8 @@ module Foma
 
 
       # - - - - main rule block - - - -
-      # at line 102:8: ( '0' .. '9' )+
-      # at file 102:8: ( '0' .. '9' )+
+      # at line 107:8: ( '0' .. '9' )+
+      # at file 107:8: ( '0' .. '9' )+
       match_count_1 = 0
       while true
         alt_1 = 2
@@ -1114,7 +1144,7 @@ module Foma
       @state.channel = channel
     ensure
       # -> uncomment the next line to manually enable rule tracing
-      # trace_out( __method__, 35 )
+      # trace_out( __method__, 36 )
 
 
     end
@@ -1123,7 +1153,7 @@ module Foma
     # (in Foma.g)
     def c_float!
       # -> uncomment the next line to manually enable rule tracing
-      # trace_in( __method__, 36 )
+      # trace_in( __method__, 37 )
 
 
 
@@ -1133,8 +1163,8 @@ module Foma
 
 
       # - - - - main rule block - - - -
-      # at line 103:10: ( '0' .. '9' )+ '.' ( '0' .. '9' )+
-      # at file 103:10: ( '0' .. '9' )+
+      # at line 108:10: ( '0' .. '9' )+ '.' ( '0' .. '9' )+
+      # at file 108:10: ( '0' .. '9' )+
       match_count_2 = 0
       while true
         alt_2 = 2
@@ -1170,7 +1200,7 @@ module Foma
 
 
       match( 0x2e )
-      # at file 103:28: ( '0' .. '9' )+
+      # at file 108:28: ( '0' .. '9' )+
       match_count_3 = 0
       while true
         alt_3 = 2
@@ -1211,7 +1241,7 @@ module Foma
       @state.channel = channel
     ensure
       # -> uncomment the next line to manually enable rule tracing
-      # trace_out( __method__, 36 )
+      # trace_out( __method__, 37 )
 
 
     end
@@ -1220,7 +1250,7 @@ module Foma
     # (in Foma.g)
     def c_bool!
       # -> uncomment the next line to manually enable rule tracing
-      # trace_in( __method__, 37 )
+      # trace_in( __method__, 38 )
 
 
 
@@ -1230,8 +1260,8 @@ module Foma
 
 
       # - - - - main rule block - - - -
-      # at line 104:9: ( 'true' | 'false' )
-      # at line 104:9: ( 'true' | 'false' )
+      # at line 109:9: ( 'true' | 'false' )
+      # at line 109:9: ( 'true' | 'false' )
       alt_4 = 2
       look_4_0 = @input.peek( 1 )
 
@@ -1245,12 +1275,12 @@ module Foma
       end
       case alt_4
       when 1
-        # at line 104:11: 'true'
+        # at line 109:11: 'true'
         match( "true" )
 
 
       when 2
-        # at line 104:20: 'false'
+        # at line 109:20: 'false'
         match( "false" )
 
 
@@ -1261,7 +1291,7 @@ module Foma
       @state.channel = channel
     ensure
       # -> uncomment the next line to manually enable rule tracing
-      # trace_out( __method__, 37 )
+      # trace_out( __method__, 38 )
 
 
     end
@@ -1270,7 +1300,7 @@ module Foma
     # (in Foma.g)
     def c_char!
       # -> uncomment the next line to manually enable rule tracing
-      # trace_in( __method__, 38 )
+      # trace_in( __method__, 39 )
 
 
 
@@ -1280,7 +1310,7 @@ module Foma
 
 
       # - - - - main rule block - - - -
-      # at line 105:7: ( '\\'' (~ ( '\\'' | '\\\\' ) | '\\\\' . )* '\\'' | '\"' (~ ( '\"' | '\\\\' ) | '\\\\' . )* '\"' )
+      # at line 110:7: ( '\\'' (~ ( '\\'' | '\\\\' ) | '\\\\' . )* '\\'' | '\"' (~ ( '\"' | '\\\\' ) | '\\\\' . )* '\"' )
       alt_7 = 2
       look_7_0 = @input.peek( 1 )
 
@@ -1294,9 +1324,9 @@ module Foma
       end
       case alt_7
       when 1
-        # at line 105:9: '\\'' (~ ( '\\'' | '\\\\' ) | '\\\\' . )* '\\''
+        # at line 110:9: '\\'' (~ ( '\\'' | '\\\\' ) | '\\\\' . )* '\\''
         match( 0x27 )
-        # at line 105:14: (~ ( '\\'' | '\\\\' ) | '\\\\' . )*
+        # at line 110:14: (~ ( '\\'' | '\\\\' ) | '\\\\' . )*
         while true # decision 5
           alt_5 = 3
           look_5_0 = @input.peek( 1 )
@@ -1309,7 +1339,7 @@ module Foma
           end
           case alt_5
           when 1
-            # at line 105:16: ~ ( '\\'' | '\\\\' )
+            # at line 110:16: ~ ( '\\'' | '\\\\' )
             if @input.peek( 1 ).between?( 0x0, 0x26 ) || @input.peek( 1 ).between?( 0x28, 0x5b ) || @input.peek( 1 ).between?( 0x5d, 0xff )
               @input.consume
             else
@@ -1322,7 +1352,7 @@ module Foma
 
 
           when 2
-            # at line 105:35: '\\\\' .
+            # at line 110:35: '\\\\' .
             match( 0x5c )
             match_any
 
@@ -1334,9 +1364,9 @@ module Foma
         match( 0x27 )
 
       when 2
-        # at line 105:52: '\"' (~ ( '\"' | '\\\\' ) | '\\\\' . )* '\"'
+        # at line 110:52: '\"' (~ ( '\"' | '\\\\' ) | '\\\\' . )* '\"'
         match( 0x22 )
-        # at line 105:57: (~ ( '\"' | '\\\\' ) | '\\\\' . )*
+        # at line 110:57: (~ ( '\"' | '\\\\' ) | '\\\\' . )*
         while true # decision 6
           alt_6 = 3
           look_6_0 = @input.peek( 1 )
@@ -1349,7 +1379,7 @@ module Foma
           end
           case alt_6
           when 1
-            # at line 105:59: ~ ( '\"' | '\\\\' )
+            # at line 110:59: ~ ( '\"' | '\\\\' )
             if @input.peek( 1 ).between?( 0x0, 0x21 ) || @input.peek( 1 ).between?( 0x23, 0x5b ) || @input.peek( 1 ).between?( 0x5d, 0xff )
               @input.consume
             else
@@ -1362,7 +1392,7 @@ module Foma
 
 
           when 2
-            # at line 105:78: '\\\\' .
+            # at line 110:78: '\\\\' .
             match( 0x5c )
             match_any
 
@@ -1379,7 +1409,7 @@ module Foma
       @state.channel = channel
     ensure
       # -> uncomment the next line to manually enable rule tracing
-      # trace_out( __method__, 38 )
+      # trace_out( __method__, 39 )
 
 
     end
@@ -1388,7 +1418,7 @@ module Foma
     # (in Foma.g)
     def id!
       # -> uncomment the next line to manually enable rule tracing
-      # trace_in( __method__, 39 )
+      # trace_in( __method__, 40 )
 
 
 
@@ -1398,7 +1428,7 @@ module Foma
 
 
       # - - - - main rule block - - - -
-      # at line 108:5: ( 'a' .. 'z' | 'A' .. 'Z' ) ( ( 'a' .. 'z' | 'A' .. 'Z' ) | '_' | ( '0' .. '9' ) )*
+      # at line 113:5: ( 'a' .. 'z' | 'A' .. 'Z' ) ( ( 'a' .. 'z' | 'A' .. 'Z' ) | '_' | ( '0' .. '9' ) )*
       if @input.peek( 1 ).between?( 0x41, 0x5a ) || @input.peek( 1 ).between?( 0x61, 0x7a )
         @input.consume
       else
@@ -1409,7 +1439,7 @@ module Foma
       end
 
 
-      # at line 108:33: ( ( 'a' .. 'z' | 'A' .. 'Z' ) | '_' | ( '0' .. '9' ) )*
+      # at line 113:33: ( ( 'a' .. 'z' | 'A' .. 'Z' ) | '_' | ( '0' .. '9' ) )*
       while true # decision 8
         alt_8 = 2
         look_8_0 = @input.peek( 1 )
@@ -1443,7 +1473,7 @@ module Foma
       @state.channel = channel
     ensure
       # -> uncomment the next line to manually enable rule tracing
-      # trace_out( __method__, 39 )
+      # trace_out( __method__, 40 )
 
 
     end
@@ -1452,7 +1482,7 @@ module Foma
     # (in Foma.g)
     def colon!
       # -> uncomment the next line to manually enable rule tracing
-      # trace_in( __method__, 40 )
+      # trace_in( __method__, 41 )
 
 
 
@@ -1462,35 +1492,8 @@ module Foma
 
 
       # - - - - main rule block - - - -
-      # at line 115:8: ':'
+      # at line 120:8: ':'
       match( 0x3a )
-
-
-      @state.type = type
-      @state.channel = channel
-    ensure
-      # -> uncomment the next line to manually enable rule tracing
-      # trace_out( __method__, 40 )
-
-
-    end
-
-    # lexer rule semicolon! (SEMICOLON)
-    # (in Foma.g)
-    def semicolon!
-      # -> uncomment the next line to manually enable rule tracing
-      # trace_in( __method__, 41 )
-
-
-
-      type = SEMICOLON
-      channel = ANTLR3::DEFAULT_CHANNEL
-    # - - - - label initialization - - - -
-
-
-      # - - - - main rule block - - - -
-      # at line 116:12: ';'
-      match( 0x3b )
 
 
       @state.type = type
@@ -1502,22 +1505,22 @@ module Foma
 
     end
 
-    # lexer rule comma! (COMMA)
+    # lexer rule semicolon! (SEMICOLON)
     # (in Foma.g)
-    def comma!
+    def semicolon!
       # -> uncomment the next line to manually enable rule tracing
       # trace_in( __method__, 42 )
 
 
 
-      type = COMMA
+      type = SEMICOLON
       channel = ANTLR3::DEFAULT_CHANNEL
     # - - - - label initialization - - - -
 
 
       # - - - - main rule block - - - -
-      # at line 117:8: ','
-      match( 0x2c )
+      # at line 121:12: ';'
+      match( 0x3b )
 
 
       @state.type = type
@@ -1529,22 +1532,22 @@ module Foma
 
     end
 
-    # lexer rule point! (POINT)
+    # lexer rule comma! (COMMA)
     # (in Foma.g)
-    def point!
+    def comma!
       # -> uncomment the next line to manually enable rule tracing
       # trace_in( __method__, 43 )
 
 
 
-      type = POINT
+      type = COMMA
       channel = ANTLR3::DEFAULT_CHANNEL
     # - - - - label initialization - - - -
 
 
       # - - - - main rule block - - - -
-      # at line 118:8: '.'
-      match( 0x2e )
+      # at line 122:8: ','
+      match( 0x2c )
 
 
       @state.type = type
@@ -1556,22 +1559,22 @@ module Foma
 
     end
 
-    # lexer rule rp! (RP)
+    # lexer rule point! (POINT)
     # (in Foma.g)
-    def rp!
+    def point!
       # -> uncomment the next line to manually enable rule tracing
       # trace_in( __method__, 44 )
 
 
 
-      type = RP
+      type = POINT
       channel = ANTLR3::DEFAULT_CHANNEL
     # - - - - label initialization - - - -
 
 
       # - - - - main rule block - - - -
-      # at line 121:5: ')'
-      match( 0x29 )
+      # at line 123:8: '.'
+      match( 0x2e )
 
 
       @state.type = type
@@ -1583,22 +1586,22 @@ module Foma
 
     end
 
-    # lexer rule lp! (LP)
+    # lexer rule rp! (RP)
     # (in Foma.g)
-    def lp!
+    def rp!
       # -> uncomment the next line to manually enable rule tracing
       # trace_in( __method__, 45 )
 
 
 
-      type = LP
+      type = RP
       channel = ANTLR3::DEFAULT_CHANNEL
     # - - - - label initialization - - - -
 
 
       # - - - - main rule block - - - -
-      # at line 122:5: '('
-      match( 0x28 )
+      # at line 126:5: ')'
+      match( 0x29 )
 
 
       @state.type = type
@@ -1610,22 +1613,22 @@ module Foma
 
     end
 
-    # lexer rule lb! (LB)
+    # lexer rule lp! (LP)
     # (in Foma.g)
-    def lb!
+    def lp!
       # -> uncomment the next line to manually enable rule tracing
       # trace_in( __method__, 46 )
 
 
 
-      type = LB
+      type = LP
       channel = ANTLR3::DEFAULT_CHANNEL
     # - - - - label initialization - - - -
 
 
       # - - - - main rule block - - - -
-      # at line 123:5: '['
-      match( 0x5b )
+      # at line 127:5: '('
+      match( 0x28 )
 
 
       @state.type = type
@@ -1637,22 +1640,22 @@ module Foma
 
     end
 
-    # lexer rule rb! (RB)
+    # lexer rule lb! (LB)
     # (in Foma.g)
-    def rb!
+    def lb!
       # -> uncomment the next line to manually enable rule tracing
       # trace_in( __method__, 47 )
 
 
 
-      type = RB
+      type = LB
       channel = ANTLR3::DEFAULT_CHANNEL
     # - - - - label initialization - - - -
 
 
       # - - - - main rule block - - - -
-      # at line 124:5: ']'
-      match( 0x5d )
+      # at line 128:5: '['
+      match( 0x5b )
 
 
       @state.type = type
@@ -1664,22 +1667,22 @@ module Foma
 
     end
 
-    # lexer rule rbrace! (RBRACE)
+    # lexer rule rb! (RB)
     # (in Foma.g)
-    def rbrace!
+    def rb!
       # -> uncomment the next line to manually enable rule tracing
       # trace_in( __method__, 48 )
 
 
 
-      type = RBRACE
+      type = RB
       channel = ANTLR3::DEFAULT_CHANNEL
     # - - - - label initialization - - - -
 
 
       # - - - - main rule block - - - -
-      # at line 127:9: '}'
-      match( 0x7d )
+      # at line 129:5: ']'
+      match( 0x5d )
 
 
       @state.type = type
@@ -1691,22 +1694,22 @@ module Foma
 
     end
 
-    # lexer rule lbrace! (LBRACE)
+    # lexer rule rbrace! (RBRACE)
     # (in Foma.g)
-    def lbrace!
+    def rbrace!
       # -> uncomment the next line to manually enable rule tracing
       # trace_in( __method__, 49 )
 
 
 
-      type = LBRACE
+      type = RBRACE
       channel = ANTLR3::DEFAULT_CHANNEL
     # - - - - label initialization - - - -
 
 
       # - - - - main rule block - - - -
-      # at line 128:9: '{'
-      match( 0x7b )
+      # at line 132:9: '}'
+      match( 0x7d )
 
 
       @state.type = type
@@ -1718,11 +1721,38 @@ module Foma
 
     end
 
+    # lexer rule lbrace! (LBRACE)
+    # (in Foma.g)
+    def lbrace!
+      # -> uncomment the next line to manually enable rule tracing
+      # trace_in( __method__, 50 )
+
+
+
+      type = LBRACE
+      channel = ANTLR3::DEFAULT_CHANNEL
+    # - - - - label initialization - - - -
+
+
+      # - - - - main rule block - - - -
+      # at line 133:9: '{'
+      match( 0x7b )
+
+
+      @state.type = type
+      @state.channel = channel
+    ensure
+      # -> uncomment the next line to manually enable rule tracing
+      # trace_out( __method__, 50 )
+
+
+    end
+
     # lexer rule whitespace! (WHITESPACE)
     # (in Foma.g)
     def whitespace!
       # -> uncomment the next line to manually enable rule tracing
-      # trace_in( __method__, 50 )
+      # trace_in( __method__, 51 )
 
 
 
@@ -1732,8 +1762,8 @@ module Foma
 
 
       # - - - - main rule block - - - -
-      # at line 137:13: ( '\\t' | '\\f' | ' ' | '\\u00A0' )+
-      # at file 137:13: ( '\\t' | '\\f' | ' ' | '\\u00A0' )+
+      # at line 142:13: ( '\\t' | '\\f' | ' ' | '\\u00A0' )+
+      # at file 142:13: ( '\\t' | '\\f' | ' ' | '\\u00A0' )+
       match_count_9 = 0
       while true
         alt_9 = 2
@@ -1779,7 +1809,7 @@ module Foma
       @state.channel = channel
     ensure
       # -> uncomment the next line to manually enable rule tracing
-      # trace_out( __method__, 50 )
+      # trace_out( __method__, 51 )
 
 
     end
@@ -1788,7 +1818,7 @@ module Foma
     # (in Foma.g)
     def newline!
       # -> uncomment the next line to manually enable rule tracing
-      # trace_in( __method__, 51 )
+      # trace_in( __method__, 52 )
 
 
 
@@ -1798,8 +1828,8 @@ module Foma
 
 
       # - - - - main rule block - - - -
-      # at line 138:10: ( '\\n' | '\\r' )+
-      # at file 138:10: ( '\\n' | '\\r' )+
+      # at line 143:10: ( '\\n' | '\\r' )+
+      # at file 143:10: ( '\\n' | '\\r' )+
       match_count_10 = 0
       while true
         alt_10 = 2
@@ -1845,7 +1875,7 @@ module Foma
       @state.channel = channel
     ensure
       # -> uncomment the next line to manually enable rule tracing
-      # trace_out( __method__, 51 )
+      # trace_out( __method__, 52 )
 
 
     end
@@ -1858,8 +1888,8 @@ module Foma
     # but instead use the next_token method, which will
     # build and emit the actual next token
     def token!
-      # at line 1:8: ( INTEGER | FLOAT | CHAR | BOOL | VOID | NULL | IF | ELSE | AND | OR | WHILE | FOR | INPUT | PRINT | PROGRAM | FUNCTION | RETURN | CLASS | INHER | START | R_END | NEW | ASSIGN | GT | GEQ | LT | LEQ | EQ | NE | ADD | SUB | MULT | DIV | MOD | C_INT | C_FLOAT | C_BOOL | C_CHAR | ID | COLON | SEMICOLON | COMMA | POINT | RP | LP | LB | RB | RBRACE | LBRACE | WHITESPACE | NEWLINE )
-      alt_11 = 51
+      # at line 1:8: ( INTEGER | FLOAT | CHAR | BOOL | VOID | NULL | IF | ELSE | AND | OR | WHILE | FOR | INPUT | PRINT | PROGRAM | FUNCTION | RETURN | CLASS | INHER | START | R_END | R_THIS | R_NEW | ASSIGN | GT | GEQ | LT | LEQ | EQ | NE | ADD | SUB | MULT | DIV | MOD | C_INT | C_FLOAT | C_BOOL | C_CHAR | ID | COLON | SEMICOLON | COMMA | POINT | RP | LP | LB | RB | RBRACE | LBRACE | WHITESPACE | NEWLINE )
+      alt_11 = 52
       alt_11 = @dfa11.predict( @input )
       case alt_11
       when 1
@@ -1968,152 +1998,157 @@ module Foma
 
 
       when 22
-        # at line 1:129: NEW
-        new!
+        # at line 1:129: R_THIS
+        r_this!
 
 
       when 23
-        # at line 1:133: ASSIGN
-        assign!
+        # at line 1:136: R_NEW
+        r_new!
 
 
       when 24
-        # at line 1:140: GT
-        gt!
+        # at line 1:142: ASSIGN
+        assign!
 
 
       when 25
-        # at line 1:143: GEQ
-        geq!
+        # at line 1:149: GT
+        gt!
 
 
       when 26
-        # at line 1:147: LT
-        lt!
+        # at line 1:152: GEQ
+        geq!
 
 
       when 27
-        # at line 1:150: LEQ
-        leq!
+        # at line 1:156: LT
+        lt!
 
 
       when 28
-        # at line 1:154: EQ
-        eq!
+        # at line 1:159: LEQ
+        leq!
 
 
       when 29
-        # at line 1:157: NE
-        ne!
+        # at line 1:163: EQ
+        eq!
 
 
       when 30
-        # at line 1:160: ADD
-        add!
+        # at line 1:166: NE
+        ne!
 
 
       when 31
-        # at line 1:164: SUB
-        sub!
+        # at line 1:169: ADD
+        add!
 
 
       when 32
-        # at line 1:168: MULT
-        mult!
+        # at line 1:173: SUB
+        sub!
 
 
       when 33
-        # at line 1:173: DIV
-        div!
+        # at line 1:177: MULT
+        mult!
 
 
       when 34
-        # at line 1:177: MOD
-        mod!
+        # at line 1:182: DIV
+        div!
 
 
       when 35
-        # at line 1:181: C_INT
-        c_int!
+        # at line 1:186: MOD
+        mod!
 
 
       when 36
-        # at line 1:187: C_FLOAT
-        c_float!
+        # at line 1:190: C_INT
+        c_int!
 
 
       when 37
-        # at line 1:195: C_BOOL
-        c_bool!
+        # at line 1:196: C_FLOAT
+        c_float!
 
 
       when 38
-        # at line 1:202: C_CHAR
-        c_char!
+        # at line 1:204: C_BOOL
+        c_bool!
 
 
       when 39
-        # at line 1:209: ID
-        id!
+        # at line 1:211: C_CHAR
+        c_char!
 
 
       when 40
-        # at line 1:212: COLON
-        colon!
+        # at line 1:218: ID
+        id!
 
 
       when 41
-        # at line 1:218: SEMICOLON
-        semicolon!
+        # at line 1:221: COLON
+        colon!
 
 
       when 42
-        # at line 1:228: COMMA
-        comma!
+        # at line 1:227: SEMICOLON
+        semicolon!
 
 
       when 43
-        # at line 1:234: POINT
-        point!
+        # at line 1:237: COMMA
+        comma!
 
 
       when 44
-        # at line 1:240: RP
-        rp!
+        # at line 1:243: POINT
+        point!
 
 
       when 45
-        # at line 1:243: LP
-        lp!
+        # at line 1:249: RP
+        rp!
 
 
       when 46
-        # at line 1:246: LB
-        lb!
+        # at line 1:252: LP
+        lp!
 
 
       when 47
-        # at line 1:249: RB
-        rb!
+        # at line 1:255: LB
+        lb!
 
 
       when 48
-        # at line 1:252: RBRACE
-        rbrace!
+        # at line 1:258: RB
+        rb!
 
 
       when 49
-        # at line 1:259: LBRACE
-        lbrace!
+        # at line 1:261: RBRACE
+        rbrace!
 
 
       when 50
-        # at line 1:266: WHITESPACE
-        whitespace!
+        # at line 1:268: LBRACE
+        lbrace!
 
 
       when 51
-        # at line 1:277: NEWLINE
+        # at line 1:275: WHITESPACE
+        whitespace!
+
+
+      when 52
+        # at line 1:286: NEWLINE
         newline!
 
 
@@ -2123,65 +2158,66 @@ module Foma
 
     # - - - - - - - - - - DFA definitions - - - - - - - - - - -
     class DFA11 < ANTLR3::DFA
-      EOT = unpack( 1, -1, 13, 25, 1, 59, 1, 61, 1, 64, 5, -1, 1, 65, 1, 
-                    25, 14, -1, 1, 25, 1, 71, 13, 25, 1, 85, 4, 25, 9, -1, 
-                    1, 25, 1, 92, 2, 25, 1, -1, 1, 25, 1, 96, 7, 25, 1, 
-                    104, 1, 25, 1, 106, 1, 107, 1, -1, 6, 25, 1, -1, 3, 
-                    25, 1, -1, 2, 25, 1, 119, 1, 25, 1, 121, 1, 122, 1, 
-                    123, 1, -1, 1, 124, 2, -1, 5, 25, 1, 130, 1, 131, 1, 
-                    25, 1, 133, 1, 25, 1, 130, 1, -1, 1, 135, 4, -1, 1, 
-                    136, 1, 137, 2, 25, 1, 140, 2, -1, 1, 25, 1, -1, 1, 
-                    25, 3, -1, 1, 25, 1, 144, 1, -1, 2, 25, 1, 147, 1, -1, 
-                    1, 148, 1, 149, 3, -1 )
-      EOF = unpack( 150, -1 )
+      EOT = unpack( 1, -1, 14, 25, 1, 61, 1, 63, 1, 66, 5, -1, 1, 67, 14, 
+                    -1, 1, 25, 1, 72, 13, 25, 1, 86, 6, 25, 9, -1, 1, 94, 
+                    2, 25, 1, -1, 1, 25, 1, 98, 7, 25, 1, 106, 1, 25, 1, 
+                    108, 1, 109, 1, -1, 7, 25, 1, -1, 3, 25, 1, -1, 2, 25, 
+                    1, 122, 1, 25, 1, 124, 1, 125, 1, 126, 1, -1, 1, 127, 
+                    2, -1, 5, 25, 1, 133, 1, 134, 1, 135, 1, 25, 1, 137, 
+                    1, 25, 1, 134, 1, -1, 1, 139, 4, -1, 1, 140, 1, 141, 
+                    2, 25, 1, 144, 3, -1, 1, 25, 1, -1, 1, 25, 3, -1, 1, 
+                    25, 1, 148, 1, -1, 2, 25, 1, 151, 1, -1, 1, 152, 1, 
+                    153, 3, -1 )
+      EOF = unpack( 154, -1 )
       MIN = unpack( 1, 9, 1, 102, 1, 97, 1, 104, 2, 111, 1, 101, 1, 108, 
-                    1, 110, 1, 114, 1, 104, 1, 114, 1, 101, 1, 116, 3, 61, 
-                    5, -1, 1, 46, 1, 114, 14, -1, 1, 104, 1, 48, 1, 111, 
+                    1, 110, 1, 114, 1, 104, 1, 114, 1, 101, 1, 116, 1, 104, 
+                    3, 61, 5, -1, 1, 46, 14, -1, 1, 104, 1, 48, 1, 111, 
                     1, 114, 1, 110, 1, 108, 2, 97, 1, 111, 1, 105, 1, 108, 
                     1, 119, 1, 115, 2, 100, 1, 48, 2, 105, 1, 116, 1, 97, 
-                    9, -1, 1, 117, 1, 48, 1, 117, 1, 101, 1, -1, 1, 97, 
-                    1, 48, 1, 99, 1, 115, 1, 114, 1, 115, 1, 108, 1, 100, 
-                    1, 108, 1, 48, 1, 101, 2, 48, 1, -1, 1, 108, 1, 110, 
-                    1, 103, 1, 117, 1, 114, 1, 101, 1, -1, 1, 116, 1, 114, 
-                    1, 116, 1, -1, 1, 116, 1, 101, 1, 48, 1, 115, 3, 48, 
-                    1, -1, 1, 48, 2, -1, 1, 101, 1, 116, 2, 114, 1, 116, 
-                    2, 48, 1, 105, 1, 48, 1, 105, 1, 48, 1, -1, 1, 48, 4, 
-                    -1, 2, 48, 1, 97, 1, 110, 1, 48, 2, -1, 1, 116, 1, -1, 
-                    1, 111, 3, -1, 1, 109, 1, 48, 1, -1, 1, 115, 1, 110, 
-                    1, 48, 1, -1, 2, 48, 3, -1 )
+                    1, 105, 1, 117, 9, -1, 1, 48, 1, 117, 1, 101, 1, -1, 
+                    1, 97, 1, 48, 1, 99, 1, 115, 1, 114, 1, 115, 1, 108, 
+                    1, 100, 1, 108, 1, 48, 1, 101, 2, 48, 1, -1, 1, 108, 
+                    1, 110, 1, 103, 1, 117, 1, 114, 1, 115, 1, 101, 1, -1, 
+                    1, 116, 1, 114, 1, 116, 1, -1, 1, 116, 1, 101, 1, 48, 
+                    1, 115, 3, 48, 1, -1, 1, 48, 2, -1, 1, 101, 1, 116, 
+                    2, 114, 1, 116, 3, 48, 1, 105, 1, 48, 1, 105, 1, 48, 
+                    1, -1, 1, 48, 4, -1, 2, 48, 1, 97, 1, 110, 1, 48, 3, 
+                    -1, 1, 116, 1, -1, 1, 111, 3, -1, 1, 109, 1, 48, 1, 
+                    -1, 1, 115, 1, 110, 1, 48, 1, -1, 2, 48, 3, -1 )
       MAX = unpack( 1, 160, 1, 110, 1, 117, 1, 108, 2, 111, 1, 117, 2, 110, 
-                    1, 114, 1, 104, 1, 114, 1, 101, 1, 116, 2, 61, 1, 62, 
-                    5, -1, 1, 57, 1, 114, 14, -1, 1, 116, 1, 122, 1, 111, 
+                    1, 114, 1, 104, 1, 114, 1, 101, 1, 116, 1, 114, 2, 61, 
+                    1, 62, 5, -1, 1, 57, 14, -1, 1, 116, 1, 122, 1, 111, 
                     1, 114, 1, 110, 1, 108, 2, 97, 1, 111, 1, 105, 1, 108, 
                     1, 119, 1, 115, 2, 100, 1, 122, 1, 105, 1, 111, 1, 116, 
-                    1, 97, 9, -1, 1, 117, 1, 122, 1, 117, 1, 101, 1, -1, 
-                    1, 97, 1, 122, 1, 99, 1, 115, 1, 114, 1, 115, 1, 108, 
-                    1, 100, 1, 108, 1, 122, 1, 101, 2, 122, 1, -1, 1, 108, 
-                    1, 110, 1, 103, 1, 117, 1, 114, 1, 101, 1, -1, 1, 116, 
-                    1, 114, 1, 116, 1, -1, 1, 116, 1, 101, 1, 122, 1, 115, 
-                    3, 122, 1, -1, 1, 122, 2, -1, 1, 101, 1, 116, 2, 114, 
-                    1, 116, 2, 122, 1, 105, 1, 122, 1, 105, 1, 122, 1, -1, 
-                    1, 122, 4, -1, 2, 122, 1, 97, 1, 110, 1, 122, 2, -1, 
-                    1, 116, 1, -1, 1, 111, 3, -1, 1, 109, 1, 122, 1, -1, 
-                    1, 115, 1, 110, 1, 122, 1, -1, 2, 122, 3, -1 )
-      ACCEPT = unpack( 17, -1, 1, 30, 1, 31, 1, 32, 1, 33, 1, 34, 2, -1, 
-                       1, 38, 1, 39, 1, 40, 1, 41, 1, 42, 1, 43, 1, 44, 
-                       1, 45, 1, 46, 1, 47, 1, 48, 1, 49, 1, 50, 1, 51, 
-                       20, -1, 1, 28, 1, 23, 1, 25, 1, 24, 1, 27, 1, 29, 
-                       1, 26, 1, 35, 1, 36, 4, -1, 1, 7, 13, -1, 1, 10, 
-                       6, -1, 1, 1, 3, -1, 1, 12, 7, -1, 1, 22, 1, -1, 1, 
-                       21, 1, 9, 11, -1, 1, 3, 1, -1, 1, 4, 1, 5, 1, 6, 
-                       1, 8, 5, -1, 1, 37, 1, 13, 1, -1, 1, 2, 1, -1, 1, 
-                       18, 1, 11, 1, 14, 2, -1, 1, 20, 3, -1, 1, 17, 2, 
-                       -1, 1, 15, 1, 19, 1, 16 )
-      SPECIAL = unpack( 150, -1 )
+                    1, 97, 1, 105, 1, 117, 9, -1, 1, 122, 1, 117, 1, 101, 
+                    1, -1, 1, 97, 1, 122, 1, 99, 1, 115, 1, 114, 1, 115, 
+                    1, 108, 1, 100, 1, 108, 1, 122, 1, 101, 2, 122, 1, -1, 
+                    1, 108, 1, 110, 1, 103, 1, 117, 1, 114, 1, 115, 1, 101, 
+                    1, -1, 1, 116, 1, 114, 1, 116, 1, -1, 1, 116, 1, 101, 
+                    1, 122, 1, 115, 3, 122, 1, -1, 1, 122, 2, -1, 1, 101, 
+                    1, 116, 2, 114, 1, 116, 3, 122, 1, 105, 1, 122, 1, 105, 
+                    1, 122, 1, -1, 1, 122, 4, -1, 2, 122, 1, 97, 1, 110, 
+                    1, 122, 3, -1, 1, 116, 1, -1, 1, 111, 3, -1, 1, 109, 
+                    1, 122, 1, -1, 1, 115, 1, 110, 1, 122, 1, -1, 2, 122, 
+                    3, -1 )
+      ACCEPT = unpack( 18, -1, 1, 31, 1, 32, 1, 33, 1, 34, 1, 35, 1, -1, 
+                       1, 39, 1, 40, 1, 41, 1, 42, 1, 43, 1, 44, 1, 45, 
+                       1, 46, 1, 47, 1, 48, 1, 49, 1, 50, 1, 51, 1, 52, 
+                       22, -1, 1, 29, 1, 24, 1, 26, 1, 25, 1, 28, 1, 30, 
+                       1, 27, 1, 36, 1, 37, 3, -1, 1, 7, 13, -1, 1, 10, 
+                       7, -1, 1, 1, 3, -1, 1, 12, 7, -1, 1, 23, 1, -1, 1, 
+                       21, 1, 9, 12, -1, 1, 3, 1, -1, 1, 4, 1, 5, 1, 6, 
+                       1, 8, 5, -1, 1, 22, 1, 38, 1, 13, 1, -1, 1, 2, 1, 
+                       -1, 1, 18, 1, 11, 1, 14, 2, -1, 1, 20, 3, -1, 1, 
+                       17, 2, -1, 1, 15, 1, 19, 1, 16 )
+      SPECIAL = unpack( 154, -1 )
       TRANSITION = [
         unpack( 1, 36, 1, 37, 1, -1, 1, 36, 1, 37, 18, -1, 1, 36, 1, -1, 
-                1, 24, 2, -1, 1, 21, 1, -1, 1, 24, 1, 31, 1, 30, 1, 19, 
-                1, 17, 1, 28, 1, 18, 1, 29, 1, 20, 10, 22, 1, 26, 1, 27, 
-                1, 16, 1, 14, 1, 15, 2, -1, 26, 25, 1, 32, 1, -1, 1, 33, 
+                1, 24, 2, -1, 1, 22, 1, -1, 1, 24, 1, 31, 1, 30, 1, 20, 
+                1, 18, 1, 28, 1, 19, 1, 29, 1, 21, 10, 23, 1, 26, 1, 27, 
+                1, 17, 1, 15, 1, 16, 2, -1, 26, 25, 1, 32, 1, -1, 1, 33, 
                 3, -1, 1, 8, 1, 4, 1, 3, 1, 25, 1, 7, 1, 2, 2, 25, 1, 1, 
-                4, 25, 1, 6, 1, 9, 1, 11, 1, 25, 1, 12, 1, 13, 1, 23, 1, 
+                4, 25, 1, 6, 1, 9, 1, 11, 1, 25, 1, 12, 1, 13, 1, 14, 1, 
                 25, 1, 5, 1, 10, 3, 25, 1, 35, 1, -1, 1, 34, 34, -1, 1, 
                 36 ),
         unpack( 1, 39, 7, -1, 1, 38 ),
@@ -2197,22 +2233,16 @@ module Foma
         unpack( 1, 55 ),
         unpack( 1, 56 ),
         unpack( 1, 57 ),
-        unpack( 1, 58 ),
+        unpack( 1, 58, 9, -1, 1, 59 ),
         unpack( 1, 60 ),
-        unpack( 1, 62, 1, 63 ),
+        unpack( 1, 62 ),
+        unpack( 1, 64, 1, 65 ),
         unpack(  ),
         unpack(  ),
         unpack(  ),
         unpack(  ),
         unpack(  ),
-        unpack( 1, 66, 1, -1, 10, 22 ),
-        unpack( 1, 67 ),
-        unpack(  ),
-        unpack(  ),
-        unpack(  ),
-        unpack(  ),
-        unpack(  ),
-        unpack(  ),
+        unpack( 1, 68, 1, -1, 10, 23 ),
         unpack(  ),
         unpack(  ),
         unpack(  ),
@@ -2221,9 +2251,14 @@ module Foma
         unpack(  ),
         unpack(  ),
         unpack(  ),
-        unpack( 1, 70, 7, -1, 1, 69, 3, -1, 1, 68 ),
+        unpack(  ),
+        unpack(  ),
+        unpack(  ),
+        unpack(  ),
+        unpack(  ),
+        unpack(  ),
+        unpack( 1, 71, 7, -1, 1, 70, 3, -1, 1, 69 ),
         unpack( 10, 25, 7, -1, 26, 25, 4, -1, 1, 25, 1, -1, 26, 25 ),
-        unpack( 1, 72 ),
         unpack( 1, 73 ),
         unpack( 1, 74 ),
         unpack( 1, 75 ),
@@ -2236,54 +2271,57 @@ module Foma
         unpack( 1, 82 ),
         unpack( 1, 83 ),
         unpack( 1, 84 ),
+        unpack( 1, 85 ),
         unpack( 10, 25, 7, -1, 26, 25, 4, -1, 1, 25, 1, -1, 26, 25 ),
-        unpack( 1, 86 ),
-        unpack( 1, 87, 5, -1, 1, 88 ),
-        unpack( 1, 89 ),
+        unpack( 1, 87 ),
+        unpack( 1, 88, 5, -1, 1, 89 ),
         unpack( 1, 90 ),
-        unpack(  ),
-        unpack(  ),
-        unpack(  ),
-        unpack(  ),
-        unpack(  ),
-        unpack(  ),
-        unpack(  ),
-        unpack(  ),
-        unpack(  ),
         unpack( 1, 91 ),
-        unpack( 10, 25, 7, -1, 26, 25, 4, -1, 1, 25, 1, -1, 26, 25 ),
+        unpack( 1, 92 ),
         unpack( 1, 93 ),
-        unpack( 1, 94 ),
         unpack(  ),
-        unpack( 1, 95 ),
+        unpack(  ),
+        unpack(  ),
+        unpack(  ),
+        unpack(  ),
+        unpack(  ),
+        unpack(  ),
+        unpack(  ),
+        unpack(  ),
         unpack( 10, 25, 7, -1, 26, 25, 4, -1, 1, 25, 1, -1, 26, 25 ),
+        unpack( 1, 95 ),
+        unpack( 1, 96 ),
+        unpack(  ),
         unpack( 1, 97 ),
-        unpack( 1, 98 ),
+        unpack( 10, 25, 7, -1, 26, 25, 4, -1, 1, 25, 1, -1, 26, 25 ),
         unpack( 1, 99 ),
         unpack( 1, 100 ),
         unpack( 1, 101 ),
         unpack( 1, 102 ),
         unpack( 1, 103 ),
-        unpack( 10, 25, 7, -1, 26, 25, 4, -1, 1, 25, 1, -1, 26, 25 ),
+        unpack( 1, 104 ),
         unpack( 1, 105 ),
+        unpack( 10, 25, 7, -1, 26, 25, 4, -1, 1, 25, 1, -1, 26, 25 ),
+        unpack( 1, 107 ),
         unpack( 10, 25, 7, -1, 26, 25, 4, -1, 1, 25, 1, -1, 26, 25 ),
         unpack( 10, 25, 7, -1, 26, 25, 4, -1, 1, 25, 1, -1, 26, 25 ),
         unpack(  ),
-        unpack( 1, 108 ),
-        unpack( 1, 109 ),
         unpack( 1, 110 ),
         unpack( 1, 111 ),
         unpack( 1, 112 ),
         unpack( 1, 113 ),
-        unpack(  ),
         unpack( 1, 114 ),
         unpack( 1, 115 ),
         unpack( 1, 116 ),
         unpack(  ),
         unpack( 1, 117 ),
         unpack( 1, 118 ),
-        unpack( 10, 25, 7, -1, 26, 25, 4, -1, 1, 25, 1, -1, 26, 25 ),
+        unpack( 1, 119 ),
+        unpack(  ),
         unpack( 1, 120 ),
+        unpack( 1, 121 ),
+        unpack( 10, 25, 7, -1, 26, 25, 4, -1, 1, 25, 1, -1, 26, 25 ),
+        unpack( 1, 123 ),
         unpack( 10, 25, 7, -1, 26, 25, 4, -1, 1, 25, 1, -1, 26, 25 ),
         unpack( 10, 25, 7, -1, 26, 25, 4, -1, 1, 25, 1, -1, 26, 25 ),
         unpack( 10, 25, 7, -1, 26, 25, 4, -1, 1, 25, 1, -1, 26, 25 ),
@@ -2291,41 +2329,43 @@ module Foma
         unpack( 10, 25, 7, -1, 26, 25, 4, -1, 1, 25, 1, -1, 26, 25 ),
         unpack(  ),
         unpack(  ),
-        unpack( 1, 125 ),
-        unpack( 1, 126 ),
-        unpack( 1, 127 ),
         unpack( 1, 128 ),
         unpack( 1, 129 ),
-        unpack( 10, 25, 7, -1, 26, 25, 4, -1, 1, 25, 1, -1, 26, 25 ),
-        unpack( 10, 25, 7, -1, 26, 25, 4, -1, 1, 25, 1, -1, 26, 25 ),
+        unpack( 1, 130 ),
+        unpack( 1, 131 ),
         unpack( 1, 132 ),
         unpack( 10, 25, 7, -1, 26, 25, 4, -1, 1, 25, 1, -1, 26, 25 ),
-        unpack( 1, 134 ),
         unpack( 10, 25, 7, -1, 26, 25, 4, -1, 1, 25, 1, -1, 26, 25 ),
-        unpack(  ),
         unpack( 10, 25, 7, -1, 26, 25, 4, -1, 1, 25, 1, -1, 26, 25 ),
-        unpack(  ),
-        unpack(  ),
-        unpack(  ),
-        unpack(  ),
-        unpack( 10, 25, 7, -1, 26, 25, 4, -1, 1, 25, 1, -1, 26, 25 ),
+        unpack( 1, 136 ),
         unpack( 10, 25, 7, -1, 26, 25, 4, -1, 1, 25, 1, -1, 26, 25 ),
         unpack( 1, 138 ),
-        unpack( 1, 139 ),
+        unpack( 10, 25, 7, -1, 26, 25, 4, -1, 1, 25, 1, -1, 26, 25 ),
+        unpack(  ),
         unpack( 10, 25, 7, -1, 26, 25, 4, -1, 1, 25, 1, -1, 26, 25 ),
         unpack(  ),
         unpack(  ),
-        unpack( 1, 141 ),
         unpack(  ),
+        unpack(  ),
+        unpack( 10, 25, 7, -1, 26, 25, 4, -1, 1, 25, 1, -1, 26, 25 ),
+        unpack( 10, 25, 7, -1, 26, 25, 4, -1, 1, 25, 1, -1, 26, 25 ),
         unpack( 1, 142 ),
-        unpack(  ),
-        unpack(  ),
-        unpack(  ),
         unpack( 1, 143 ),
         unpack( 10, 25, 7, -1, 26, 25, 4, -1, 1, 25, 1, -1, 26, 25 ),
         unpack(  ),
+        unpack(  ),
+        unpack(  ),
         unpack( 1, 145 ),
+        unpack(  ),
         unpack( 1, 146 ),
+        unpack(  ),
+        unpack(  ),
+        unpack(  ),
+        unpack( 1, 147 ),
+        unpack( 10, 25, 7, -1, 26, 25, 4, -1, 1, 25, 1, -1, 26, 25 ),
+        unpack(  ),
+        unpack( 1, 149 ),
+        unpack( 1, 150 ),
         unpack( 10, 25, 7, -1, 26, 25, 4, -1, 1, 25, 1, -1, 26, 25 ),
         unpack(  ),
         unpack( 10, 25, 7, -1, 26, 25, 4, -1, 1, 25, 1, -1, 26, 25 ),
@@ -2346,7 +2386,7 @@ module Foma
 
       def description
         <<-'__dfa_description__'.strip!
-          1:1: Tokens : ( INTEGER | FLOAT | CHAR | BOOL | VOID | NULL | IF | ELSE | AND | OR | WHILE | FOR | INPUT | PRINT | PROGRAM | FUNCTION | RETURN | CLASS | INHER | START | R_END | NEW | ASSIGN | GT | GEQ | LT | LEQ | EQ | NE | ADD | SUB | MULT | DIV | MOD | C_INT | C_FLOAT | C_BOOL | C_CHAR | ID | COLON | SEMICOLON | COMMA | POINT | RP | LP | LB | RB | RBRACE | LBRACE | WHITESPACE | NEWLINE );
+          1:1: Tokens : ( INTEGER | FLOAT | CHAR | BOOL | VOID | NULL | IF | ELSE | AND | OR | WHILE | FOR | INPUT | PRINT | PROGRAM | FUNCTION | RETURN | CLASS | INHER | START | R_END | R_THIS | R_NEW | ASSIGN | GT | GEQ | LT | LEQ | EQ | NE | ADD | SUB | MULT | DIV | MOD | C_INT | C_FLOAT | C_BOOL | C_CHAR | ID | COLON | SEMICOLON | COMMA | POINT | RP | LP | LB | RB | RBRACE | LBRACE | WHITESPACE | NEWLINE );
         __dfa_description__
       end
 

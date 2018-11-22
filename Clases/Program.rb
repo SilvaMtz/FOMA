@@ -17,9 +17,22 @@ class Program
 
   def add_const (const, type)
 
-    if !@dirConstantes[const]
-      @dirConstantes[const] = @memory.get_const(type)
+    case type
+    when "int"
+      if !@dirConstantes[const.to_i]
+        @dirConstantes[const.to_i] = @memory.get_const(type)
+      end
+    when "float"
+      if !@dirConstantes[const.to_f]
+        @dirConstantes[const.to_f] = @memory.get_const(type)
+      end
+    else
+      if !@dirConstantes[const.to_f]
+        @dirConstantes[const.to_f] = @memory.get_const(type)
+      end
     end
+
+
   end
 
   def add_attrs ()
@@ -63,7 +76,7 @@ class Program
     if dim2.to_i > 0
       add_var(id, type, "global",dim1.to_i * dim2.to_i, dim1, dim2)
     else
-      
+
       add_var(id, type, "global", dim1, dim1, dim2)
     end
   end
@@ -100,6 +113,13 @@ class Program
     puts ""
     puts "\tFUNTION TABLE:"
     @dirFunc.display
+
+    puts ""
+    puts "\tCONSTANTS:"
+    puts @dirConstantes.to_s
+    puts @dirConstantes.invert.to_s
+    puts ""
+
   end
 
 end

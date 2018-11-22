@@ -1,0 +1,42 @@
+class A
+start
+
+  char a;
+  int b;
+  int c;
+
+  A(int a, int b, int c)
+  start
+    print (a);
+    print (b);
+    print (c);
+    print (this c);
+    this c = c;
+    print (this c);
+  end
+
+  void sumaMucho (int n)
+  start
+    print (this c);
+    print (n);
+    this c = this c + n;
+    print(this c);
+  end
+
+end
+
+A obj;
+
+program classExample
+start
+  obj.a = "Patricio";
+  obj.b = 20;
+  obj.c =  obj.b;
+
+  obj.A(100, 200, 300);
+  obj.sumaMucho(100);
+
+  print (obj.c);
+  print (obj.a);
+
+end

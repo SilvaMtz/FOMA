@@ -18,29 +18,42 @@ class VM
 
   def run
     while (true)
-      # puts "#{@cuadruplos.cuads[@cuadActual].operador} \t#{@cuadActual}"
+          # puts "#{@cuadruplos.cuads[@cuadActual].operador} \t#{@cuadActual}"
 
       case @cuadruplos.cuads[@cuadActual].operador
         #GOTOS
       when "goto"
-        @cuadActual = @cuadruplos.cuads[@cuadActual].resultado
+        @cuadActual = @cuadruplos.cuads[@cuadActual].resultado.to_i
 
       when "goto_f"
-        memoryNumber = @cuadruplos.cuads[@cuadActual].operIzq
-        case memoryNumber
+        leftMemoryNumber = @cuadruplos.cuads[@cuadActual].operIzq
+
+        if leftMemoryNumber[0] == '('
+          leftMemoryNumber = leftMemoryNumber[1..-2].to_i
+          case leftMemoryNumber.to_i
+          when 1_000...5_000
+            leftMemoryNumber = @globalMem[leftMemoryNumber.to_i].to_i
+          when 10_000...15_000, 21_000...25_000
+            leftMemoryNumber = @runningMem[leftMemoryNumber.to_i].to_i
+          else
+            puts "ERROR. MEMORIA INDIRECTA GOTO_F IZQ"
+          end
+        end
+
+        case leftMemoryNumber.to_i
         when 4_000...5_000
-          value = @globalMem[memoryNumber]
+          value = @globalMem[leftMemoryNumber.to_i]
         when 14_000...15_000, 24_000...25_000
-          value = @runningMem[memoryNumber]
+          value = @runningMem[leftMemoryNumber.to_i]
         when 34_000...34_005
-          value =  @program.dirConstantes.invert[memoryNumber]
+          value =  @program.dirConstantes.invert[leftMemoryNumber.to_i]
         else
           puts "ERROR. EN GOTO_F"
           exit
         end
 
         if (value == false)
-          @cuadActual = @cuadruplos.cuads[@cuadActual].resultado
+          @cuadActual = @cuadruplos.cuads[@cuadActual].resultado.to_i
         else
           @cuadActual += 1
         end
@@ -50,18 +63,26 @@ class VM
 
         resMemoryNumber = @cuadruplos.cuads[@cuadActual].resultado
 
-        if(resMemoryNumber[0] == '(')
-           resMemoryNumber = resMemoryNumber[1...-1]
-           resMemoryNumber = @runningMem[resMemoryNumber]
-        end
+        if resMemoryNumber[0] == '('
 
-        case resMemoryNumber
+          resMemoryNumber = resMemoryNumber[1..-2].to_i
+          case resMemoryNumber.to_i
+          when 1_000...5_000
+            resMemoryNumber = @globalMem[resMemoryNumber.to_i]
+          when 11_000...15_000, 21_000...25_000
+            resMemoryNumber = @runningMem[resMemoryNumber.to_i]
+          end
+
+        end
+        # puts resMemoryNumber
+        # puts @globalMem.to_s
+        case resMemoryNumber.to_i
         when 1_000...5_000
-          resValue = @globalMem[resMemoryNumber]
+          resValue = @globalMem[resMemoryNumber.to_i]
         when 11_000...15_000, 21_000...25_000
-          resValue = @runningMem[resMemoryNumber]
+          resValue = @runningMem[resMemoryNumber.to_i]
         when 31_000...34_005
-          resValue =  @program.dirConstantes.invert[resMemoryNumber]
+          resValue =  @program.dirConstantes.invert[resMemoryNumber.to_i]
         else
           puts "ERROR. EN PRINT VALOR RESULTADO"
           exit
@@ -75,226 +96,45 @@ class VM
 
         resMemoryNumber = @cuadruplos.cuads[@cuadActual].resultado
 
-        if(resMemoryNumber[0] == '(')
-           resMemoryNumber = resMemoryNumber[1...-1]
-           resMemoryNumber = @runningMem[resMemoryNumber]
+        if resMemoryNumber[0] == '('
+          resMemoryNumber = resMemoryNumber[1..-2].to_i
         end
-        case resMemoryNumber
+        case resMemoryNumber.to_i
         when 1_000...5_000
-          @globalMem[resMemoryNumber] = infoIn
+          @globalMem[resMemoryNumber.to_i] = infoIn
         when 11_000...15_000
-          @runningMem[resMemoryNumber] = infoIn
+          @runningMem[resMemoryNumber.to_i] = infoIn
         else
           puts "ERROR. EN INPUT VALOR RESULTADO"
           exit
         end
         @cuadActual += 1
 
-      when "calc"
-
-        leftMemoryNumber = @cuadruplos.cuads[@cuadActual].operIzq
-
-        if(leftMemoryNumber[0] == '(')
-           leftMemoryNumber = leftMemoryNumber[1...-1].to_i
-
-
-
-        end
-        case leftMemoryNumber
-        when 1_000...2_000
-          leftValue = @globalMem[leftMemoryNumber].to_i
-        when 2_000...3_000
-          leftValue = @globalMem[leftMemoryNumber].to_f
-        when 3_000...4_000
-          leftValue = @globalMem[leftMemoryNumber]
-        when 4_000...5_000
-          puts"ERROR. SUMA DE BOOLEANO OPERANDO IZQ "
-          exit
-
-        when 11_000...12_000, 21_000...22_000
-          leftValue = @runningMem[leftMemoryNumber].to_i
-          puts "IN HERE"
-        when 12_000...13_000, 22_000...23_000
-          leftValue = @runningMem[leftMemoryNumber].to_f
-        when 13_000...14_000, 23_000...24_000
-          leftValue = @runningMem[leftMemoryNumber]
-        when 14_000...15_000, 24_000...25_000
-          puts"ERROR. SUMA DE BOOLEANO OPERANDO IZQ "
-          exit
-
-        when 31_000...32_000
-          leftValue =  @program.dirConstantes.invert[leftMemoryNumber].to_i
-        when 32_000...33_000
-          leftValue =  @program.dirConstantes.invert[leftMemoryNumber].to_f
-        when 33_000...34_000
-          leftValue =  @program.dirConstantes.invert[leftMemoryNumber]
-        when 34_000...34_005
-          puts"ERROR. SUMA DE BOOLEANO OPERANDO IZQ "
-          exit
-        else
-          puts "ERROR. EN SUMA VALOR IZQUIERDO"
-          exit
-        end
-
-
-        rightMemoryNumber = @cuadruplos.cuads[@cuadActual].operDer
-
-
-        if(rightMemoryNumber[0] == '(')
-           rightMemoryNumber = rightMemoryNumber[1...-1]
-           rightMemoryNumber = @runningMem[rightMemoryNumber]
-         end
-        case rightMemoryNumber
-        when 1_000...2_000
-          rightValue = @globalMem[rightMemoryNumber].to_i
-        when 2_000...3_000
-          rightValue = @globalMem[rightMemoryNumber].to_f
-        when 3_000...4_000
-          rightValue = @globalMem[rightMemoryNumber]
-        when 4_000...5_000
-          puts"ERROR. SUMA DE BOOLEANO OPERANDO DER "
-          exit
-
-        when 11_000...12_000, 21_000...22_000
-          rightValue = @runningMem[rightMemoryNumber].to_i
-        when 12_000...13_000, 22_000...23_000
-          rightValue = @runningMem[rightMemoryNumber].to_f
-        when 13_000...14_000, 23_000...24_000
-          rightValue = @runningMem[rightMemoryNumber]
-        when 14_000...15_000, 24_000...25_000
-          puts"ERROR. SUMA DE BOOLEANO OPERANDO DER "
-          exit
-
-        when 31_000...32_000
-          rightValue =  @program.dirConstantes.invert[rightMemoryNumber].to_i
-        when 32_000...33_000
-          rightValue =  @program.dirConstantes.invert[rightMemoryNumber].to_f
-        when 33_000...34_000
-          rightValue =  @program.dirConstantes.invert[rightMemoryNumber]
-        when 34_000...34_005
-          puts"ERROR. SUMA DE BOOLEANO OPERANDO DER "
-          exit
-        else
-          puts "ERROR. EN SUMA VALOR DERECHO"
-          exit
-        end
-
-
-        resMemoryNumber = @cuadruplos.cuads[@cuadActual].resultado
-        resMemoryNumber = resMemoryNumber[1...-1]
-
-        @runningMem[resMemoryNumber] = leftValue + rightValue
-        @cuadActual += 1
-
-      when "calc2"
-
-        leftMemoryNumber = @cuadruplos.cuads[@cuadActual].operIzq
-
-        if(leftMemoryNumber[0] == '(')
-           leftMemoryNumber = leftMemoryNumber[1...-1]
-           leftMemoryNumber = @runningMem[leftMemoryNumber]
-        end
-        case leftMemoryNumber
-        when 1_000...2_000
-          leftValue = @globalMem[leftMemoryNumber].to_i
-        when 2_000...3_000
-          leftValue = @globalMem[leftMemoryNumber].to_f
-        when 3_000...4_000
-          leftValue = @globalMem[leftMemoryNumber]
-        when 4_000...5_000
-          puts"ERROR. SUMA DE BOOLEANO OPERANDO IZQ "
-          exit
-
-        when 11_000...12_000, 21_000...22_000
-          leftValue = @runningMem[leftMemoryNumber].to_i
-        when 12_000...13_000, 22_000...23_000
-          leftValue = @runningMem[leftMemoryNumber].to_f
-        when 13_000...14_000, 23_000...24_000
-          leftValue = @runningMem[leftMemoryNumber]
-        when 14_000...15_000, 24_000...25_000
-          puts"ERROR. SUMA DE BOOLEANO OPERANDO IZQ "
-          exit
-
-        when 31_000...32_000
-          leftValue =  @program.dirConstantes.invert[leftMemoryNumber].to_i
-        when 32_000...33_000
-          leftValue =  @program.dirConstantes.invert[leftMemoryNumber].to_f
-        when 33_000...34_000
-          leftValue =  @program.dirConstantes.invert[leftMemoryNumber]
-        when 34_000...34_005
-          puts"ERROR. SUMA DE BOOLEANO OPERANDO IZQ "
-          exit
-        else
-          puts "ERROR. EN SUMA VALOR IZQUIERDO"
-          exit
-        end
-
-
-        rightMemoryNumber = @cuadruplos.cuads[@cuadActual].operDer
-
-
-        if(rightMemoryNumber[0] == '(')
-           rightMemoryNumber = rightMemoryNumber[1...-1]
-           rightMemoryNumber = @runningMem[rightMemoryNumber]
-         end
-        case rightMemoryNumber
-        when 1_000...2_000
-          rightValue = @globalMem[rightMemoryNumber].to_i
-        when 2_000...3_000
-          rightValue = @globalMem[rightMemoryNumber].to_f
-        when 3_000...4_000
-          rightValue = @globalMem[rightMemoryNumber]
-        when 4_000...5_000
-          puts"ERROR. SUMA DE BOOLEANO OPERANDO DER "
-          exit
-
-        when 11_000...12_000, 21_000...22_000
-          rightValue = @runningMem[rightMemoryNumber].to_i
-        when 12_000...13_000, 22_000...23_000
-          rightValue = @runningMem[rightMemoryNumber].to_f
-        when 13_000...14_000, 23_000...24_000
-          rightValue = @runningMem[rightMemoryNumber]
-        when 14_000...15_000, 24_000...25_000
-          puts"ERROR. SUMA DE BOOLEANO OPERANDO DER "
-          exit
-
-        when 31_000...32_000
-          rightValue =  @program.dirConstantes.invert[rightMemoryNumber].to_i
-        when 32_000...33_000
-          rightValue =  @program.dirConstantes.invert[rightMemoryNumber].to_f
-        when 33_000...34_000
-          rightValue =  @program.dirConstantes.invert[rightMemoryNumber]
-        when 34_000...34_005
-          puts"ERROR. SUMA DE BOOLEANO OPERANDO DER "
-          exit
-        else
-          puts "ERROR. EN SUMA VALOR DERECHO"
-          exit
-        end
-
-
-        resMemoryNumber = @cuadruplos.cuads[@cuadActual].resultado
-        resMemoryNumber = resMemoryNumber[1...-1]
-
-        @runningMem[resMemoryNumber] = leftValue * rightValue
-        @cuadActual += 1
 
       when "="
 
         leftMemoryNumber = @cuadruplos.cuads[@cuadActual].operIzq
 
-        if(leftMemoryNumber[0] == '(')
-           leftMemoryNumber = leftMemoryNumber[1...-1]
-           leftMemoryNumber = @runningMem[leftMemoryNumber]
+        if leftMemoryNumber[0] == '('
+          leftMemoryNumber = leftMemoryNumber[1..-2].to_i
+          case leftMemoryNumber.to_i
+          when 1_000...5_000
+            leftMemoryNumber = @globalMem[leftMemoryNumber.to_i].to_i
+          when 10_000...15_000, 21_000...25_000
+            leftMemoryNumber = @runningMem[leftMemoryNumber.to_i].to_i
+          else
+            puts "ERROR. MEMORIA INDIRECTA ASSIGN IZQ"
+          end
         end
 
-        case leftMemoryNumber
+        case leftMemoryNumber.to_i
         when 1_000...5_000
-          leftValue = @globalMem[leftMemoryNumber]
+          leftValue = @globalMem[leftMemoryNumber.to_i]
         when 11_000...15_000, 21_000...25_000
-          leftValue = @runningMem[leftMemoryNumber]
+          leftValue = @runningMem[leftMemoryNumber.to_i]
         when 31_000...34_005
-          leftValue =  @program.dirConstantes.invert[leftMemoryNumber]
+          leftValue =  @program.dirConstantes.invert[leftMemoryNumber.to_i]
+
         else
           puts "ERROR. EN ASSIGN VALOR IZQUIERDO"
           exit
@@ -302,18 +142,24 @@ class VM
 
         resMemoryNumber = @cuadruplos.cuads[@cuadActual].resultado
 
+        if resMemoryNumber[0] == '('
 
-        if(resMemoryNumber[0] == '(')
-           resMemoryNumber = resMemoryNumber[1...-1]
-           resMemoryNumber = @runningMem[resMemoryNumber]
+          resMemoryNumber = resMemoryNumber[1..-2].to_i
+          case resMemoryNumber.to_i
+          when 1_000...5_000
+            resMemoryNumber = @globalMem[resMemoryNumber.to_i]
+          when 11_000...15_000, 21_000...25_000
+            resMemoryNumber = @runningMem[resMemoryNumber.to_i]
+          end
+
         end
 
-
-        case resMemoryNumber
+        case resMemoryNumber.to_i
         when 1_000...5_000
-          @globalMem[resMemoryNumber] = leftValue
+          @globalMem[resMemoryNumber.to_i] = leftValue
+          # puts "#{resMemoryNumber}  = #{leftMemoryNumber} = #{leftValue}"
         when 11_000...15_000
-          @runningMem[resMemoryNumber] = leftValue
+          @runningMem[resMemoryNumber.to_i] = leftValue
         else
           puts "ERROR. EN ASSIGN VALOR RESULTADO"
           exit
@@ -326,37 +172,46 @@ class VM
 
         leftMemoryNumber = @cuadruplos.cuads[@cuadActual].operIzq
 
-        if(leftMemoryNumber[0] == '(')
-           leftMemoryNumber = leftMemoryNumber[1...-1]
-           leftMemoryNumber = @runningMem[leftMemoryNumber]
+        if leftMemoryNumber[0] == '('
+          leftMemoryNumber = leftMemoryNumber[1..-2].to_i
+          case leftMemoryNumber.to_i
+          when 1_000...5_000
+            leftMemoryNumber = @globalMem[leftMemoryNumber.to_i].to_i
+          when 10_000...15_000, 21_000...25_000
+            leftMemoryNumber = @runningMem[leftMemoryNumber.to_i].to_i
+          else
+            puts "ERROR. MEMORIA INDIRECTA SUMA IZQ"
+          end
         end
-        case leftMemoryNumber
+
+
+        case leftMemoryNumber.to_i
         when 1_000...2_000
-          leftValue = @globalMem[leftMemoryNumber].to_i
+          leftValue = @globalMem[leftMemoryNumber.to_i].to_i
         when 2_000...3_000
-          leftValue = @globalMem[leftMemoryNumber].to_f
+          leftValue = @globalMem[leftMemoryNumber.to_i].to_f
         when 3_000...4_000
-          leftValue = @globalMem[leftMemoryNumber]
+          leftValue = @globalMem[leftMemoryNumber.to_i]
         when 4_000...5_000
           puts"ERROR. SUMA DE BOOLEANO OPERANDO IZQ "
           exit
 
         when 11_000...12_000, 21_000...22_000
-          leftValue = @runningMem[leftMemoryNumber].to_i
+          leftValue = @runningMem[leftMemoryNumber.to_i].to_i
         when 12_000...13_000, 22_000...23_000
-          leftValue = @runningMem[leftMemoryNumber].to_f
+          leftValue = @runningMem[leftMemoryNumber.to_i].to_f
         when 13_000...14_000, 23_000...24_000
-          leftValue = @runningMem[leftMemoryNumber]
+          leftValue = @runningMem[leftMemoryNumber.to_i]
         when 14_000...15_000, 24_000...25_000
           puts"ERROR. SUMA DE BOOLEANO OPERANDO IZQ "
           exit
 
         when 31_000...32_000
-          leftValue =  @program.dirConstantes.invert[leftMemoryNumber].to_i
+          leftValue =  @program.dirConstantes.invert[leftMemoryNumber.to_i].to_i
         when 32_000...33_000
-          leftValue =  @program.dirConstantes.invert[leftMemoryNumber].to_f
+          leftValue =  @program.dirConstantes.invert[leftMemoryNumber.to_i].to_f
         when 33_000...34_000
-          leftValue =  @program.dirConstantes.invert[leftMemoryNumber]
+          leftValue =  @program.dirConstantes.invert[leftMemoryNumber.to_i]
         when 34_000...34_005
           puts"ERROR. SUMA DE BOOLEANO OPERANDO IZQ "
           exit
@@ -368,38 +223,45 @@ class VM
 
         rightMemoryNumber = @cuadruplos.cuads[@cuadActual].operDer
 
+        if rightMemoryNumber[0] == '('
+          rightMemoryNumber = rightMemoryNumber[1..-2].to_i
+          case rightMemoryNumber.to_i
+          when 1_000...5_000
+            rightMemoryNumber = @globalMem[rightMemoryNumber.to_i].to_i
+          when 10_000...15_000, 21_000...25_000
+            rightMemoryNumber = @runningMem[rightMemoryNumber.to_i].to_i
+          else
+            puts "ERROR. MEMORIA INDIRECTA SUMA DERECHA"
+          end
+        end
 
-        if(rightMemoryNumber[0] == '(')
-           rightMemoryNumber = rightMemoryNumber[1...-1]
-           rightMemoryNumber = @runningMem[rightMemoryNumber]
-         end
-        case rightMemoryNumber
+        case rightMemoryNumber.to_i
         when 1_000...2_000
-          rightValue = @globalMem[rightMemoryNumber].to_i
+          rightValue = @globalMem[rightMemoryNumber.to_i].to_i
         when 2_000...3_000
-          rightValue = @globalMem[rightMemoryNumber].to_f
+          rightValue = @globalMem[rightMemoryNumber.to_i].to_f
         when 3_000...4_000
-          rightValue = @globalMem[rightMemoryNumber]
+          rightValue = @globalMem[rightMemoryNumber.to_i]
         when 4_000...5_000
           puts"ERROR. SUMA DE BOOLEANO OPERANDO DER "
           exit
 
         when 11_000...12_000, 21_000...22_000
-          rightValue = @runningMem[rightMemoryNumber].to_i
+          rightValue = @runningMem[rightMemoryNumber.to_i].to_i
         when 12_000...13_000, 22_000...23_000
-          rightValue = @runningMem[rightMemoryNumber].to_f
+          rightValue = @runningMem[rightMemoryNumber.to_i].to_f
         when 13_000...14_000, 23_000...24_000
-          rightValue = @runningMem[rightMemoryNumber]
+          rightValue = @runningMem[rightMemoryNumber.to_i]
         when 14_000...15_000, 24_000...25_000
           puts"ERROR. SUMA DE BOOLEANO OPERANDO DER "
           exit
 
         when 31_000...32_000
-          rightValue =  @program.dirConstantes.invert[rightMemoryNumber].to_i
+          rightValue =  @program.dirConstantes.invert[rightMemoryNumber.to_i].to_i
         when 32_000...33_000
-          rightValue =  @program.dirConstantes.invert[rightMemoryNumber].to_f
+          rightValue =  @program.dirConstantes.invert[rightMemoryNumber.to_i].to_f
         when 33_000...34_000
-          rightValue =  @program.dirConstantes.invert[rightMemoryNumber]
+          rightValue =  @program.dirConstantes.invert[rightMemoryNumber.to_i]
         when 34_000...34_005
           puts"ERROR. SUMA DE BOOLEANO OPERANDO DER "
           exit
@@ -407,44 +269,52 @@ class VM
           puts "ERROR. EN SUMA VALOR DERECHO"
           exit
         end
-
-        @runningMem[@cuadruplos.cuads[@cuadActual].resultado] = leftValue + rightValue
+# puts  "#{(leftValue + rightValue)} #{leftValue} + #{rightValue} "
+        @runningMem[@cuadruplos.cuads[@cuadActual].resultado.to_i] = leftValue + rightValue
         @cuadActual += 1
 
       when "-"
         leftMemoryNumber = @cuadruplos.cuads[@cuadActual].operIzq
 
-        if(leftMemoryNumber[0] == '(')
-           leftMemoryNumber = leftMemoryNumber[1...-1]
-           leftMemoryNumber = @runningMem[leftMemoryNumber]
+        if leftMemoryNumber[0] == '('
+          leftMemoryNumber = leftMemoryNumber[1..-2].to_i
+          case leftMemoryNumber.to_i
+          when 1_000...5_000
+            leftMemoryNumber = @globalMem[leftMemoryNumber.to_i].to_i
+          when 10_000...15_000, 21_000...25_000
+            leftMemoryNumber = @runningMem[leftMemoryNumber.to_i].to_i
+          else
+            puts "ERROR. MEMORIA INDIRECTA RESTA IZQ"
+          end
         end
-        case leftMemoryNumber
+
+        case leftMemoryNumber.to_i
         when 1_000...2_000
-          leftValue = @globalMem[leftMemoryNumber].to_i
+          leftValue = @globalMem[leftMemoryNumber.to_i].to_i
         when 2_000...3_000
-          leftValue = @globalMem[leftMemoryNumber].to_f
+          leftValue = @globalMem[leftMemoryNumber.to_i].to_f
         when 3_000...4_000
-          leftValue = @globalMem[leftMemoryNumber]
+          leftValue = @globalMem[leftMemoryNumber.to_i]
         when 4_000...5_000
           puts"ERROR. RESTA DE BOOLEANO OPERANDO IZQ "
           exit
 
         when 11_000...12_000, 21_000...22_000
-          leftValue = @runningMem[leftMemoryNumber].to_i
+          leftValue = @runningMem[leftMemoryNumber.to_i].to_i
         when 12_000...13_000, 22_000...23_000
-          leftValue = @runningMem[leftMemoryNumber].to_f
+          leftValue = @runningMem[leftMemoryNumber.to_i].to_f
         when 13_000...14_000, 23_000...24_000
-          leftValue = @runningMem[leftMemoryNumber]
+          leftValue = @runningMem[leftMemoryNumber.to_i]
         when 14_000...15_000, 24_000...25_000
           puts"ERROR. RESTA DE BOOLEANO OPERANDO IZQ "
           exit
 
         when 31_000...32_000
-          leftValue =  @program.dirConstantes.invert[leftMemoryNumber].to_i
+          leftValue =  @program.dirConstantes.invert[leftMemoryNumber.to_i].to_i
         when 32_000...33_000
-          leftValue =  @program.dirConstantes.invert[leftMemoryNumber].to_f
+          leftValue =  @program.dirConstantes.invert[leftMemoryNumber.to_i].to_f
         when 33_000...34_000
-          leftValue =  @program.dirConstantes.invert[leftMemoryNumber]
+          leftValue =  @program.dirConstantes.invert[leftMemoryNumber.to_i]
         when 34_000...34_005
           puts"ERROR. RESTA DE BOOLEANO OPERANDO IZQ "
           exit
@@ -456,38 +326,44 @@ class VM
 
         rightMemoryNumber = @cuadruplos.cuads[@cuadActual].operDer
 
-
-        if(rightMemoryNumber[0] == '(')
-           rightMemoryNumber = rightMemoryNumber[1...-1]
-           rightMemoryNumber = @runningMem[rightMemoryNumber]
-         end
-        case rightMemoryNumber
+        if rightMemoryNumber[0] == '('
+          rightMemoryNumber = rightMemoryNumber[1..-2].to_i
+          case rightMemoryNumber.to_i
+          when 1_000...5_000
+            rightMemoryNumber = @globalMem[rightMemoryNumber.to_i].to_i
+          when 10_000...15_000, 21_000...25_000
+            rightMemoryNumber = @runningMem[rightMemoryNumber.to_i].to_i
+          else
+            puts "ERROR. MEMORIA INDIRECTA RESTA DERECHA"
+          end
+        end
+        case rightMemoryNumber.to_i
         when 1_000...2_000
-          rightValue = @globalMem[rightMemoryNumber].to_i
+          rightValue = @globalMem[rightMemoryNumber.to_i].to_i
         when 2_000...3_000
-          rightValue = @globalMem[rightMemoryNumber].to_f
+          rightValue = @globalMem[rightMemoryNumber.to_i].to_f
         when 3_000...4_000
-          rightValue = @globalMem[rightMemoryNumber]
+          rightValue = @globalMem[rightMemoryNumber.to_i]
         when 4_000...5_000
           puts"ERROR. RESTA DE BOOLEANO OPERANDO DER "
           exit
 
         when 11_000...12_000, 21_000...22_000
-          rightValue = @runningMem[rightMemoryNumber].to_i
+          rightValue = @runningMem[rightMemoryNumber.to_i].to_i
         when 12_000...13_000, 22_000...23_000
-          rightValue = @runningMem[rightMemoryNumber].to_f
+          rightValue = @runningMem[rightMemoryNumber.to_i].to_f
         when 13_000...14_000, 23_000...24_000
-          rightValue = @runningMem[rightMemoryNumber]
+          rightValue = @runningMem[rightMemoryNumber.to_i]
         when 14_000...15_000, 24_000...25_000
           puts"ERROR. RESTA DE BOOLEANO OPERANDO DER "
           exit
 
         when 31_000...32_000
-          rightValue =  @program.dirConstantes.invert[rightMemoryNumber].to_i
+          rightValue =  @program.dirConstantes.invert[rightMemoryNumber.to_i].to_i
         when 32_000...33_000
-          rightValue =  @program.dirConstantes.invert[rightMemoryNumber].to_f
+          rightValue =  @program.dirConstantes.invert[rightMemoryNumber.to_i].to_f
         when 33_000...34_000
-          rightValue =  @program.dirConstantes.invert[rightMemoryNumber]
+          rightValue =  @program.dirConstantes.invert[rightMemoryNumber.to_i]
         when 34_000...34_005
           puts"ERROR. RESTA DE BOOLEANO OPERANDO DER "
           exit
@@ -496,43 +372,51 @@ class VM
           exit
         end
 
-        @runningMem[@cuadruplos.cuads[@cuadActual].resultado] = leftValue - rightValue
+        @runningMem[@cuadruplos.cuads[@cuadActual].resultado.to_i] = leftValue - rightValue
         @cuadActual += 1
 
       when "*"
         leftMemoryNumber = @cuadruplos.cuads[@cuadActual].operIzq
 
-        if(leftMemoryNumber[0] == '(')
-           leftMemoryNumber = leftMemoryNumber[1...-1]
-           leftMemoryNumber = @runningMem[leftMemoryNumber]
+        if leftMemoryNumber[0] == '('
+          leftMemoryNumber = leftMemoryNumber[1..-2].to_i
+          case leftMemoryNumber.to_i
+          when 1_000...5_000
+            leftMemoryNumber = @globalMem[leftMemoryNumber.to_i].to_i
+          when 10_000...15_000, 21_000...25_000
+            leftMemoryNumber = @runningMem[leftMemoryNumber.to_i].to_i
+          else
+            puts "ERROR. MEMORIA INDIRECTA MULT IZQ"
+          end
         end
-        case leftMemoryNumber
+
+        case leftMemoryNumber.to_i
         when 1_000...2_000
-          leftValue = @globalMem[leftMemoryNumber].to_i
+          leftValue = @globalMem[leftMemoryNumber.to_i].to_i
         when 2_000...3_000
-          leftValue = @globalMem[leftMemoryNumber].to_f
+          leftValue = @globalMem[leftMemoryNumber.to_i].to_f
         when 3_000...4_000
-          leftValue = @globalMem[leftMemoryNumber]
+          leftValue = @globalMem[leftMemoryNumber.to_i]
         when 4_000...5_000
           puts"ERROR. MULTIPLICACION DE BOOLEANO OPERANDO IZQ "
           exit
 
         when 11_000...12_000, 21_000...22_000
-          leftValue = @runningMem[leftMemoryNumber].to_i
+          leftValue = @runningMem[leftMemoryNumber.to_i].to_i
         when 12_000...13_000, 22_000...23_000
-          leftValue = @runningMem[leftMemoryNumber].to_f
+          leftValue = @runningMem[leftMemoryNumber.to_i].to_f
         when 13_000...14_000, 23_000...24_000
-          leftValue = @runningMem[leftMemoryNumber]
+          leftValue = @runningMem[leftMemoryNumber.to_i]
         when 14_000...15_000, 24_000...25_000
           puts"ERROR. MULTIPLICACION DE BOOLEANO OPERANDO IZQ "
           exit
 
         when 31_000...32_000
-          leftValue =  @program.dirConstantes.invert[leftMemoryNumber].to_i
+          leftValue =  @program.dirConstantes.invert[leftMemoryNumber.to_i].to_i
         when 32_000...33_000
-          leftValue =  @program.dirConstantes.invert[leftMemoryNumber].to_f
+          leftValue =  @program.dirConstantes.invert[leftMemoryNumber.to_i].to_f
         when 33_000...34_000
-          leftValue =  @program.dirConstantes.invert[leftMemoryNumber]
+          leftValue =  @program.dirConstantes.invert[leftMemoryNumber.to_i]
         when 34_000...34_005
           puts"ERROR. MULTIPLICACION DE BOOLEANO OPERANDO IZQ "
           exit
@@ -544,38 +428,44 @@ class VM
 
         rightMemoryNumber = @cuadruplos.cuads[@cuadActual].operDer
 
-
-        if(rightMemoryNumber[0] == '(')
-           rightMemoryNumber = rightMemoryNumber[1...-1]
-           rightMemoryNumber = @runningMem[rightMemoryNumber]
-         end
-        case rightMemoryNumber
+        if rightMemoryNumber[0] == '('
+          rightMemoryNumber = rightMemoryNumber[1..-2].to_i
+          case rightMemoryNumber.to_i
+          when 1_000...5_000
+            rightMemoryNumber = @globalMem[rightMemoryNumber.to_i].to_i
+          when 10_000...15_000, 21_000...25_000
+            rightMemoryNumber = @runningMem[rightMemoryNumber.to_i].to_i
+          else
+            puts "ERROR. MEMORIA INDIRECTA MULT DERECHA"
+          end
+        end
+        case rightMemoryNumber.to_i
         when 1_000...2_000
-          rightValue = @globalMem[rightMemoryNumber].to_i
+          rightValue = @globalMem[rightMemoryNumber.to_i].to_i
         when 2_000...3_000
-          rightValue = @globalMem[rightMemoryNumber].to_f
+          rightValue = @globalMem[rightMemoryNumber.to_i].to_f
         when 3_000...4_000
-          rightValue = @globalMem[rightMemoryNumber]
+          rightValue = @globalMem[rightMemoryNumber.to_i]
         when 4_000...5_000
           puts"ERROR. MULTIPLICACION DE BOOLEANO OPERANDO DER "
           exit
 
         when 11_000...12_000, 21_000...22_000
-          rightValue = @runningMem[rightMemoryNumber].to_i
+          rightValue = @runningMem[rightMemoryNumber.to_i].to_i
         when 12_000...13_000, 22_000...23_000
-          rightValue = @runningMem[rightMemoryNumber].to_f
+          rightValue = @runningMem[rightMemoryNumber.to_i].to_f
         when 13_000...14_000, 23_000...24_000
-          rightValue = @runningMem[rightMemoryNumber]
+          rightValue = @runningMem[rightMemoryNumber.to_i]
         when 14_000...15_000, 24_000...25_000
           puts"ERROR. MULTIPLICACION DE BOOLEANO OPERANDO DER "
           exit
 
         when 31_000...32_000
-          rightValue =  @program.dirConstantes.invert[rightMemoryNumber].to_i
+          rightValue =  @program.dirConstantes.invert[rightMemoryNumber.to_i].to_i
         when 32_000...33_000
-          rightValue =  @program.dirConstantes.invert[rightMemoryNumber].to_f
+          rightValue =  @program.dirConstantes.invert[rightMemoryNumber.to_i].to_f
         when 33_000...34_000
-          rightValue =  @program.dirConstantes.invert[rightMemoryNumber]
+          rightValue =  @program.dirConstantes.invert[rightMemoryNumber.to_i]
         when 34_000...34_005
           puts"ERROR. MULTIPLICACION DE BOOLEANO OPERANDO DER "
           exit
@@ -583,44 +473,52 @@ class VM
           puts "ERROR. EN MULTIPLICACION VALOR DERECHO"
           exit
         end
-
-        @runningMem[@cuadruplos.cuads[@cuadActual].resultado] = leftValue * rightValue
+  #     puts  "#{(leftValue > rightValue)} #{leftValue}  #{rightValue} "
+        @runningMem[@cuadruplos.cuads[@cuadActual].resultado.to_i] = leftValue * rightValue
         @cuadActual += 1
 
       when "/"
         leftMemoryNumber = @cuadruplos.cuads[@cuadActual].operIzq
 
-        if(leftMemoryNumber[0] == '(')
-           leftMemoryNumber = leftMemoryNumber[1...-1]
-           leftMemoryNumber = @runningMem[leftMemoryNumber]
+        if leftMemoryNumber[0] == '('
+          leftMemoryNumber = leftMemoryNumber[1..-2].to_i
+          case leftMemoryNumber.to_i
+          when 1_000...5_000
+            leftMemoryNumber = @globalMem[leftMemoryNumber.to_i].to_i
+          when 10_000...15_000, 21_000...25_000
+            leftMemoryNumber = @runningMem[leftMemoryNumber.to_i].to_i
+          else
+            puts "ERROR. MEMORIA INDIRECTA DIV IZQ"
+          end
         end
-        case leftMemoryNumber
+
+        case leftMemoryNumber.to_i
         when 1_000...2_000
-          leftValue = @globalMem[leftMemoryNumber].to_i
+          leftValue = @globalMem[leftMemoryNumber.to_i].to_i
         when 2_000...3_000
-          leftValue = @globalMem[leftMemoryNumber].to_f
+          leftValue = @globalMem[leftMemoryNumber.to_i].to_f
         when 3_000...4_000
-          leftValue = @globalMem[leftMemoryNumber]
+          leftValue = @globalMem[leftMemoryNumber.to_i]
         when 4_000...5_000
           puts"ERROR. DIVISION DE BOOLEANO OPERANDO IZQ "
           exit
 
         when 11_000...12_000, 21_000...22_000
-          leftValue = @runningMem[leftMemoryNumber].to_i
+          leftValue = @runningMem[leftMemoryNumber.to_i].to_i
         when 12_000...13_000, 22_000...23_000
-          leftValue = @runningMem[leftMemoryNumber].to_f
+          leftValue = @runningMem[leftMemoryNumber.to_i].to_f
         when 13_000...14_000, 23_000...24_000
-          leftValue = @runningMem[leftMemoryNumber]
+          leftValue = @runningMem[leftMemoryNumber.to_i]
         when 14_000...15_000, 24_000...25_000
           puts"ERROR. DIVISION DE BOOLEANO OPERANDO IZQ "
           exit
 
         when 31_000...32_000
-          leftValue =  @program.dirConstantes.invert[leftMemoryNumber].to_i
+          leftValue =  @program.dirConstantes.invert[leftMemoryNumber.to_i].to_i
         when 32_000...33_000
-          leftValue =  @program.dirConstantes.invert[leftMemoryNumber].to_f
+          leftValue =  @program.dirConstantes.invert[leftMemoryNumber.to_i].to_f
         when 33_000...34_000
-          leftValue =  @program.dirConstantes.invert[leftMemoryNumber]
+          leftValue =  @program.dirConstantes.invert[leftMemoryNumber.to_i]
         when 34_000...34_005
           puts"ERROR. DIVISION DE BOOLEANO OPERANDO IZQ "
           exit
@@ -632,38 +530,44 @@ class VM
 
         rightMemoryNumber = @cuadruplos.cuads[@cuadActual].operDer
 
-
-        if(rightMemoryNumber[0] == '(')
-           rightMemoryNumber = rightMemoryNumber[1...-1]
-           rightMemoryNumber = @runningMem[rightMemoryNumber]
-         end
-        case rightMemoryNumber
+        if rightMemoryNumber[0] == '('
+          rightMemoryNumber = rightMemoryNumber[1..-2].to_i
+          case rightMemoryNumber.to_i
+          when 1_000...5_000
+            rightMemoryNumber = @globalMem[rightMemoryNumber.to_i].to_i
+          when 10_000...15_000, 21_000...25_000
+            rightMemoryNumber = @runningMem[rightMemoryNumber.to_i].to_i
+          else
+            puts "ERROR. MEMORIA INDIRECTA DIV DERECHA"
+          end
+        end
+        case rightMemoryNumber.to_i
         when 1_000...2_000
-          rightValue = @globalMem[rightMemoryNumber].to_i
+          rightValue = @globalMem[rightMemoryNumber.to_i].to_i
         when 2_000...3_000
-          rightValue = @globalMem[rightMemoryNumber].to_f
+          rightValue = @globalMem[rightMemoryNumber.to_i].to_f
         when 3_000...4_000
-          rightValue = @globalMem[rightMemoryNumber]
+          rightValue = @globalMem[rightMemoryNumber.to_i]
         when 4_000...5_000
           puts"ERROR. DIVISION DE BOOLEANO OPERANDO DER "
           exit
 
         when 11_000...12_000, 21_000...22_000
-          rightValue = @runningMem[rightMemoryNumber].to_i
+          rightValue = @runningMem[rightMemoryNumber.to_i].to_i
         when 12_000...13_000, 22_000...23_000
-          rightValue = @runningMem[rightMemoryNumber].to_f
+          rightValue = @runningMem[rightMemoryNumber.to_i].to_f
         when 13_000...14_000, 23_000...24_000
-          rightValue = @runningMem[rightMemoryNumber]
+          rightValue = @runningMem[rightMemoryNumber.to_i]
         when 14_000...15_000, 24_000...25_000
           puts"ERROR. DIVISION DE BOOLEANO OPERANDO DER "
           exit
 
         when 31_000...32_000
-          rightValue =  @program.dirConstantes.invert[rightMemoryNumber].to_i
+          rightValue =  @program.dirConstantes.invert[rightMemoryNumber.to_i].to_i
         when 32_000...33_000
-          rightValue =  @program.dirConstantes.invert[rightMemoryNumber].to_f
+          rightValue =  @program.dirConstantes.invert[rightMemoryNumber.to_i].to_f
         when 33_000...34_000
-          rightValue =  @program.dirConstantes.invert[rightMemoryNumber]
+          rightValue =  @program.dirConstantes.invert[rightMemoryNumber.to_i]
         when 34_000...34_005
           puts"ERROR. DIVISION DE BOOLEANO OPERANDO DER "
           exit
@@ -672,43 +576,51 @@ class VM
           exit
         end
 
-        @runningMem[@cuadruplos.cuads[@cuadActual].resultado] = leftValue / rightValue
+        @runningMem[@cuadruplos.cuads[@cuadActual].resultado.to_i] = leftValue / rightValue
         @cuadActual += 1
 
       when "%"
         leftMemoryNumber = @cuadruplos.cuads[@cuadActual].operIzq
 
-        if(leftMemoryNumber[0] == '(')
-           leftMemoryNumber = leftMemoryNumber[1...-1]
-           leftMemoryNumber = @runningMem[leftMemoryNumber]
+        if leftMemoryNumber[0] == '('
+          leftMemoryNumber = leftMemoryNumber[1..-2].to_i
+          case leftMemoryNumber.to_i
+          when 1_000...5_000
+            leftMemoryNumber = @globalMem[leftMemoryNumber.to_i].to_i
+          when 10_000...15_000, 21_000...25_000
+            leftMemoryNumber = @runningMem[leftMemoryNumber.to_i].to_i
+          else
+            puts "ERROR. MEMORIA INDIRECTA MOD IZQ"
+          end
         end
-        case leftMemoryNumber
+
+        case leftMemoryNumber.to_i
         when 1_000...2_000
-          leftValue = @globalMem[leftMemoryNumber].to_i
+          leftValue = @globalMem[leftMemoryNumber.to_i].to_i
         when 2_000...3_000
-          leftValue = @globalMem[leftMemoryNumber].to_f
+          leftValue = @globalMem[leftMemoryNumber.to_i].to_f
         when 3_000...4_000
-          leftValue = @globalMem[leftMemoryNumber]
+          leftValue = @globalMem[leftMemoryNumber.to_i]
         when 4_000...5_000
           puts"ERROR. MODULO DE BOOLEANO OPERANDO IZQ "
           exit
 
         when 11_000...12_000, 21_000...22_000
-          leftValue = @runningMem[leftMemoryNumber].to_i
+          leftValue = @runningMem[leftMemoryNumber.to_i].to_i
         when 12_000...13_000, 22_000...23_000
-          leftValue = @runningMem[leftMemoryNumber].to_f
+          leftValue = @runningMem[leftMemoryNumber.to_i].to_f
         when 13_000...14_000, 23_000...24_000
-          leftValue = @runningMem[leftMemoryNumber]
+          leftValue = @runningMem[leftMemoryNumber.to_i]
         when 14_000...15_000, 24_000...25_000
           puts"ERROR. MODULO DE BOOLEANO OPERANDO IZQ "
           exit
 
         when 31_000...32_000
-          leftValue =  @program.dirConstantes.invert[leftMemoryNumber].to_i
+          leftValue =  @program.dirConstantes.invert[leftMemoryNumber.to_i].to_i
         when 32_000...33_000
-          leftValue =  @program.dirConstantes.invert[leftMemoryNumber].to_f
+          leftValue =  @program.dirConstantes.invert[leftMemoryNumber.to_i].to_f
         when 33_000...34_000
-          leftValue =  @program.dirConstantes.invert[leftMemoryNumber]
+          leftValue =  @program.dirConstantes.invert[leftMemoryNumber.to_i]
         when 34_000...34_005
           puts"ERROR. MODULO DE BOOLEANO OPERANDO IZQ "
           exit
@@ -720,38 +632,44 @@ class VM
 
         rightMemoryNumber = @cuadruplos.cuads[@cuadActual].operDer
 
-
-        if(rightMemoryNumber[0] == '(')
-           rightMemoryNumber = rightMemoryNumber[1...-1]
-           rightMemoryNumber = @runningMem[rightMemoryNumber]
-         end
-        case rightMemoryNumber
+        if rightMemoryNumber[0] == '('
+          rightMemoryNumber = rightMemoryNumber[1..-2].to_i
+          case rightMemoryNumber.to_i
+          when 1_000...5_000
+            rightMemoryNumber = @globalMem[rightMemoryNumber.to_i].to_i
+          when 10_000...15_000, 21_000...25_000
+            rightMemoryNumber = @runningMem[rightMemoryNumber.to_i].to_i
+          else
+            puts "ERROR. MEMORIA INDIRECTA MOD DERECHA"
+          end
+        end
+        case rightMemoryNumber.to_i
         when 1_000...2_000
-          rightValue = @globalMem[rightMemoryNumber].to_i
+          rightValue = @globalMem[rightMemoryNumber.to_i].to_i
         when 2_000...3_000
-          rightValue = @globalMem[rightMemoryNumber].to_f
+          rightValue = @globalMem[rightMemoryNumber.to_i].to_f
         when 3_000...4_000
-          rightValue = @globalMem[rightMemoryNumber]
+          rightValue = @globalMem[rightMemoryNumber.to_i]
         when 4_000...5_000
           puts"ERROR. MODULO DE BOOLEANO OPERANDO DER "
           exit
 
         when 11_000...12_000, 21_000...22_000
-          rightValue = @runningMem[rightMemoryNumber].to_i
+          rightValue = @runningMem[rightMemoryNumber.to_i].to_i
         when 12_000...13_000, 22_000...23_000
-          rightValue = @runningMem[rightMemoryNumber].to_f
+          rightValue = @runningMem[rightMemoryNumber.to_i].to_f
         when 13_000...14_000, 23_000...24_000
-          rightValue = @runningMem[rightMemoryNumber]
+          rightValue = @runningMem[rightMemoryNumber.to_i]
         when 14_000...15_000, 24_000...25_000
           puts"ERROR. MODULO DE BOOLEANO OPERANDO DER "
           exit
 
         when 31_000...32_000
-          rightValue =  @program.dirConstantes.invert[rightMemoryNumber].to_i
+          rightValue =  @program.dirConstantes.invert[rightMemoryNumber.to_i].to_i
         when 32_000...33_000
-          rightValue =  @program.dirConstantes.invert[rightMemoryNumber].to_f
+          rightValue =  @program.dirConstantes.invert[rightMemoryNumber.to_i].to_f
         when 33_000...34_000
-          rightValue =  @program.dirConstantes.invert[rightMemoryNumber]
+          rightValue =  @program.dirConstantes.invert[rightMemoryNumber.to_i]
         when 34_000...34_005
           puts"ERROR. MODULO DE BOOLEANO OPERANDO DER "
           exit
@@ -760,44 +678,53 @@ class VM
           exit
         end
 
-        @runningMem[@cuadruplos.cuads[@cuadActual].resultado] = leftValue % rightValue
+        @runningMem[@cuadruplos.cuads[@cuadActual].resultado.to_i] = leftValue % rightValue
         @cuadActual += 1
 
 
       when ">"
         leftMemoryNumber = @cuadruplos.cuads[@cuadActual].operIzq
 
-        if(leftMemoryNumber[0] == '(')
-           leftMemoryNumber = leftMemoryNumber[1...-1]
-           leftMemoryNumber = @runningMem[leftMemoryNumber]
+        if leftMemoryNumber[0] == '('
+          leftMemoryNumber = leftMemoryNumber[1..-2].to_i
+
+          case leftMemoryNumber.to_i
+          when 1_000...5_000
+            leftMemoryNumber = @globalMem[leftMemoryNumber.to_i].to_i
+          when 10_000...15_000, 21_000...25_000
+            leftMemoryNumber = @runningMem[leftMemoryNumber.to_i].to_i
+          else
+            puts "ERROR. MEMORIA INDIRECTA MAYOR IZQ"
+          end
         end
-        case leftMemoryNumber
+
+        case leftMemoryNumber.to_i
         when 1_000...2_000
-          leftValue = @globalMem[leftMemoryNumber].to_i
+          leftValue = @globalMem[leftMemoryNumber.to_i].to_i
         when 2_000...3_000
-          leftValue = @globalMem[leftMemoryNumber].to_f
+          leftValue = @globalMem[leftMemoryNumber.to_i].to_f
         when 3_000...4_000
-          leftValue = @globalMem[leftMemoryNumber]
+          leftValue = @globalMem[leftMemoryNumber.to_i]
         when 4_000...5_000
           puts"ERROR. MAYOR DE BOOLEANO OPERANDO IZQ "
           exit
 
         when 11_000...12_000, 21_000...22_000
-          leftValue = @runningMem[leftMemoryNumber].to_i
+          leftValue = @runningMem[leftMemoryNumber.to_i].to_i
         when 12_000...13_000, 22_000...23_000
-          leftValue = @runningMem[leftMemoryNumber].to_f
+          leftValue = @runningMem[leftMemoryNumber.to_i].to_f
         when 13_000...14_000, 23_000...24_000
-          leftValue = @runningMem[leftMemoryNumber]
+          leftValue = @runningMem[leftMemoryNumber.to_i]
         when 14_000...15_000, 24_000...25_000
           puts"ERROR. MAYOR DE BOOLEANO OPERANDO IZQ "
           exit
 
         when 31_000...32_000
-          leftValue =  @program.dirConstantes.invert[leftMemoryNumber].to_i
+          leftValue =  @program.dirConstantes.invert[leftMemoryNumber.to_i].to_i
         when 32_000...33_000
-          leftValue =  @program.dirConstantes.invert[leftMemoryNumber].to_f
+          leftValue =  @program.dirConstantes.invert[leftMemoryNumber.to_i].to_f
         when 33_000...34_000
-          leftValue =  @program.dirConstantes.invert[leftMemoryNumber]
+          leftValue =  @program.dirConstantes.invert[leftMemoryNumber.to_i]
         when 34_000...34_005
           puts"ERROR. MAYOR DE BOOLEANO OPERANDO IZQ "
           exit
@@ -809,38 +736,44 @@ class VM
 
         rightMemoryNumber = @cuadruplos.cuads[@cuadActual].operDer
 
-
-        if(rightMemoryNumber[0] == '(')
-           rightMemoryNumber = rightMemoryNumber[1...-1]
-           rightMemoryNumber = @runningMem[rightMemoryNumber]
-         end
-        case rightMemoryNumber
+        if rightMemoryNumber[0] == '('
+          rightMemoryNumber = rightMemoryNumber[1..-2].to_i
+          case rightMemoryNumber.to_i
+          when 1_000...5_000
+            rightMemoryNumber = @globalMem[rightMemoryNumber.to_i].to_i
+          when 10_000...15_000, 21_000...25_000
+            rightMemoryNumber = @runningMem[rightMemoryNumber.to_i].to_i
+          else
+            puts "ERROR. MEMORIA INDIRECTA MAYOR DERECHA"
+          end
+        end
+        case rightMemoryNumber.to_i
         when 1_000...2_000
-          rightValue = @globalMem[rightMemoryNumber].to_i
+          rightValue = @globalMem[rightMemoryNumber.to_i].to_i
         when 2_000...3_000
-          rightValue = @globalMem[rightMemoryNumber].to_f
+          rightValue = @globalMem[rightMemoryNumber.to_i].to_f
         when 3_000...4_000
-          rightValue = @globalMem[rightMemoryNumber]
+          rightValue = @globalMem[rightMemoryNumber.to_i]
         when 4_000...5_000
           puts"ERROR. MAYOR DE BOOLEANO OPERANDO DER "
           exit
 
         when 11_000...12_000, 21_000...22_000
-          rightValue = @runningMem[rightMemoryNumber].to_i
+          rightValue = @runningMem[rightMemoryNumber.to_i].to_i
         when 12_000...13_000, 22_000...23_000
-          rightValue = @runningMem[rightMemoryNumber].to_f
+          rightValue = @runningMem[rightMemoryNumber.to_i].to_f
         when 13_000...14_000, 23_000...24_000
-          rightValue = @runningMem[rightMemoryNumber]
+          rightValue = @runningMem[rightMemoryNumber.to_i]
         when 14_000...15_000, 24_000...25_000
           puts"ERROR. MAYOR DE BOOLEANO OPERANDO DER "
           exit
 
         when 31_000...32_000
-          rightValue =  @program.dirConstantes.invert[rightMemoryNumber].to_i
+          rightValue =  @program.dirConstantes.invert[rightMemoryNumber.to_i].to_i
         when 32_000...33_000
-          rightValue =  @program.dirConstantes.invert[rightMemoryNumber].to_f
+          rightValue =  @program.dirConstantes.invert[rightMemoryNumber.to_i].to_f
         when 33_000...34_000
-          rightValue =  @program.dirConstantes.invert[rightMemoryNumber]
+          rightValue =  @program.dirConstantes.invert[rightMemoryNumber.to_i]
         when 34_000...34_005
           puts"ERROR. MAYOR DE BOOLEANO OPERANDO DER "
           exit
@@ -848,45 +781,53 @@ class VM
           puts "ERROR. EN MAYOR VALOR DERECHO"
           exit
         end
-
-        @runningMem[@cuadruplos.cuads[@cuadActual].resultado] = leftValue > rightValue
+        # puts  "#{(leftValue > rightValue)} #{leftValue}  #{rightValue} "
+        @runningMem[@cuadruplos.cuads[@cuadActual].resultado.to_i] = leftValue > rightValue
         @cuadActual += 1
 
 
       when ">="
         leftMemoryNumber = @cuadruplos.cuads[@cuadActual].operIzq
 
-        if(leftMemoryNumber[0] == '(')
-           leftMemoryNumber = leftMemoryNumber[1...-1]
-           leftMemoryNumber = @runningMem[leftMemoryNumber]
+        if leftMemoryNumber[0] == '('
+          leftMemoryNumber = leftMemoryNumber[1..-2].to_i
+          case leftMemoryNumber.to_i
+          when 1_000...5_000
+            leftMemoryNumber = @globalMem[leftMemoryNumber.to_i].to_i
+          when 10_000...15_000, 21_000...25_000
+            leftMemoryNumber = @runningMem[leftMemoryNumber.to_i].to_i
+          else
+            puts "ERROR. MEMORIA INDIRECTA MAYOR IGUAL IZQ"
+          end
         end
-        case leftMemoryNumber
+
+        case leftMemoryNumber.to_i
         when 1_000...2_000
-          leftValue = @globalMem[leftMemoryNumber].to_i
+          leftValue = @globalMem[leftMemoryNumber.to_i].to_i
         when 2_000...3_000
-          leftValue = @globalMem[leftMemoryNumber].to_f
+          leftValue = @globalMem[leftMemoryNumber.to_i].to_f
         when 3_000...4_000
-          leftValue = @globalMem[leftMemoryNumber]
+          leftValue = @globalMem[leftMemoryNumber.to_i]
         when 4_000...5_000
           puts"ERROR. MAYOR IGUAL DE BOOLEANO OPERANDO IZQ "
           exit
 
         when 11_000...12_000, 21_000...22_000
-          leftValue = @runningMem[leftMemoryNumber].to_i
+          leftValue = @runningMem[leftMemoryNumber.to_i].to_i
         when 12_000...13_000, 22_000...23_000
-          leftValue = @runningMem[leftMemoryNumber].to_f
+          leftValue = @runningMem[leftMemoryNumber.to_i].to_f
         when 13_000...14_000, 23_000...24_000
-          leftValue = @runningMem[leftMemoryNumber]
+          leftValue = @runningMem[leftMemoryNumber.to_i]
         when 14_000...15_000, 24_000...25_000
           puts"ERROR. MAYOR IGUAL DE BOOLEANO OPERANDO IZQ "
           exit
 
         when 31_000...32_000
-          leftValue =  @program.dirConstantes.invert[leftMemoryNumber].to_i
+          leftValue =  @program.dirConstantes.invert[leftMemoryNumber.to_i].to_i
         when 32_000...33_000
-          leftValue =  @program.dirConstantes.invert[leftMemoryNumber].to_f
+          leftValue =  @program.dirConstantes.invert[leftMemoryNumber.to_i].to_f
         when 33_000...34_000
-          leftValue =  @program.dirConstantes.invert[leftMemoryNumber]
+          leftValue =  @program.dirConstantes.invert[leftMemoryNumber.to_i]
         when 34_000...34_005
           puts"ERROR. MAYOR IGUAL DE BOOLEANO OPERANDO IZQ "
           exit
@@ -898,38 +839,44 @@ class VM
 
         rightMemoryNumber = @cuadruplos.cuads[@cuadActual].operDer
 
-
-        if(rightMemoryNumber[0] == '(')
-           rightMemoryNumber = rightMemoryNumber[1...-1]
-           rightMemoryNumber = @runningMem[rightMemoryNumber]
-         end
-        case rightMemoryNumber
+        if rightMemoryNumber[0] == '('
+          rightMemoryNumber = rightMemoryNumber[1..-2].to_i
+          case rightMemoryNumber.to_i
+          when 1_000...5_000
+            rightMemoryNumber = @globalMem[rightMemoryNumber.to_i].to_i
+          when 10_000...15_000, 21_000...25_000
+            rightMemoryNumber = @runningMem[rightMemoryNumber.to_i].to_i
+          else
+            puts "ERROR. MEMORIA INDIRECTA MAYOR IGUAL DERECHA"
+          end
+        end
+        case rightMemoryNumber.to_i
         when 1_000...2_000
-          rightValue = @globalMem[rightMemoryNumber].to_i
+          rightValue = @globalMem[rightMemoryNumber.to_i].to_i
         when 2_000...3_000
-          rightValue = @globalMem[rightMemoryNumber].to_f
+          rightValue = @globalMem[rightMemoryNumber.to_i].to_f
         when 3_000...4_000
-          rightValue = @globalMem[rightMemoryNumber]
+          rightValue = @globalMem[rightMemoryNumber.to_i]
         when 4_000...5_000
           puts"ERROR. MAYOR IGUAL DE BOOLEANO OPERANDO DER "
           exit
 
         when 11_000...12_000, 21_000...22_000
-          rightValue = @runningMem[rightMemoryNumber].to_i
+          rightValue = @runningMem[rightMemoryNumber.to_i].to_i
         when 12_000...13_000, 22_000...23_000
-          rightValue = @runningMem[rightMemoryNumber].to_f
+          rightValue = @runningMem[rightMemoryNumber.to_i].to_f
         when 13_000...14_000, 23_000...24_000
-          rightValue = @runningMem[rightMemoryNumber]
+          rightValue = @runningMem[rightMemoryNumber.to_i]
         when 14_000...15_000, 24_000...25_000
           puts"ERROR. MAYOR IGUAL DE BOOLEANO OPERANDO DER "
           exit
 
         when 31_000...32_000
-          rightValue =  @program.dirConstantes.invert[rightMemoryNumber].to_i
+          rightValue =  @program.dirConstantes.invert[rightMemoryNumber.to_i].to_i
         when 32_000...33_000
-          rightValue =  @program.dirConstantes.invert[rightMemoryNumber].to_f
+          rightValue =  @program.dirConstantes.invert[rightMemoryNumber.to_i].to_f
         when 33_000...34_000
-          rightValue =  @program.dirConstantes.invert[rightMemoryNumber]
+          rightValue =  @program.dirConstantes.invert[rightMemoryNumber.to_i]
         when 34_000...34_005
           puts"ERROR. MAYOR IGUAL DE BOOLEANO OPERANDO DER "
           exit
@@ -938,43 +885,51 @@ class VM
           exit
         end
 
-        @runningMem[@cuadruplos.cuads[@cuadActual].resultado] = leftValue >= rightValue
+        @runningMem[@cuadruplos.cuads[@cuadActual].resultado.to_i] = leftValue >= rightValue
         @cuadActual += 1
 
       when "<"
         leftMemoryNumber = @cuadruplos.cuads[@cuadActual].operIzq
 
-        if(leftMemoryNumber[0] == '(')
-           leftMemoryNumber = leftMemoryNumber[1...-1]
-           leftMemoryNumber = @runningMem[leftMemoryNumber]
+        if leftMemoryNumber[0] == '('
+          leftMemoryNumber = leftMemoryNumber[1..-2].to_i
+          case leftMemoryNumber.to_i
+          when 1_000...5_000
+            leftMemoryNumber = @globalMem[leftMemoryNumber.to_i].to_i
+          when 10_000...15_000, 21_000...25_000
+            leftMemoryNumber = @runningMem[leftMemoryNumber.to_i].to_i
+          else
+            puts "ERROR. MEMORIA INDIRECTA MENOR IZQ"
+          end
         end
-        case leftMemoryNumber
+
+        case leftMemoryNumber.to_i
         when 1_000...2_000
-          leftValue = @globalMem[leftMemoryNumber].to_i
+          leftValue = @globalMem[leftMemoryNumber.to_i].to_i
         when 2_000...3_000
-          leftValue = @globalMem[leftMemoryNumber].to_f
+          leftValue = @globalMem[leftMemoryNumber.to_i].to_f
         when 3_000...4_000
-          leftValue = @globalMem[leftMemoryNumber]
+          leftValue = @globalMem[leftMemoryNumber.to_i]
         when 4_000...5_000
           puts"ERROR. MENOR DE BOOLEANO OPERANDO IZQ "
           exit
 
         when 11_000...12_000, 21_000...22_000
-          leftValue = @runningMem[leftMemoryNumber].to_i
+          leftValue = @runningMem[leftMemoryNumber.to_i].to_i
         when 12_000...13_000, 22_000...23_000
-          leftValue = @runningMem[leftMemoryNumber].to_f
+          leftValue = @runningMem[leftMemoryNumber.to_i].to_f
         when 13_000...14_000, 23_000...24_000
-          leftValue = @runningMem[leftMemoryNumber]
+          leftValue = @runningMem[leftMemoryNumber.to_i]
         when 14_000...15_000, 24_000...25_000
           puts"ERROR. MENOR DE BOOLEANO OPERANDO IZQ "
           exit
 
         when 31_000...32_000
-          leftValue =  @program.dirConstantes.invert[leftMemoryNumber].to_i
+          leftValue =  @program.dirConstantes.invert[leftMemoryNumber.to_i].to_i
         when 32_000...33_000
-          leftValue =  @program.dirConstantes.invert[leftMemoryNumber].to_f
+          leftValue =  @program.dirConstantes.invert[leftMemoryNumber.to_i].to_f
         when 33_000...34_000
-          leftValue =  @program.dirConstantes.invert[leftMemoryNumber]
+          leftValue =  @program.dirConstantes.invert[leftMemoryNumber.to_i]
         when 34_000...34_005
           puts"ERROR. MENOR DE BOOLEANO OPERANDO IZQ "
           exit
@@ -986,38 +941,44 @@ class VM
 
         rightMemoryNumber = @cuadruplos.cuads[@cuadActual].operDer
 
-
-        if(rightMemoryNumber[0] == '(')
-           rightMemoryNumber = rightMemoryNumber[1...-1]
-           rightMemoryNumber = @runningMem[rightMemoryNumber]
-         end
-        case rightMemoryNumber
+        if rightMemoryNumber[0] == '('
+          rightMemoryNumber = rightMemoryNumber[1..-2].to_i
+          case rightMemoryNumber.to_i
+          when 1_000...5_000
+            rightMemoryNumber = @globalMem[rightMemoryNumber.to_i].to_i
+          when 10_000...15_000, 21_000...25_000
+            rightMemoryNumber = @runningMem[rightMemoryNumber.to_i].to_i
+          else
+            puts "ERROR. MEMORIA INDIRECTA MENOR DERECHA"
+          end
+        end
+        case rightMemoryNumber.to_i
         when 1_000...2_000
-          rightValue = @globalMem[rightMemoryNumber].to_i
+          rightValue = @globalMem[rightMemoryNumber.to_i].to_i
         when 2_000...3_000
-          rightValue = @globalMem[rightMemoryNumber].to_f
+          rightValue = @globalMem[rightMemoryNumber.to_i].to_f
         when 3_000...4_000
-          rightValue = @globalMem[rightMemoryNumber]
+          rightValue = @globalMem[rightMemoryNumber.to_i]
         when 4_000...5_000
           puts"ERROR. MENOR DE BOOLEANO OPERANDO DER "
           exit
 
         when 11_000...12_000, 21_000...22_000
-          rightValue = @runningMem[rightMemoryNumber].to_i
+          rightValue = @runningMem[rightMemoryNumber.to_i].to_i
         when 12_000...13_000, 22_000...23_000
-          rightValue = @runningMem[rightMemoryNumber].to_f
+          rightValue = @runningMem[rightMemoryNumber.to_i].to_f
         when 13_000...14_000, 23_000...24_000
-          rightValue = @runningMem[rightMemoryNumber]
+          rightValue = @runningMem[rightMemoryNumber.to_i]
         when 14_000...15_000, 24_000...25_000
           puts"ERROR. MENOR DE BOOLEANO OPERANDO DER "
           exit
 
         when 31_000...32_000
-          rightValue =  @program.dirConstantes.invert[rightMemoryNumber].to_i
+          rightValue =  @program.dirConstantes.invert[rightMemoryNumber.to_i].to_i
         when 32_000...33_000
-          rightValue =  @program.dirConstantes.invert[rightMemoryNumber].to_f
+          rightValue =  @program.dirConstantes.invert[rightMemoryNumber.to_i].to_f
         when 33_000...34_000
-          rightValue =  @program.dirConstantes.invert[rightMemoryNumber]
+          rightValue =  @program.dirConstantes.invert[rightMemoryNumber.to_i]
         when 34_000...34_005
           puts"ERROR. MENOR DE BOOLEANO OPERANDO DER "
           exit
@@ -1026,43 +987,52 @@ class VM
           exit
         end
 
-        @runningMem[@cuadruplos.cuads[@cuadActual].resultado] = leftValue < rightValue
+        @runningMem[@cuadruplos.cuads[@cuadActual].resultado.to_i] = leftValue < rightValue
         @cuadActual += 1
 
       when "<="
         leftMemoryNumber = @cuadruplos.cuads[@cuadActual].operIzq
 
-        if(leftMemoryNumber[0] == '(')
-           leftMemoryNumber = leftMemoryNumber[1...-1]
-           leftMemoryNumber = @runningMem[leftMemoryNumber]
+        if leftMemoryNumber[0] == '('
+          leftMemoryNumber = leftMemoryNumber[1..-2].to_i
+          case leftMemoryNumber.to_i
+          when 1_000...5_000
+            leftMemoryNumber = @globalMem[leftMemoryNumber.to_i].to_i
+          when 10_000...15_000, 21_000...25_000
+            leftMemoryNumber = @runningMem[leftMemoryNumber.to_i].to_i
+          else
+            puts "ERROR. MEMORIA INDIRECTA MENOR IGUAL IZQ"
+          end
         end
-        case leftMemoryNumber
+
+
+        case leftMemoryNumber.to_i
         when 1_000...2_000
-          leftValue = @globalMem[leftMemoryNumber].to_i
+          leftValue = @globalMem[leftMemoryNumber.to_i].to_i
         when 2_000...3_000
-          leftValue = @globalMem[leftMemoryNumber].to_f
+          leftValue = @globalMem[leftMemoryNumber.to_i].to_f
         when 3_000...4_000
-          leftValue = @globalMem[leftMemoryNumber]
+          leftValue = @globalMem[leftMemoryNumber.to_i]
         when 4_000...5_000
           puts"ERROR. MENOR IGUAL DE BOOLEANO OPERANDO IZQ "
           exit
 
         when 11_000...12_000, 21_000...22_000
-          leftValue = @runningMem[leftMemoryNumber].to_i
+          leftValue = @runningMem[leftMemoryNumber.to_i].to_i
         when 12_000...13_000, 22_000...23_000
-          leftValue = @runningMem[leftMemoryNumber].to_f
+          leftValue = @runningMem[leftMemoryNumber.to_i].to_f
         when 13_000...14_000, 23_000...24_000
-          leftValue = @runningMem[leftMemoryNumber]
+          leftValue = @runningMem[leftMemoryNumber.to_i]
         when 14_000...15_000, 24_000...25_000
           puts"ERROR. MENOR IGUAL DE BOOLEANO OPERANDO IZQ "
           exit
 
         when 31_000...32_000
-          leftValue =  @program.dirConstantes.invert[leftMemoryNumber].to_i
+          leftValue =  @program.dirConstantes.invert[leftMemoryNumber.to_i].to_i
         when 32_000...33_000
-          leftValue =  @program.dirConstantes.invert[leftMemoryNumber].to_f
+          leftValue =  @program.dirConstantes.invert[leftMemoryNumber.to_i].to_f
         when 33_000...34_000
-          leftValue =  @program.dirConstantes.invert[leftMemoryNumber]
+          leftValue =  @program.dirConstantes.invert[leftMemoryNumber.to_i]
         when 34_000...34_005
           puts"ERROR. MENOR IGUAL DE BOOLEANO OPERANDO IZQ "
           exit
@@ -1074,38 +1044,44 @@ class VM
 
         rightMemoryNumber = @cuadruplos.cuads[@cuadActual].operDer
 
-
-        if(rightMemoryNumber[0] == '(')
-           rightMemoryNumber = rightMemoryNumber[1...-1]
-           rightMemoryNumber = @runningMem[rightMemoryNumber]
-         end
-        case rightMemoryNumber
+        if rightMemoryNumber[0] == '('
+          rightMemoryNumber = rightMemoryNumber[1..-2].to_i
+          case rightMemoryNumber.to_i
+          when 1_000...5_000
+            rightMemoryNumber = @globalMem[rightMemoryNumber.to_i].to_i
+          when 10_000...15_000, 21_000...25_000
+            rightMemoryNumber = @runningMem[rightMemoryNumber.to_i].to_i
+          else
+            puts "ERROR. MEMORIA INDIRECTA MENOR IGUAL DERECHA"
+          end
+        end
+        case rightMemoryNumber.to_i
         when 1_000...2_000
-          rightValue = @globalMem[rightMemoryNumber].to_i
+          rightValue = @globalMem[rightMemoryNumber.to_i].to_i
         when 2_000...3_000
-          rightValue = @globalMem[rightMemoryNumber].to_f
+          rightValue = @globalMem[rightMemoryNumber.to_i].to_f
         when 3_000...4_000
-          rightValue = @globalMem[rightMemoryNumber]
+          rightValue = @globalMem[rightMemoryNumber.to_i]
         when 4_000...5_000
           puts"ERROR. MENOR IGUAL DE BOOLEANO OPERANDO DER "
           exit
 
         when 11_000...12_000, 21_000...22_000
-          rightValue = @runningMem[rightMemoryNumber].to_i
+          rightValue = @runningMem[rightMemoryNumber.to_i].to_i
         when 12_000...13_000, 22_000...23_000
-          rightValue = @runningMem[rightMemoryNumber].to_f
+          rightValue = @runningMem[rightMemoryNumber.to_i].to_f
         when 13_000...14_000, 23_000...24_000
-          rightValue = @runningMem[rightMemoryNumber]
+          rightValue = @runningMem[rightMemoryNumber.to_i]
         when 14_000...15_000, 24_000...25_000
           puts"ERROR. MENOR IGUAL DE BOOLEANO OPERANDO DER "
           exit
 
         when 31_000...32_000
-          rightValue =  @program.dirConstantes.invert[rightMemoryNumber].to_i
+          rightValue =  @program.dirConstantes.invert[rightMemoryNumber.to_i].to_i
         when 32_000...33_000
-          rightValue =  @program.dirConstantes.invert[rightMemoryNumber].to_f
+          rightValue =  @program.dirConstantes.invert[rightMemoryNumber.to_i].to_f
         when 33_000...34_000
-          rightValue =  @program.dirConstantes.invert[rightMemoryNumber]
+          rightValue =  @program.dirConstantes.invert[rightMemoryNumber.to_i]
         when 34_000...34_005
           puts"ERROR. MENOR IGUAL DE BOOLEANO OPERANDO DER "
           exit
@@ -1114,43 +1090,52 @@ class VM
           exit
         end
 
-        @runningMem[@cuadruplos.cuads[@cuadActual].resultado] = leftValue <= rightValue
+        @runningMem[@cuadruplos.cuads[@cuadActual].resultado.to_i] = leftValue <= rightValue
         @cuadActual += 1
 
       when "=="
         leftMemoryNumber = @cuadruplos.cuads[@cuadActual].operIzq
 
-        if(leftMemoryNumber[0] == '(')
-           leftMemoryNumber = leftMemoryNumber[1...-1]
-           leftMemoryNumber = @runningMem[leftMemoryNumber]
+        if leftMemoryNumber[0] == '('
+          leftMemoryNumber = leftMemoryNumber[1..-2].to_i
+          case leftMemoryNumber.to_i
+          when 1_000...5_000
+            leftMemoryNumber = @globalMem[leftMemoryNumber.to_i].to_i
+          when 10_000...15_000, 21_000...25_000
+            leftMemoryNumber = @runningMem[leftMemoryNumber.to_i].to_i
+          else
+            puts "ERROR. MEMORIA INDIRECTA IGUALDAD IZQ"
+          end
         end
-        case leftMemoryNumber
+
+
+        case leftMemoryNumber.to_i
         when 1_000...2_000
-          leftValue = @globalMem[leftMemoryNumber].to_i
+          leftValue = @globalMem[leftMemoryNumber.to_i].to_i
         when 2_000...3_000
-          leftValue = @globalMem[leftMemoryNumber].to_f
+          leftValue = @globalMem[leftMemoryNumber.to_i].to_f
         when 3_000...4_000
-          leftValue = @globalMem[leftMemoryNumber]
+          leftValue = @globalMem[leftMemoryNumber.to_i]
         when 4_000...5_000
-          leftValue = @globalMem[leftMemoryNumber]
+          leftValue = @globalMem[leftMemoryNumber.to_i]
 
         when 11_000...12_000, 21_000...22_000
-          leftValue = @runningMem[leftMemoryNumber].to_i
+          leftValue = @runningMem[leftMemoryNumber.to_i].to_i
         when 12_000...13_000, 22_000...23_000
-          leftValue = @runningMem[leftMemoryNumber].to_f
+          leftValue = @runningMem[leftMemoryNumber.to_i].to_f
         when 13_000...14_000, 23_000...24_000
-          leftValue = @runningMem[leftMemoryNumber]
+          leftValue = @runningMem[leftMemoryNumber.to_i]
         when 14_000...15_000, 24_000...25_000
-          leftValue = @runningMem[leftMemoryNumber]
+          leftValue = @runningMem[leftMemoryNumber.to_i]
 
         when 31_000...32_000
-          leftValue =  @program.dirConstantes.invert[leftMemoryNumber].to_i
+          leftValue =  @program.dirConstantes.invert[leftMemoryNumber.to_i].to_i
         when 32_000...33_000
-          leftValue =  @program.dirConstantes.invert[leftMemoryNumber].to_f
+          leftValue =  @program.dirConstantes.invert[leftMemoryNumber.to_i].to_f
         when 33_000...34_000
-          leftValue =  @program.dirConstantes.invert[leftMemoryNumber]
+          leftValue =  @program.dirConstantes.invert[leftMemoryNumber.to_i]
         when 34_000...34_005
-          leftValue =  @program.dirConstantes.invert[leftMemoryNumber]
+          leftValue =  @program.dirConstantes.invert[leftMemoryNumber.to_i]
         else
           puts "ERROR. EN IGUALDAD VALOR IZQUIERDO"
           exit
@@ -1159,80 +1144,96 @@ class VM
 
         rightMemoryNumber = @cuadruplos.cuads[@cuadActual].operDer
 
+        if rightMemoryNumber[0] == '('
+          rightMemoryNumber = rightMemoryNumber[1..-2].to_i
+          case rightMemoryNumber.to_i
+          when 1_000...5_000
+            rightMemoryNumber = @globalMem[rightMemoryNumber.to_i].to_i
+          when 10_000...15_000, 21_000...25_000
+            rightMemoryNumber = @runningMem[rightMemoryNumber.to_i].to_i
+          else
+            puts "ERROR. MEMORIA INDIRECTA IGUALDAD DERECHA"
+          end
+        end
 
-        if(rightMemoryNumber[0] == '(')
-           rightMemoryNumber = rightMemoryNumber[1...-1]
-           rightMemoryNumber = @runningMem[rightMemoryNumber]
-         end
-        case rightMemoryNumber
+        case rightMemoryNumber.to_i
         when 1_000...2_000
-          rightValue = @globalMem[rightMemoryNumber].to_i
+          rightValue = @globalMem[rightMemoryNumber.to_i].to_i
         when 2_000...3_000
-          rightValue = @globalMem[rightMemoryNumber].to_f
+          rightValue = @globalMem[rightMemoryNumber.to_i].to_f
         when 3_000...4_000
-          rightValue = @globalMem[rightMemoryNumber]
+          rightValue = @globalMem[rightMemoryNumber.to_i]
         when 4_000...5_000
-          rightValue = @globalMem[rightMemoryNumber]
+          rightValue = @globalMem[rightMemoryNumber.to_i]
 
         when 11_000...12_000, 21_000...22_000
-          rightValue = @runningMem[rightMemoryNumber].to_i
+          rightValue = @runningMem[rightMemoryNumber.to_i].to_i
         when 12_000...13_000, 22_000...23_000
-          rightValue = @runningMem[rightMemoryNumber].to_f
+          rightValue = @runningMem[rightMemoryNumber.to_i].to_f
         when 13_000...14_000, 23_000...24_000
-          rightValue = @runningMem[rightMemoryNumber]
+          rightValue = @runningMem[rightMemoryNumber.to_i]
         when 14_000...15_000, 24_000...25_000
-          rightValue = @runningMem[rightMemoryNumber]
+          rightValue = @runningMem[rightMemoryNumber.to_i]
 
         when 31_000...32_000
-          rightValue =  @program.dirConstantes.invert[rightMemoryNumber].to_i
+          rightValue =  @program.dirConstantes.invert[rightMemoryNumber.to_i].to_i
         when 32_000...33_000
-          rightValue =  @program.dirConstantes.invert[rightMemoryNumber].to_f
+          rightValue =  @program.dirConstantes.invert[rightMemoryNumber.to_i].to_f
         when 33_000...34_000
-          rightValue =  @program.dirConstantes.invert[rightMemoryNumber]
+          rightValue =  @program.dirConstantes.invert[rightMemoryNumber.to_i]
         when 34_000...34_005
-          rightValue =  @program.dirConstantes.invert[rightMemoryNumber]
+          rightValue =  @program.dirConstantes.invert[rightMemoryNumber.to_i]
         else
           puts "ERROR. EN IGUALDAD VALOR DERECHO"
           exit
         end
 
-        @runningMem[@cuadruplos.cuads[@cuadActual].resultado] = leftValue == rightValue
+        @runningMem[@cuadruplos.cuads[@cuadActual].resultado.to_i] = leftValue == rightValue
         @cuadActual += 1
 
       when "<>"
         leftMemoryNumber = @cuadruplos.cuads[@cuadActual].operIzq
 
-        if(leftMemoryNumber[0] == '(')
-           leftMemoryNumber = leftMemoryNumber[1...-1]
-           leftMemoryNumber = @runningMem[leftMemoryNumber]
+        if leftMemoryNumber[0] == '('
+          leftMemoryNumber = leftMemoryNumber[1..-2].to_i
+          case leftMemoryNumber.to_i
+          when 1_000...5_000
+            leftMemoryNumber = @globalMem[leftMemoryNumber.to_i].to_i
+          when 10_000...15_000, 21_000...25_000
+            leftMemoryNumber = @runningMem[leftMemoryNumber.to_i].to_i
+          else
+            puts "ERROR. MEMORIA INDIRECTA DESIGUALDAD IZQ"
+          end
         end
-        case leftMemoryNumber
+
+
+        case leftMemoryNumber.to_i
         when 1_000...2_000
-          leftValue = @globalMem[leftMemoryNumber].to_i
+          leftValue = @globalMem[leftMemoryNumber.to_i].to_i
         when 2_000...3_000
-          leftValue = @globalMem[leftMemoryNumber].to_f
+          leftValue = @globalMem[leftMemoryNumber.to_i].to_f
         when 3_000...4_000
-          leftValue = @globalMem[leftMemoryNumber]
+          leftValue = @globalMem[leftMemoryNumber.to_i]
         when 4_000...5_000
-          leftValue = @globalMem[leftMemoryNumber]
+          leftValue = @globalMem[leftMemoryNumber.to_i]
 
         when 11_000...12_000, 21_000...22_000
-          leftValue = @runningMem[leftMemoryNumber].to_i
+          leftValue = @runningMem[leftMemoryNumber.to_i].to_i
         when 12_000...13_000, 22_000...23_000
-          leftValue = @runningMem[leftMemoryNumber].to_f
+          leftValue = @runningMem[leftMemoryNumber.to_i].to_f
         when 13_000...14_000, 23_000...24_000
-          leftValue = @runningMem[leftMemoryNumber]
+          leftValue = @runningMem[leftMemoryNumber.to_i]
         when 14_000...15_000, 24_000...25_000
-          leftValue = @runningMem[leftMemoryNumber]
+          leftValue = @runningMem[leftMemoryNumber.to_i]
 
         when 31_000...32_000
-          leftValue =  @program.dirConstantes.invert[leftMemoryNumber].to_i
+          leftValue =  @program.dirConstantes.invert[leftMemoryNumber.to_i].to_i
         when 32_000...33_000
-          leftValue =  @program.dirConstantes.invert[leftMemoryNumber].to_f
+          leftValue =  @program.dirConstantes.invert[leftMemoryNumber.to_i].to_f
         when 33_000...34_000
-          leftValue =  @program.dirConstantes.invert[leftMemoryNumber]
+          leftValue =  @program.dirConstantes.invert[leftMemoryNumber.to_i]
         when 34_000...34_005
-          leftValue =  @program.dirConstantes.invert[leftMemoryNumber]
+          leftValue =  @program.dirConstantes.invert[leftMemoryNumber.to_i]
         else
           puts "ERROR. EN DESIGUALDAD VALOR IZQUIERDO"
           exit
@@ -1241,71 +1242,87 @@ class VM
 
         rightMemoryNumber = @cuadruplos.cuads[@cuadActual].operDer
 
+        if rightMemoryNumber[0] == '('
+          rightMemoryNumber = rightMemoryNumber[1..-2].to_i
+          case rightMemoryNumber.to_i
+          when 1_000...5_000
+            rightMemoryNumber = @globalMem[rightMemoryNumber.to_i].to_i
+          when 10_000...15_000, 21_000...25_000
+            rightMemoryNumber = @runningMem[rightMemoryNumber.to_i].to_i
+          else
+            puts "ERROR. MEMORIA INDIRECTA DESIGUALDAD DERECHA"
+          end
+        end
 
-        if(rightMemoryNumber[0] == '(')
-           rightMemoryNumber = rightMemoryNumber[1...-1]
-           rightMemoryNumber = @runningMem[rightMemoryNumber]
-         end
-        case rightMemoryNumber
+        case rightMemoryNumber.to_i
         when 1_000...2_000
-          rightValue = @globalMem[rightMemoryNumber].to_i
+          rightValue = @globalMem[rightMemoryNumber.to_i].to_i
         when 2_000...3_000
-          rightValue = @globalMem[rightMemoryNumber].to_f
+          rightValue = @globalMem[rightMemoryNumber.to_i].to_f
         when 3_000...4_000
-          rightValue = @globalMem[rightMemoryNumber]
+          rightValue = @globalMem[rightMemoryNumber.to_i]
         when 4_000...5_000
-          rightValue = @globalMem[rightMemoryNumber]
+          rightValue = @globalMem[rightMemoryNumber.to_i]
 
         when 11_000...12_000, 21_000...22_000
-          rightValue = @runningMem[rightMemoryNumber].to_i
+          rightValue = @runningMem[rightMemoryNumber.to_i].to_i
         when 12_000...13_000, 22_000...23_000
-          rightValue = @runningMem[rightMemoryNumber].to_f
+          rightValue = @runningMem[rightMemoryNumber.to_i].to_f
         when 13_000...14_000, 23_000...24_000
-          rightValue = @runningMem[rightMemoryNumber]
+          rightValue = @runningMem[rightMemoryNumber.to_i]
         when 14_000...15_000, 24_000...25_000
-          rightValue = @runningMem[rightMemoryNumber]
+          rightValue = @runningMem[rightMemoryNumber.to_i]
 
         when 31_000...32_000
-          rightValue =  @program.dirConstantes.invert[rightMemoryNumber].to_i
+          rightValue =  @program.dirConstantes.invert[rightMemoryNumber.to_i].to_i
         when 32_000...33_000
-          rightValue =  @program.dirConstantes.invert[rightMemoryNumber].to_f
+          rightValue =  @program.dirConstantes.invert[rightMemoryNumber.to_i].to_f
         when 33_000...34_000
-          rightValue =  @program.dirConstantes.invert[rightMemoryNumber]
+          rightValue =  @program.dirConstantes.invert[rightMemoryNumber.to_i]
         when 34_000...34_005
-          rightValue =  @program.dirConstantes.invert[rightMemoryNumber]
+          rightValue =  @program.dirConstantes.invert[rightMemoryNumber.to_i]
         else
           puts "ERROR. EN DESIGUALDAD VALOR DERECHO"
           exit
         end
 
-        @runningMem[@cuadruplos.cuads[@cuadActual].resultado] = leftValue != rightValue
+        @runningMem[@cuadruplos.cuads[@cuadActual].resultado.to_i] = leftValue != rightValue
         @cuadActual += 1
 
       when "and"
         leftMemoryNumber = @cuadruplos.cuads[@cuadActual].operIzq
 
-        if(leftMemoryNumber[0] == '(')
-           leftMemoryNumber = leftMemoryNumber[1...-1]
-           leftMemoryNumber = @runningMem[leftMemoryNumber]
+        if leftMemoryNumber[0] == '('
+          leftMemoryNumber = leftMemoryNumber[1..-2].to_i
+          case leftMemoryNumber.to_i
+          when 1_000...5_000
+            leftMemoryNumber = @globalMem[leftMemoryNumber.to_i].to_i
+          when 10_000...15_000, 21_000...25_000
+            leftMemoryNumber = @runningMem[leftMemoryNumber.to_i].to_i
+          else
+            puts "ERROR. MEMORIA INDIRECTA AND IZQ"
+          end
         end
-        case leftMemoryNumber
+
+
+        case leftMemoryNumber.to_i
         when 1_000...4_000
           puts "ERROR. AND CON VALORES NO BOOLEANOS"
           exit
         when 4_000...5_000
-          leftValue = @globalMem[leftMemoryNumber]
+          leftValue = @globalMem[leftMemoryNumber.to_i]
 
         when 11_000...14_000, 21_000...24_000
           puts "ERROR. AND CON VALORES NO BOOLEANOS"
           exit
         when 14_000...15_000, 24_000...25_000
-          leftValue = @runningMem[leftMemoryNumber]
+          leftValue = @runningMem[leftMemoryNumber.to_i]
 
         when 31_000...34_000
           puts "ERROR. AND CON VALORES NO BOOLEANOS"
           exit
         when 34_000...34_005
-          leftValue =  @program.dirConstantes.invert[leftMemoryNumber]
+          leftValue =  @program.dirConstantes.invert[leftMemoryNumber.to_i]
         else
           puts "ERROR. EN AND VALOR IZQUIERDO"
           exit
@@ -1314,63 +1331,77 @@ class VM
 
         rightMemoryNumber = @cuadruplos.cuads[@cuadActual].operDer
 
-
-        if(rightMemoryNumber[0] == '(')
-           rightMemoryNumber = rightMemoryNumber[1...-1]
-           rightMemoryNumber = @runningMem[rightMemoryNumber]
-         end
-        case rightMemoryNumber
+        if rightMemoryNumber[0] == '('
+          rightMemoryNumber = rightMemoryNumber[1..-2].to_i
+          case rightMemoryNumber.to_i
+          when 1_000...5_000
+            rightMemoryNumber = @globalMem[rightMemoryNumber.to_i].to_i
+          when 10_000...15_000, 21_000...25_000
+            rightMemoryNumber = @runningMem[rightMemoryNumber.to_i].to_i
+          else
+            puts "ERROR. MEMORIA INDIRECTA AND DERECHA"
+          end
+        end
+        case rightMemoryNumber.to_i
         when 1_000...4_000
           puts "ERROR. AND CON VALORES NO BOOLEANOS"
           exit
         when 4_000...5_000
-          rightValue = @globalMem[rightMemoryNumber]
+          rightValue = @globalMem[rightMemoryNumber.to_i]
 
         when 11_000...14_000, 21_000...24_000
           puts "ERROR. AND CON VALORES NO BOOLEANOS"
           exit
         when 14_000...15_000, 24_000...25_000
-          rightValue = @runningMem[rightMemoryNumber]
+          rightValue = @runningMem[rightMemoryNumber.to_i]
 
         when 31_000...34_000
           puts "ERROR. AND CON VALORES NO BOOLEANOS"
           exit
         when 34_000...34_005
-          rightValue =  @program.dirConstantes.invert[rightMemoryNumber]
+          rightValue =  @program.dirConstantes.invert[rightMemoryNumber.to_i]
         else
           puts "ERROR. EN AND VALOR IZQUIERDO"
           exit
         end
 
-        @runningMem[@cuadruplos.cuads[@cuadActual].resultado] = leftValue and rightValue
+        @runningMem[@cuadruplos.cuads[@cuadActual].resultado.to_i] = leftValue and rightValue
         @cuadActual += 1
 
 
       when "or"
         leftMemoryNumber = @cuadruplos.cuads[@cuadActual].operIzq
 
-        if(leftMemoryNumber[0] == '(')
-           leftMemoryNumber = leftMemoryNumber[1...-1]
-           leftMemoryNumber = @runningMem[leftMemoryNumber]
+        if leftMemoryNumber[0] == '('
+          leftMemoryNumber = leftMemoryNumber[1..-2].to_i
+          case leftMemoryNumber.to_i
+          when 1_000...5_000
+            leftMemoryNumber = @globalMem[leftMemoryNumber.to_i].to_i
+          when 10_000...15_000, 21_000...25_000
+            leftMemoryNumber = @runningMem[leftMemoryNumber.to_i].to_i
+          else
+            puts "ERROR. MEMORIA INDIRECTA OR IZQ"
+          end
         end
-        case leftMemoryNumber
+
+        case leftMemoryNumber.to_i
         when 1_000...4_000
           puts "ERROR. OR CON VALORES NO BOOLEANOS"
           exit
         when 4_000...5_000
-          leftValue = @globalMem[leftMemoryNumber]
+          leftValue = @globalMem[leftMemoryNumber.to_i]
 
         when 11_000...14_000, 21_000...24_000
           puts "ERROR. OR CON VALORES NO BOOLEANOS"
           exit
         when 14_000...15_000, 24_000...25_000
-          leftValue = @runningMem[leftMemoryNumber]
+          leftValue = @runningMem[leftMemoryNumber.to_i]
 
         when 31_000...34_000
           puts "ERROR. OR CON VALORES NO BOOLEANOS"
           exit
         when 34_000...34_005
-          leftValue =  @program.dirConstantes.invert[leftMemoryNumber]
+          leftValue =  @program.dirConstantes.invert[leftMemoryNumber.to_i]
         else
           puts "ERROR. EN OR VALOR IZQUIERDO"
           exit
@@ -1379,35 +1410,42 @@ class VM
 
         rightMemoryNumber = @cuadruplos.cuads[@cuadActual].operDer
 
+        if rightMemoryNumber[0] == '('
+          rightMemoryNumber = rightMemoryNumber[1..-2].to_i
+          case rightMemoryNumber.to_i
+          when 1_000...5_000
+            rightMemoryNumber = @globalMem[rightMemoryNumber.to_i].to_i
+          when 10_000...15_000, 21_000...25_000
+            rightMemoryNumber = @runningMem[rightMemoryNumber.to_i].to_i
+          else
+            puts "ERROR. MEMORIA INDIRECTA OR DERECHA"
+          end
+        end
 
-        if(rightMemoryNumber[0] == '(')
-           rightMemoryNumber = rightMemoryNumber[1...-1]
-           rightMemoryNumber = @runningMem[rightMemoryNumber]
-         end
-        case rightMemoryNumber
+        case rightMemoryNumber.to_i
         when 1_000...4_000
           puts "ERROR. OR CON VALORES NO BOOLEANOS"
           exit
         when 4_000...5_000
-          rightValue = @globalMem[rightMemoryNumber]
+          rightValue = @globalMem[rightMemoryNumber.to_i]
 
         when 11_000...14_000, 21_000...24_000
           puts "ERROR. OR CON VALORES NO BOOLEANOS"
           exit
         when 14_000...15_000, 24_000...25_000
-          rightValue = @runningMem[rightMemoryNumber]
+          rightValue = @runningMem[rightMemoryNumber.to_i]
 
         when 31_000...34_000
           puts "ERROR. OR CON VALORES NO BOOLEANOS"
           exit
         when 34_000...34_005
-          rightValue =  @program.dirConstantes.invert[rightMemoryNumber]
+          rightValue =  @program.dirConstantes.invert[rightMemoryNumber.to_i]
         else
           puts "ERROR. EN OR VALOR IZQUIERDO"
           exit
         end
 
-        @runningMem[@cuadruplos.cuads[@cuadActual].resultado] = leftValue or rightValue
+        @runningMem[@cuadruplos.cuads[@cuadActual].resultado.to_i] = leftValue or rightValue
         @cuadActual += 1
 
 
@@ -1433,39 +1471,47 @@ class VM
       when "param"
         leftMemoryNumber = @cuadruplos.cuads[@cuadActual].operIzq
 
-        if(leftMemoryNumber[0] == '(')
-           leftMemoryNumber = leftMemoryNumber[1...-1]
-           leftMemoryNumber = @runningMem[leftMemoryNumber]
+        if leftMemoryNumber[0] == '('
+          leftMemoryNumber = leftMemoryNumber[1..-2].to_i
+          case leftMemoryNumber.to_i
+          when 1_000...5_000
+            leftMemoryNumber = @globalMem[leftMemoryNumber.to_i].to_i
+          when 10_000...15_000, 21_000...25_000
+            leftMemoryNumber = @runningMem[leftMemoryNumber.to_i].to_i
+          else
+            puts "ERROR. MEMORIA INDIRECTA PARAM IZQ"
+          end
         end
-        case leftMemoryNumber
+
+        case leftMemoryNumber.to_i
         when 1_000...2_000
-          leftValue = @globalMem[leftMemoryNumber].to_i
+          leftValue = @globalMem[leftMemoryNumber.to_i].to_i
         when 2_000...3_000
-          leftValue = @globalMem[leftMemoryNumber].to_f
+          leftValue = @globalMem[leftMemoryNumber.to_i].to_f
         when 3_000...4_000
-          leftValue = @globalMem[leftMemoryNumber]
+          leftValue = @globalMem[leftMemoryNumber.to_i]
         when 4_000...5_000
-          leftValue = @globalMem[leftMemoryNumber]
+          leftValue = @globalMem[leftMemoryNumber.to_i]
 
         when 11_000...12_000, 21_000...22_000
-          leftValue = @runningMem[leftMemoryNumber].to_i
+          leftValue = @runningMem[leftMemoryNumber.to_i].to_i
         when 12_000...13_000, 22_000...23_000
-          leftValue = @runningMem[leftMemoryNumber].to_f
+          leftValue = @runningMem[leftMemoryNumber.to_i].to_f
         when 13_000...14_000, 23_000...24_000
-          leftValue = @runningMem[leftMemoryNumber]
+          leftValue = @runningMem[leftMemoryNumber.to_i]
         when 14_000...15_000, 24_000...25_000
-          leftValue = @runningMem[leftMemoryNumber]
+          leftValue = @runningMem[leftMemoryNumber.to_i]
 
         when 31_000...32_000
-          leftValue =  @program.dirConstantes.invert[leftMemoryNumber].to_i
+          leftValue =  @program.dirConstantes.invert[leftMemoryNumber.to_i].to_i
         when 32_000...33_000
-          leftValue =  @program.dirConstantes.invert[leftMemoryNumber].to_f
+          leftValue =  @program.dirConstantes.invert[leftMemoryNumber.to_i].to_f
         when 33_000...34_000
-          leftValue =  @program.dirConstantes.invert[leftMemoryNumber]
+          leftValue =  @program.dirConstantes.invert[leftMemoryNumber.to_i]
         when 34_000...34_005
-          leftValue =  @program.dirConstantes.invert[leftMemoryNumber]
+          leftValue =  @program.dirConstantes.invert[leftMemoryNumber.to_i]
         else
-          puts "ERROR. EN DESIGUALDAD VALOR IZQUIERDO"
+          puts "ERROR. EN PARAM VALOR IZQUIERDO"
 
           exit
         end
@@ -1487,17 +1533,21 @@ class VM
 
         resMemoryNumber = @cuadruplos.cuads[@cuadActual].resultado
 
-        if(resMemoryNumber[0] == '(')
-           resMemoryNumber = resMemoryNumber[1...-1]
-           resMemoryNumber = @runningMem[resMemoryNumber]
-        end
-        case resMemoryNumber
+        resMemoryNumber = resMemoryNumber[1..-2].to_i
+        case resMemoryNumber.to_i
         when 1_000...5_000
-          resValue = @globalMem[resMemoryNumber]
+          resMemoryNumber = @globalMem[resMemoryNumber.to_i]
         when 11_000...15_000, 21_000...25_000
-          resValue = @runningMem[resMemoryNumber]
+          resMemoryNumber = @runningMem[resMemoryNumber.to_i]
+        end
+
+        case resMemoryNumber.to_i
+        when 1_000...5_000
+          resValue = @globalMem[resMemoryNumber.to_i]
+        when 11_000...15_000, 21_000...25_000
+          resValue = @runningMem[resMemoryNumber.to_i]
         when 31_000...34_005
-          resValue =  @program.dirConstantes.invert[resMemoryNumber]
+          resValue =  @program.dirConstantes.invert[resMemoryNumber.to_i]
         else
           puts "ERROR. EN PRINT VALOR RESULTADO"
           exit
@@ -1510,31 +1560,40 @@ class VM
 
         leftMemoryNumber = @cuadruplos.cuads[@cuadActual].operIzq
 
-        if(leftMemoryNumber[0] == '(')
-           leftMemoryNumber = leftMemoryNumber[1...-1]
-           leftMemoryNumber = @runningMem[leftMemoryNumber]
+        if leftMemoryNumber[0] == '('
+          leftMemoryNumber = leftMemoryNumber[1..-2].to_i
+          case leftMemoryNumber.to_i
+          when 1_000...5_000
+            leftMemoryNumber = @globalMem[leftMemoryNumber.to_i].to_i
+          when 10_000...15_000, 21_000...25_000
+            leftMemoryNumber = @runningMem[leftMemoryNumber.to_i].to_i
+          else
+            puts "ERROR. MEMORIA INDIRECTA SUMA IZQ"
+          end
         end
-        case leftMemoryNumber
+
+
+        case leftMemoryNumber.to_i
         when 1_000...2_000
-          @globalMem[leftMemoryNumber] = resValue.to_i
+          @globalMem[leftMemoryNumber.to_i] = resValue.to_i
         when 2_000...3_000
-          @globalMem[leftMemoryNumber] = resValue.to_f
+          @globalMem[leftMemoryNumber.to_i] = resValue.to_f
         when 3_000...4_000
-          @globalMem[leftMemoryNumber] = resValue
+          @globalMem[leftMemoryNumber.to_i] = resValue
         when 4_000...5_000
-          @globalMem[leftMemoryNumber] = resValue
+          @globalMem[leftMemoryNumber.to_i] = resValue
 
         when 11_000...12_000, 21_000...22_000
-          @runningMem[leftMemoryNumber] = resValue.to_i
+          @runningMem[leftMemoryNumber.to_i] = resValue.to_i
         when 12_000...13_000, 22_000...23_000
-          @runningMem[leftMemoryNumber] = resValue.to_f
+          @runningMem[leftMemoryNumber.to_i] = resValue.to_f
         when 13_000...14_000, 23_000...24_000
-          @runningMem[leftMemoryNumber] = resValue
+          @runningMem[leftMemoryNumber.to_i] = resValue
         when 14_000...15_000, 24_000...25_000
-          @runningMem[leftMemoryNumber] = resValue
+          @runningMem[leftMemoryNumber.to_i] = resValue
 
         else
-          puts "ERROR. EN DESIGUALDAD VALOR IZQUIERDO"
+          puts "ERROR. EN RETURN VALOR IZQUIERDO"
           exit
         end
 
@@ -1544,20 +1603,20 @@ class VM
 
       when "range"
 
-        leftMemoryNumber = @cuadruplos.cuads[@cuadActual].operIzq
-        rightMemoryNumber = @cuadruplos.cuads[@cuadActual].operDer
-        resMemoryNumber = @cuadruplos.cuads[@cuadActual].resultado
-
-
-        leftValue = @program.dirConstantes.invert[leftMemoryNumber]
-        rightValue = @program.dirConstantes.invert[rightMemoryNumber]
-        resValue = @program.dirConstantes.invert[resMemoryNumber]
-
-
-        if (leftValue.to_i < rightValue.to_i or  resValue.to_i < leftValue.to_i)
-          puts "ERROR: EL ARREGLO NO ESTA DENTRO DE LOS LIMITES"
-          exit
-        end
+        # leftMemoryNumber = @cuadruplos.cuads[@cuadActual].operIzq.to_i
+        # rightMemoryNumber = @cuadruplos.cuads[@cuadActual].operDer.to_i
+        # resMemoryNumber = @cuadruplos.cuads[@cuadActual].resultado.to_i
+        #
+        #
+        # leftValue = @program.dirConstantes.invert[leftMemoryNumber.to_i]
+        # rightValue = @program.dirConstantes.invert[rightMemoryNumber.to_i]
+        # resValue = @program.dirConstantes.invert[resMemoryNumber.to_i]
+        #
+        #
+        # if (leftValue.to_i < rightValue.to_i or  resValue.to_i < leftValue.to_i)
+        #   puts "ERROR: EL ARREGLO NO ESTA DENTRO DE LOS LIMITES"
+        #   exit
+        # end
 
 
         @cuadActual += 1

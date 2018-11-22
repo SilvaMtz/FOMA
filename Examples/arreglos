@@ -1,4 +1,5 @@
-int a[5][5];
+int a[10];
+
 int x;
 
 program Arreglos
@@ -6,12 +7,14 @@ start
   int j;
   int k;
 
-  j = 10;
+  j = 8;
   k = 5;
-  a[0][0] = 10;
-  a[j-k][1] = a[0][0];
+  a[9] = 70;
+  a[8] = 50;
+  a[j-k]= a[9];
 
-  print(a[0][0]);
+  print(a[j]);
+  print(a[8]);
 
 
 end

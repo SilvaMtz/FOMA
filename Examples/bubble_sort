@@ -1,12 +1,45 @@
-int arr[10];
+int a[10];
 
-program bubble_sort
+int x;
+int j;
+int temp;
+
+program Arreglos
 start
-  arr[0] = 15;
+  int j;
+  int k;
+
+  a[0] = 645;
+  a[1] = 65;
+  a[2] = 43;
+  a[3] = 72;
+  a[4] = 92;
+  a[5] = 45;
+  a[6] = 70;
+  a[7] = 234;
+  a[8] = 123;
+  a[9] = 15;
+
+  for (x = 0; x < 10-1; x = x + 1)
+  start
+    for (j = x + 1; j < 10; j = j + 1)
+    start
+      if(a[x] < a[j])
+      start
+        temp = a[x];
+        a[x] = a[j];
+        a[j] = temp;
+      end
+    end
+  end
 
 
 
-  print (arr[0] );
 
+  for (x = 0; x < 10; x = x + 1)
+  start
+    print (x);
+    print (a[x]);
+  end
 
 end
